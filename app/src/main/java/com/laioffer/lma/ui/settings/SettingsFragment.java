@@ -1,6 +1,7 @@
 package com.laioffer.lma.ui.settings;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,16 +12,19 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.laioffer.lma.R;
 
 public class SettingsFragment extends Fragment {
 
     private SettingsViewModel settingsViewModel;
-
+    SwipeRefreshLayout swipeRefreshLayout;
+    TextView textView;
+    int num = 0;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        settingsViewModel =
+       /* settingsViewModel =
                 ViewModelProviders.of(this).get(SettingsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_settings, container, false);
         final TextView textView = root.findViewById(R.id.text_home);
@@ -28,6 +32,23 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
+            }
+        });*/
+        View root = inflater.inflate(R.layout.fragment_settings, container, false);
+        swipeRefreshLayout = (SwipeRefreshLayout) root.findViewById(R.id.swipe);
+        textView = (TextView) root.findViewById(R.id.text_home);
+        textView.setText("Overview, Testing 0");
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        num++;
+                        textView.setText("Overview, Testing " + num);
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                },4000);
             }
         });
         return root;
