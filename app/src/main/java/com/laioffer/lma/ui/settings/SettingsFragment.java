@@ -19,9 +19,9 @@ import com.laioffer.lma.R;
 public class SettingsFragment extends Fragment {
 
     private SettingsViewModel settingsViewModel;
-    SwipeRefreshLayout swipeRefreshLayout;
-    TextView textView;
-    int num = 0;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private TextView textView;
+    private int num = 0;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
        /* settingsViewModel =
@@ -37,7 +37,7 @@ public class SettingsFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_settings, container, false);
         swipeRefreshLayout = (SwipeRefreshLayout) root.findViewById(R.id.swipe);
         textView = (TextView) root.findViewById(R.id.text_home);
-        textView.setText("Overview, Testing 0");
+        textView.setText("Setting, swipe count = 0");
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -45,10 +45,10 @@ public class SettingsFragment extends Fragment {
                     @Override
                     public void run() {
                         num++;
-                        textView.setText("Overview, Testing " + num);
+                        textView.setText("Setting, swipe count = " + num);
                         swipeRefreshLayout.setRefreshing(false);
                     }
-                },4000);
+                },2000);
             }
         });
         return root;

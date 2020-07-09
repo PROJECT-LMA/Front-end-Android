@@ -15,14 +15,17 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.laioffer.lma.R;
+import com.laioffer.lma.ui.settings.SettingsViewModel;
 
 public class OverviewFragment extends Fragment {
 
     private OverviewViewModel overviewViewModel;
-
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private TextView textView;
+    private int num = 0;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        overviewViewModel =
+        /*overviewViewModel =
                 ViewModelProviders.of(this).get(OverviewViewModel.class);
         View root = inflater.inflate(R.layout.fragment_overview, container, false);
         final TextView textView = root.findViewById(R.id.text_dashboard);
@@ -31,20 +34,25 @@ public class OverviewFragment extends Fragment {
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
             }
-        });
+        });*/
 
-        /*
+        View root = inflater.inflate(R.layout.fragment_settings, container, false);
+        swipeRefreshLayout = (SwipeRefreshLayout) root.findViewById(R.id.swipe);
+        textView = (TextView) root.findViewById(R.id.text_home);
+        textView.setText("Overview, swipe count = 0");
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        num++;
+                        textView.setText("Overview, swipe count = " + num);
                         swipeRefreshLayout.setRefreshing(false);
                     }
-                },4000);
+                },2000);
             }
-        });*/
+        });
         return root;
     }
 }
