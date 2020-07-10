@@ -5,7 +5,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 
-import com.google.android.material.tabs.TabLayout;
+import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 
 public class OnBoardingActivity extends AppCompatActivity {
@@ -20,8 +20,8 @@ public class OnBoardingActivity extends AppCompatActivity {
         viewpager = findViewById(R.id.account_viewpager);
         OnBoardingPageAdapter onBoardingPageAdapter = new OnBoardingPageAdapter(getSupportFragmentManager());
         viewpager.setAdapter(onBoardingPageAdapter);
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
-        tabLayout.setupWithViewPager(viewpager);
+        SmartTabLayout tabLayout = (SmartTabLayout ) findViewById(R.id.viewpagertab);
+        tabLayout.setViewPager(viewpager);
 
     }
 }
