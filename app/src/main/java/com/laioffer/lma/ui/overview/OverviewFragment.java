@@ -25,6 +25,36 @@ public class OverviewFragment extends Fragment {
     private int num = 0;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        overviewViewModel =
+                ViewModelProviders.of(this).get(OverviewViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_overview, container, false);
+        swipeRefreshLayout = (SwipeRefreshLayout) root.findViewById(R.id.swipe);
+        final TextView textView = root.findViewById(R.id.text_dashboard);
+        overviewViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String s) {
+                textView.setText(s);
+            }
+        });
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        overviewViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+                            @Override
+                            public void onChanged(@Nullable String s) {
+                                textView.setText(s);
+                            }
+                        });
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                },2000);
+            }
+        });
+
         /*overviewViewModel =
                 ViewModelProviders.of(this).get(OverviewViewModel.class);
         View root = inflater.inflate(R.layout.fragment_overview, container, false);
@@ -36,7 +66,7 @@ public class OverviewFragment extends Fragment {
             }
         });*/
 
-        View root = inflater.inflate(R.layout.fragment_settings, container, false);
+        /*View root = inflater.inflate(R.layout.fragment_settings, container, false);
         swipeRefreshLayout = (SwipeRefreshLayout) root.findViewById(R.id.swipe);
         textView = (TextView) root.findViewById(R.id.text_home);
         textView.setText("Overview, swipe count = 0");
@@ -52,7 +82,7 @@ public class OverviewFragment extends Fragment {
                     }
                 },2000);
             }
-        });
+        });*/
         return root;
     }
 }
