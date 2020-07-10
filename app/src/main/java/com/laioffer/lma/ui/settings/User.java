@@ -15,7 +15,7 @@ public class User {
         this.password = user.password;
     }
 
-    public class UserBuilder {
+    public static class UserBuilder {
         private String objectId;
         private String firstName;
         private String lastName;
