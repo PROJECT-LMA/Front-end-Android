@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import com.google.android.material.tabs.TabLayout;
 
+
 public class OnBoardingActivity extends AppCompatActivity {
     private ViewPager viewpager;
 
@@ -16,7 +17,7 @@ public class OnBoardingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_on_boarding);
 
         // setup viewpager and tablayout
-        viewpager = findViewById(R.id.viewpager);
+        viewpager = findViewById(R.id.account_viewpager);
         OnBoardingPageAdapter onBoardingPageAdapter = new OnBoardingPageAdapter(getSupportFragmentManager());
         viewpager.setAdapter(onBoardingPageAdapter);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
