@@ -28,18 +28,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/login_banner"
+                    android:text="@string/welcome_back"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="19.2sp" />
 
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="@string/welcome_back"
-                    android:textColor="#6e7f8d"
-                    android:textSize="17.3sp" />
             </LinearLayout>
 
 

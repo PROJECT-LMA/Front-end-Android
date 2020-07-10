@@ -29,7 +29,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/create_a_new_account"
-                    android:textSize="19.2sp"
+                    android:textSize="17sp"
                     android:textColor="@color/colorPrimaryDark"/>
 
 
@@ -37,7 +37,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/sync_across_devices_with_your_account"
-                    android:textSize="17.3sp"
+                    android:textSize="15sp"
                     android:layout_marginTop="4dp"
                     android:textColor="#6e7f8d"/>
             </LinearLayout>
