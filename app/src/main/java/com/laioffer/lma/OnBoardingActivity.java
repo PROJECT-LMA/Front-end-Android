@@ -5,6 +5,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 
+import com.laioffer.lma.adapter.OnBoardingPageAdapter;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 
@@ -22,6 +23,5 @@ public class OnBoardingActivity extends AppCompatActivity {
         viewpager.setAdapter(onBoardingPageAdapter);
         SmartTabLayout tabLayout = (SmartTabLayout ) findViewById(R.id.viewpagertab);
         tabLayout.setViewPager(viewpager);
-
     }
 }

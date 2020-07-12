@@ -1,4 +1,4 @@
-package com.laioffer.lma;
+package com.laioffer.lma.ui.account;
 
 import android.os.Bundle;
 
@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.laioffer.lma.R;
 
 
 public class LoginFragment extends Fragment {
