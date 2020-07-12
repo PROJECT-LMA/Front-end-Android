@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
+    <color name="colorBackground">#F8FDFE</color>
+    <color name="colorPrimary">#29CBD5</color>
+    <color name="colorPrimaryDark">#0C1215</color>
+    <color name="colorSecondaryDark">#1D4468</color>
+    <color name="colorAccent">#CEB896</color>
+    <color name="colorGrey">#CCD7DE</color>
 
 
-    <color name="zxing_result_view">#b0000000</color>
-    <color name="zxing_status_text">#ffffffff</color>
-    <color name="zxing_transparent">#00000000</color>
-    <color name="zxing_viewfinder_mask">#60000000</color>
+    <color name="black_20">#33000000</color>
+    <color name="transparent">#00000000</color>
 </resources>
