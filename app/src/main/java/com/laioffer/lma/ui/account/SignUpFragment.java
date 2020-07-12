@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.laioffer.lma.R;
 import com.laioffer.lma.network.Account;
+import com.laioffer.lma.network.HttpUtils;
 import com.laioffer.lma.utils.EditTextValidator;
 import com.laioffer.lma.utils.Encryption;
 
@@ -82,7 +83,7 @@ public class SignUpFragment extends Fragment {
 
         email.addTextChangedListener(new EditTextValidator(email) {
             @Override
-            public void validate(TextView textView, String text) {
+            public void validate(final TextView textView, String text) {
                 if (text == null || text.length() == 0) {
                     textView.setError("Please enter your email address");
                     registerBtn.setClickable(false);
@@ -95,7 +96,25 @@ public class SignUpFragment extends Fragment {
                     textView.setError("Not a valid email address");
                     registerBtn.setClickable(false);
                 } else {
-                    registerBtn.setClickable(true);
+                    final Activity activity = getActivity();
+                    Thread thread = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            final Account.AccountResult result = Account.checkEmail(email.getText().toString());
+                            if (result.isStatus()) {
+                                registerBtn.setClickable(true);
+                            } else {
+                                activity.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        textView.setError(result.getMessage());
+                                    }
+                                });
+                                registerBtn.setClickable(false);
+                            }
+                        }
+                    });
+                    thread.start();
                 }
             }
         });
