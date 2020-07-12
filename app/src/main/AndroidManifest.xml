@@ -17,7 +17,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <service android:name=".ui.service.Myservice"/>
-        <receiver android:name=".ui.service.AlarmReceiver"/>
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="portrait"
