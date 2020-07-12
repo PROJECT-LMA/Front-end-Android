@@ -19,7 +19,6 @@ import android.widget.Toast;
 import com.laioffer.lma.R;
 import com.laioffer.lma.network.Account;
 import com.laioffer.lma.utils.EditTextValidator;
-import com.laioffer.lma.utils.Encryption;
 
 
 public class SignUpFragment extends Fragment {
@@ -44,7 +43,7 @@ public class SignUpFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        inflatedView = inflater.inflate(R.layout.fragment_signup, container, false);
+        inflatedView =  inflater.inflate(R.layout.fragment_signup, container, false);
 
         /* get all fields */
         final Button registerBtn = inflatedView.findViewById(R.id.register);
@@ -133,7 +132,7 @@ public class SignUpFragment extends Fragment {
                         final Account.AccountResult result = Account.userRegister(
                                 firstName.getText().toString(),
                                 lastName.getText().toString(),
-                                Encryption.md5Encryption(password.getText().toString()),
+                                password.getText().toString(),
                                 email.getText().toString());
                         Activity activity = getActivity();
 
