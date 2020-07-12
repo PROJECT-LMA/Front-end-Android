@@ -100,7 +100,7 @@ public class SignUpFragment extends Fragment {
                     Thread thread = new Thread(new Runnable() {
                         @Override
                         public void run() {
-                            final Account.AccountResult result = Account.checkEmail(email.getText().toString());
+                            final Account.Result result = Account.checkEmail(email.getText().toString());
                             if (result.isStatus()) {
                                 registerBtn.setClickable(true);
                             } else {
@@ -149,7 +149,7 @@ public class SignUpFragment extends Fragment {
                 Thread thread = new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        final Account.AccountResult result = Account.userRegister(
+                        final Account.Result result = Account.userRegister(
                                 firstName.getText().toString(),
                                 lastName.getText().toString(),
                                 Encryption.md5Encryption(password.getText().toString()),

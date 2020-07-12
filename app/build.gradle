@@ -40,4 +40,5 @@ dependencies {
     implementation 'com.ogaclejapan.smarttablayout:library:2.0.0@aar'
 
     implementation 'commons-codec:commons-codec:1.10'
+
 }
