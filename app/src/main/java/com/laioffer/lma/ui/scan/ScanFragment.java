@@ -1,69 +1,53 @@
 package com.laioffer.lma.ui.scan;
 
 import android.Manifest;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.google.zxing.Result;
-import com.karumi.dexter.Dexter;
-import com.karumi.dexter.PermissionToken;
-import com.karumi.dexter.listener.PermissionDeniedResponse;
-import com.karumi.dexter.listener.PermissionGrantedResponse;
-import com.karumi.dexter.listener.PermissionRequest;
-import com.karumi.dexter.listener.single.PermissionListener;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 import com.laioffer.lma.MainActivity;
 import com.laioffer.lma.R;
+import com.laioffer.lma.ui.service.Myservice;
 
-import org.w3c.dom.Text;
+import static android.view.View.getDefaultSize;
+import static androidx.constraintlayout.widget.Constraints.TAG;
+import static com.google.zxing.integration.android.IntentIntegrator.REQUEST_CODE;
 
-import me.dm7.barcodescanner.zxing.ZXingScannerView;
+public class ScanFragment extends Fragment {
 
-public class ScanFragment extends Fragment implements ZXingScannerView.ResultHandler {
     private ScanViewModel scanViewModel;
+    private TextView txtResult;
+    private Fragment self;
 
-    private ZXingScannerView mScannerView;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         scanViewModel =
                 ViewModelProviders.of(this).get(ScanViewModel.class);
         View root = inflater.inflate(R.layout.fragment_scan, container, false);
+        /*
         final TextView textView = root.findViewById(R.id.text_notifications);
-
-        final ZXingScannerView zxscan = root.findViewById(R.id.zxscan);
-        super.onCreate(savedInstanceState);
-
-
-        Dexter.withActivity(getActivity())
-                .withPermission(Manifest.permission.CAMERA)
-                .withListener(new PermissionListener() {
-                    @Override
-                    public void onPermissionGranted(PermissionGrantedResponse response) {
-                        zxscan.setResultHandler(ScanFragment.this);
-                        zxscan.startCamera();
-                    }
-
-                    @Override
-                    public void onPermissionDenied(PermissionDeniedResponse response) {
-                        Toast.makeText(getActivity(), "You must accept to continue!", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
-
-                    }
-                });
-
         scanViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
@@ -72,17 +56,92 @@ public class ScanFragment extends Fragment implements ZXingScannerView.ResultHan
         });
 
 
+         */
+        self = this;
+        txtResult = root.findViewById(R.id.txt_result);
+        int permissionCheck = ContextCompat.checkSelfPermission(getContext(),Manifest.permission.CAMERA);
+        if (permissionCheck != PackageManager.PERMISSION_GRANTED){
+            requestPermissions(new String[]{Manifest.permission.CAMERA}, 1888);
+        } else {
+            IntentIntegrator integrator = IntentIntegrator.forSupportFragment(self);
+
+//            integrator.setCaptureActivity(MainActivity.class);
+//            integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
+//            integrator.setOrientationLocked(false);
+//            integrator.setPrompt("Scan QR code");
+//            integrator.setBeepEnabled(false);
+//            integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE);
+
+
+            integrator.initiateScan();
+        }
+
+        //timer
+        getActivity().startService(new Intent(getActivity(),Myservice.class));
+        Log.i(TAG, "Started service");
+
         return root;
     }
 
     @Override
-    public void onDestroy() {
-        mScannerView.stopCamera();
-        super.onDestroy();
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        Log.d(result.toString(), "test");
+        if(result != null) {
+            if(result.getContents() == null) {
+                Toast.makeText(getContext(), "Cancelled", Toast.LENGTH_LONG).show();
+            } else {
+
+                txtResult.setText(result.getContents());
+                Toast.makeText(getContext(), "Scanned : " + result.getContents(), Toast.LENGTH_LONG).show();
+
+            }
+        }
+    }
+
+    //timer
+
+    private BroadcastReceiver br = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            updateGUI(intent); // or whatever method used to update your GUI fields
+        }
+    };
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        requireActivity().registerReceiver(br, new IntentFilter(Myservice.COUNTDOWN_BR));
+        Log.i(TAG, "Registered broacast receiver");
     }
 
     @Override
-    public void handleResult(Result rawResult) {
+    public void onPause() {
+        super.onPause();
+        requireActivity().unregisterReceiver(br);
+        Log.i(TAG, "Unregistered broacast receiver");
+    }
 
+    @Override
+    public void onStop() {
+        try {
+            requireActivity().unregisterReceiver(br);
+        } catch (Exception e) {
+            // Receiver was probably already stopped in onPause()
+        }
+        super.onStop();
+    }
+    @Override
+    public void onDestroy() {
+        getActivity().stopService(new Intent(getActivity(), Myservice.class));
+        Log.i(TAG, "Stopped service");
+        super.onDestroy();
+    }
+
+    private void updateGUI(Intent intent) {
+        if (intent.getExtras() != null) {
+            long millisUntilFinished = intent.getLongExtra("countdown", 0);
+            Log.i(TAG, "Countdown seconds remaining: " +  millisUntilFinished / 1000);
+        }
     }
 }
