@@ -51,7 +51,7 @@ public class Account {
             if (response.getBoolean("isSuccess")) {
                 result = new AccountResult(true, "Successfully registered");
             } else {
-                result = new AccountResult(false, "Email duplicated");
+                result = new AccountResult(false, "This email address has been registered");
             }
 
         } catch (Exception e) {
@@ -85,7 +85,7 @@ public class Account {
             if (response.getBoolean("isAvailable")) {
                 result = new AccountResult(true, "");
             } else {
-                result = new AccountResult(false, "Email duplicated");
+                result = new AccountResult(false, "This email address has been used");
             }
 
         } catch (Exception e) {
