@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorBackground">
 
     <LinearLayout
+        android:id="@+id/login_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/login_main"
         android:orientation="vertical">
 
 
@@ -29,18 +29,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/login_banner"
-                    android:textSize="19.2sp"
-                    android:textColor="@color/colorPrimaryDark"/>
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:text="@string/welcome_back"
-                    android:textSize="17.3sp"
-                    android:layout_marginTop="4dp"
-                    android:textColor="#6e7f8d"/>
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="19.2sp" />
+
             </LinearLayout>
 
 
@@ -50,8 +42,8 @@
             style="@style/StyledTilEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
             android:layout_marginLeft="28.7dp"
+            android:layout_marginTop="40dp"
             android:layout_marginRight="28.7dp"
             android:textColor="@color/colorPrimaryDark">
 
@@ -60,10 +52,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/prompt_email"
-                android:textAllCaps="false"
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
                 android:paddingTop="10dp"
+                android:textAllCaps="false"
                 android:textColor="@color/colorPrimaryDark"
                 android:textCursorDrawable="@drawable/color_cursor"
                 android:textSize="14sp" />
@@ -73,11 +65,11 @@
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/StyledTilEditText"
-            android:layout_marginLeft="28.7dp"
-            android:layout_marginRight="28.7dp"
-            android:layout_marginTop="25dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="28.7dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginRight="28.7dp"
             android:textColor="@color/colorPrimaryDark">
 
             <EditText
@@ -95,22 +87,68 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28.7dp"
+            android:layout_marginTop="20dp">
+
+            <CheckBox
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:buttonTint="@color/colorPrimary"
+                android:id="@+id/kept_logged_in_checkbox" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/keep_me_logged_in"
+                android:layout_marginStart="10dp"
+                android:textSize="16sp"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28.7dp"
+            android:layout_marginTop="15dp">
+
+            <CheckBox
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:buttonTint="@color/colorPrimary"
+                android:id="@+id/term_of_service_checkbox"/>
+
+            <TextView
+                android:id="@+id/term_of_service"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/term_of_use"
+                android:layout_marginStart="10dp"
+                android:textSize="16sp"
+                android:clickable="true"
+                android:textColor="#007bff"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 
     <Button
         android:id="@+id/login"
-        android:layout_below="@id/login_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/primary_rect"
-        android:textColor="@color/colorBackground"
-        android:textAllCaps="false"
-        android:textSize="17sp"
-        android:layout_marginTop="45dp"
+        android:layout_below="@id/login_main"
         android:layout_marginStart="30dp"
+        android:layout_marginTop="45dp"
         android:layout_marginEnd="30dp"
-        android:text="@string/login"/>
+        android:background="@drawable/primary_rect"
+        android:text="@string/login"
+        android:textAllCaps="false"
+        android:textColor="@color/colorBackground"
+        android:textSize="17sp" />
 
 
 </RelativeLayout>

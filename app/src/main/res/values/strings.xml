@@ -10,11 +10,16 @@
     <string name="don_t_have_an_account">Don’t have an account?</string>
     <string name="signup_now">Signup now</string>
     <string name="login">Login</string>
-    <string name="create_a_new_account">Create a New Account</string>
-    <string name="sync_across_devices_with_your_account">Sync across devices with your account</string>
+    <string name="create_a_new_account">Register with us to start your easy laundry journey</string>
+    <string name="sync_across_devices_with_your_account">find your information anywhere you login
+</string>
     <string name="last_name">Last Name</string>
     <string name="create_account">Create Account</string>
     <string name="already_a_user">Already a user?</string>
     <string name="login_now">Login now</string>
     <string name="first_name">First Name</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="keep_me_logged_in">Keep me logged in</string>
+    <string name="term_of_use">Term of use</string>
 </resources>
