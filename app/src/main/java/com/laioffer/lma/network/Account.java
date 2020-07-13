@@ -1,6 +1,6 @@
 package com.laioffer.lma.network;
 
-import android.util.Log;
+import com.laioffer.lma.model.User;
 
 import org.json.JSONObject;
 
@@ -26,6 +26,42 @@ public class Account {
         public String getMessage() {
             return message;
         }
+    }
+
+    public static Result userLogin(String password, String email){
+        Result result;
+        HttpURLConnection conn = null;
+
+        try{
+            URL url = new URL(HttpUtils.serverUrl + HttpUtils.login);
+            conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("POST");
+
+            JSONObject object = new JSONObject();
+            object.put("email", email);
+            object.put("password", password);
+
+            HttpUtils.writeJsonObject(conn, object);
+            conn.connect();
+
+            JSONObject response = HttpUtils.readJsonObjectFromResponse(conn);
+
+            if (response.getBoolean("isSuccess")) {
+                result = new Result(true, "Successfully login");
+                User.login(response.getJSONObject("user"), response.getString("token"));
+            }else{
+                result = new Result(false, "Login failed");
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+            result = new Result(false, "Network error");
+        } finally {
+            if (conn != null) {
+                conn.disconnect();
+            }
+        }
+
+        return result;
     }
 
     public static Result userRegister(String firstName, String lastName, String password,
@@ -71,7 +107,6 @@ public class Account {
             URL url = new URL(HttpUtils.serverUrl + HttpUtils.checkEmail);
             conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
-            conn.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
 
             JSONObject object = new JSONObject();
             object.put("email", email);

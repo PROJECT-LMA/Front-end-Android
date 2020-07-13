@@ -12,14 +12,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.laioffer.lma.MainActivity;
 import com.laioffer.lma.R;
+import com.laioffer.lma.SetupActivity;
+import com.laioffer.lma.model.User;
 import com.laioffer.lma.network.Account;
 import com.laioffer.lma.utils.EditTextValidator;
+import com.laioffer.lma.utils.Encryption;
 
 
 public class LoginFragment extends Fragment {
@@ -35,16 +39,18 @@ public class LoginFragment extends Fragment {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View inflatedView = inflater.inflate(R.layout.fragment_login, container, false);
+        final View inflatedView = inflater.inflate(R.layout.fragment_login, container, false);
 
+        final User user = User.getInstance(getContext());
         /* get all fields */
         final Button loginBtn = inflatedView.findViewById(R.id.login);
         final EditText email = inflatedView.findViewById(R.id.username);
         final EditText password = inflatedView.findViewById(R.id.password);
+        final CheckBox rememberLoggedIn = inflatedView.findViewById(R.id.kept_logged_in_checkbox);
+        final CheckBox serviceAgreement = inflatedView.findViewById(R.id.term_of_service_checkbox);
 
         // disable button until all fields are filled correctly
         loginBtn.setClickable(false);
@@ -92,11 +98,22 @@ public class LoginFragment extends Fragment {
                     });
                     return;
                 }
+
+                if (!serviceAgreement.isChecked()) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getContext(), "Please read and agree term of service", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                    return;
+                }
+
                 Thread thread = new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        final Account.AccountResult result = Account.userLogin(
-                                password.getText().toString(),
+                        final Account.Result result = Account.userLogin(
+                                Encryption.md5Encryption(password.getText().toString()),
                                 email.getText().toString());
                         Activity activity = getActivity();
 
@@ -108,18 +125,20 @@ public class LoginFragment extends Fragment {
                         });
 
                         if (result.isStatus()) {
-                            activity.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    ViewPager pager = (ViewPager)getActivity().findViewById(R.id.account_viewpager);
-                                    pager.setCurrentItem(0, true);
-                                }
-                            });
+                            user.setRememberLoggedIn(rememberLoggedIn.isChecked());
+                            user.saveUserStats(getContext());
+                            Intent intent;
+                            if (user.getLocationId().isEmpty()) {
+                                intent = new Intent(getContext(), SetupActivity.class);
+                            } else {
+                                intent = new Intent(getContext(), MainActivity.class);
+                            }
+                            startActivity(intent);
+                            getActivity().finish();
                         }
                     }
                 });
                 thread.start();
-                startActivity(new Intent(getActivity(), MainActivity.class));
             }
         });
 

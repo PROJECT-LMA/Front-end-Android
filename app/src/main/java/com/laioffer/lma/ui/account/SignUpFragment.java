@@ -20,6 +20,7 @@ import com.laioffer.lma.R;
 import com.laioffer.lma.network.Account;
 import com.laioffer.lma.network.HttpUtils;
 import com.laioffer.lma.utils.EditTextValidator;
+import com.laioffer.lma.utils.Encryption;
 
 
 public class SignUpFragment extends Fragment {
@@ -151,7 +152,7 @@ public class SignUpFragment extends Fragment {
                         final Account.Result result = Account.userRegister(
                                 firstName.getText().toString(),
                                 lastName.getText().toString(),
-                                password.getText().toString(),
+                                Encryption.md5Encryption(password.getText().toString()),
                                 email.getText().toString());
                         Activity activity = getActivity();
 
