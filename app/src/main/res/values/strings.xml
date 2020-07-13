@@ -22,4 +22,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="keep_me_logged_in">Keep me logged in</string>
     <string name="term_of_use">Term of use</string>
+    <string name="save">save</string>
+    <string name="choose_your_washroom">Choose your washroom</string>
 </resources>
