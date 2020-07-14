@@ -38,6 +38,7 @@ public class Myservice extends Service {
 
         Log.i(TAG, "Starting timer...");
         createNotificationChannel();
+        // 10 sec count
         cdt = new CountDownTimer(10000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -77,7 +78,6 @@ public class Myservice extends Service {
 
     private void addNotification() {
         // Builds your notification
-        Log.d(TAG, "addNotification: ");
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.mipmap.ic_launcher_round)
                 .setContentTitle("LMA")

@@ -1,6 +1,7 @@
 package com.laioffer.lma.ui.scan;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -22,11 +24,13 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.viewpager.widget.ViewPager;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.laioffer.lma.MainActivity;
 import com.laioffer.lma.R;
+import com.laioffer.lma.network.Account;
 import com.laioffer.lma.ui.service.Myservice;
 
 import static android.view.View.getDefaultSize;
@@ -37,6 +41,8 @@ public class ScanFragment extends Fragment {
 
     private ScanViewModel scanViewModel;
     private TextView txtResult;
+    private Button scanToOpen;
+    private Button scanToClose;
     private Fragment self;
 
 
@@ -57,28 +63,27 @@ public class ScanFragment extends Fragment {
 
 
          */
-        self = this;
+
         txtResult = root.findViewById(R.id.txt_result);
-        int permissionCheck = ContextCompat.checkSelfPermission(getContext(),Manifest.permission.CAMERA);
-        if (permissionCheck != PackageManager.PERMISSION_GRANTED){
-            requestPermissions(new String[]{Manifest.permission.CAMERA}, 1888);
-        } else {
-            IntentIntegrator integrator = IntentIntegrator.forSupportFragment(self);
+        scanToOpen = root.findViewById(R.id.scanToOpen_button);
+        scanToClose = root.findViewById(R.id.scanToClose_button);
+        self = this;
 
-//            integrator.setCaptureActivity(MainActivity.class);
-//            integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
-//            integrator.setOrientationLocked(false);
-//            integrator.setPrompt("Scan QR code");
-//            integrator.setBeepEnabled(false);
-//            integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE);
+        scanToOpen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                scanQRCode();
+            }
+        });
+
+        scanToClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                scanQRCode();
+            }
+        });
 
 
-            integrator.initiateScan();
-        }
-
-        //timer
-        getActivity().startService(new Intent(getActivity(),Myservice.class));
-        Log.i(TAG, "Started service");
 
         return root;
     }
@@ -92,15 +97,65 @@ public class ScanFragment extends Fragment {
                 Toast.makeText(getContext(), "Cancelled", Toast.LENGTH_LONG).show();
             } else {
 
-                txtResult.setText(result.getContents());
+
+                //txtResult.setText(result.getContents());
                 Toast.makeText(getContext(), "Scanned : " + result.getContents(), Toast.LENGTH_LONG).show();
 
+                // if washer is available, start service
+                /*
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        final Account.AccountResult result = Account.scanToOpen(
+                                scanString.getText().toString(),
+                                token.getText().toString());
+                        Activity activity = getActivity();
+
+                        activity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getContext(), result.getMessage(), Toast.LENGTH_LONG).show();
+                            }
+                        });
+
+                        if (result.isStatus()) {
+                            activity.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    //start service
+                                    getActivity().startService(new Intent(getActivity(),Myservice.class));
+                                    Log.i(TAG, "Started service");
+                                }
+                            });
+                        }
+                    }
+                });
+                thread.start();
+                */
             }
         }
     }
 
-    //timer
+    private void scanQRCode() {
+        // scan QR code
+        int permissionCheck = ContextCompat.checkSelfPermission(getContext(),Manifest.permission.CAMERA);
+        if (permissionCheck != PackageManager.PERMISSION_GRANTED){
+            requestPermissions(new String[]{Manifest.permission.CAMERA}, 1888);
+        } else {
+            IntentIntegrator integrator = IntentIntegrator.forSupportFragment(self);
 
+            //integrator.setCaptureActivity(MainActivity.class);
+            integrator.setOrientationLocked(false);
+            integrator.setPrompt("Scan QR code");
+            integrator.setBeepEnabled(false);
+            integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE);
+
+
+            integrator.initiateScan();
+        }
+    }
+
+    //timer
     private BroadcastReceiver br = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
