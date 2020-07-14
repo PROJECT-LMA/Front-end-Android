@@ -41,11 +41,12 @@ public class LocationListAdaptor extends RecyclerView.Adapter<LocationListAdapto
         String name = locations.get(position).getName();
         holder.locationName.setText(name);
 
-        // TODO: set button a onClick listener
+        // TODO: set a onClick listener
         View.OnClickListener handleClick = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // should be able to light up radio button
+                // and deselect any item, use @param selected
             }
         };
 
