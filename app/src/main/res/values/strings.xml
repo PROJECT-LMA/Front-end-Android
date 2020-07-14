@@ -3,4 +3,25 @@
     <string name="title_scan">Scan</string>
     <string name="title_overview">Overview</string>
     <string name="title_settings">Settings</string>
+    <string name="login_banner">Login to your account</string>
+    <string name="welcome_back">Welcome back!</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="don_t_have_an_account">Don’t have an account?</string>
+    <string name="signup_now">Signup now</string>
+    <string name="login">Login</string>
+    <string name="create_a_new_account">Register with us to start your easy laundry journey</string>
+    <string name="sync_across_devices_with_your_account">find your information anywhere you login
+</string>
+    <string name="last_name">Last Name</string>
+    <string name="create_account">Create Account</string>
+    <string name="already_a_user">Already a user?</string>
+    <string name="login_now">Login now</string>
+    <string name="first_name">First Name</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="keep_me_logged_in">Keep me logged in</string>
+    <string name="term_of_use">Term of use</string>
+    <string name="save">save</string>
+    <string name="choose_your_washroom">Choose your washroom</string>
 </resources>

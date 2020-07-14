@@ -17,7 +17,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.laioffer.lma.LauncherActivity;
-import com.laioffer.lma.LoginActivity;
+import com.laioffer.lma.OnBoardingActivity;
 import com.laioffer.lma.MainActivity;
 import com.laioffer.lma.R;
 
@@ -65,7 +65,7 @@ public class SettingsFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent launchActivity = new Intent(getActivity(), LauncherActivity.class);
+                Intent launchActivity = new Intent(getActivity(), OnBoardingActivity.class);
                 startActivity(launchActivity);
             }
         });
