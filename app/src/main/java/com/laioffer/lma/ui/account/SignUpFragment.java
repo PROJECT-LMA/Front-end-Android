@@ -20,6 +20,7 @@ import com.laioffer.lma.R;
 import com.laioffer.lma.network.Account;
 import com.laioffer.lma.network.HttpUtils;
 import com.laioffer.lma.utils.EditTextValidator;
+import com.laioffer.lma.utils.Encryption;
 
 
 public class SignUpFragment extends Fragment {
@@ -99,7 +100,7 @@ public class SignUpFragment extends Fragment {
                     Thread thread = new Thread(new Runnable() {
                         @Override
                         public void run() {
-                            final Account.AccountResult result = Account.checkEmail(email.getText().toString());
+                            final Account.Result result = Account.checkEmail(email.getText().toString());
                             if (result.isStatus()) {
                                 registerBtn.setClickable(true);
                             } else {
@@ -148,10 +149,10 @@ public class SignUpFragment extends Fragment {
                 Thread thread = new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        final Account.AccountResult result = Account.userRegister(
+                        final Account.Result result = Account.userRegister(
                                 firstName.getText().toString(),
                                 lastName.getText().toString(),
-                                password.getText().toString(),
+                                Encryption.md5Encryption(password.getText().toString()),
                                 email.getText().toString());
                         Activity activity = getActivity();
 

@@ -22,7 +22,6 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
@@ -33,6 +32,7 @@ import com.laioffer.lma.R;
 import com.laioffer.lma.network.Account;
 import com.laioffer.lma.ui.service.Myservice;
 
+public class ScanFragment extends Fragment {
 import static android.view.View.getDefaultSize;
 import static androidx.constraintlayout.widget.Constraints.TAG;
 import static com.google.zxing.integration.android.IntentIntegrator.REQUEST_CODE;
