@@ -1,6 +1,7 @@
 package com.laioffer.lma.ui.account;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -44,6 +45,7 @@ public class LoginFragment extends Fragment {
                              Bundle savedInstanceState) {
         final View inflatedView = inflater.inflate(R.layout.fragment_login, container, false);
 
+        final Activity activity = getActivity();
         final User user = User.getInstance(getContext());
         /* get all fields */
         final Button loginBtn = inflatedView.findViewById(R.id.login);
@@ -129,12 +131,12 @@ public class LoginFragment extends Fragment {
                             user.saveUserStats(getContext());
                             Intent intent;
                             if (user.getLocationId().isEmpty()) {
-                                intent = new Intent(getContext(), SetupActivity.class);
+                                intent = new Intent(activity, SetupActivity.class);
                             } else {
-                                intent = new Intent(getContext(), MainActivity.class);
+                                intent = new Intent(activity, MainActivity.class);
                             }
                             startActivity(intent);
-                            getActivity().finish();
+                            activity.finish();
                         }
                     }
                 });
