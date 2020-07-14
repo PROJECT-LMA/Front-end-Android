@@ -15,7 +15,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.laioffer.lma.R;
-import com.laioffer.lma.ui.settings.SettingsViewModel;
+import com.laioffer.lma.ui.overview.OverviewViewModel;
 
 public class OverviewFragment extends Fragment {
 

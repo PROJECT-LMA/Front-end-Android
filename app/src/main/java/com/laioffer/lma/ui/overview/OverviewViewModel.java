@@ -1,14 +1,14 @@
 package com.laioffer.lma.ui.overview;
 
+import com.laioffer.lma.model.Machine;
+import com.laioffer.lma.model.Machine.MachineBuilder;
 import androidx.lifecycle.LiveData;
-import com.laioffer.lma.ui.overview.Machine.MachineBuilder;
+import com.laioffer.lma.model.Machine;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.crypto.Mac;
 
 public class OverviewViewModel extends ViewModel {
 
