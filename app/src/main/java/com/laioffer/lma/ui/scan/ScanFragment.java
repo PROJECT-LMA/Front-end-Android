@@ -32,7 +32,6 @@ import com.laioffer.lma.R;
 import com.laioffer.lma.network.Account;
 import com.laioffer.lma.ui.service.Myservice;
 
-public class ScanFragment extends Fragment {
 import static android.view.View.getDefaultSize;
 import static androidx.constraintlayout.widget.Constraints.TAG;
 import static com.google.zxing.integration.android.IntentIntegrator.REQUEST_CODE;
@@ -83,8 +82,6 @@ public class ScanFragment extends Fragment {
             }
         });
 
-
-
         return root;
     }
 
@@ -96,7 +93,6 @@ public class ScanFragment extends Fragment {
             if(result.getContents() == null) {
                 Toast.makeText(getContext(), "Cancelled", Toast.LENGTH_LONG).show();
             } else {
-
 
                 //txtResult.setText(result.getContents());
                 Toast.makeText(getContext(), "Scanned : " + result.getContents(), Toast.LENGTH_LONG).show();

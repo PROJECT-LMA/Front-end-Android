@@ -10,8 +10,8 @@ import java.net.URL;
 public class Scan {
     // washer isAvailable
     // scanToClose? token?
-    public static Account.AccountResult scanToOpen(String scanString, String token) {
-        Account.AccountResult result;
+    public static Account.Result scanToOpen(String scanString, String token) {
+        Account.Result result;
         HttpURLConnection conn = null;
         try {
             URL url = new URL(HttpUtils.serverUrl + HttpUtils.scanToOpen);
@@ -27,14 +27,14 @@ public class Scan {
 
             JSONObject response = HttpUtils.readJsonObjectFromResponse(conn);
             if (response.getBoolean("isUsing")) {
-                result = new Account.AccountResult(false, "Washer is not available!");
+                result = new Account.Result(false, "Washer is not available!");
             } else {
-                result = new Account.AccountResult(true, "Washer is available!");
+                result = new Account.Result(true, "Washer is available!");
             }
 
         } catch (Exception e) {
             e.printStackTrace();
-            result = new Account.AccountResult(false, "Network error");
+            result = new Account.Result(false, "Network error");
         } finally {
             if (conn != null) {
                 conn.disconnect();
@@ -44,8 +44,8 @@ public class Scan {
         return result;
     }
 
-    public static Account.AccountResult scanToClose(String scanString, String token) {
-        Account.AccountResult result;
+    public static Account.Result scanToClose(String scanString, String token) {
+        Account.Result result;
         HttpURLConnection conn = null;
         try {
             URL url = new URL(HttpUtils.serverUrl + HttpUtils.scanToClose);
@@ -61,14 +61,14 @@ public class Scan {
 
             JSONObject response = HttpUtils.readJsonObjectFromResponse(conn);
             if (response.getBoolean("isSuccess")) {
-                result = new Account.AccountResult(true, "Thank you for using!");
+                result = new Account.Result(true, "Thank you for using!");
             } else {
-                result = new Account.AccountResult(false, "Error!");
+                result = new Account.Result(false, "Error!");
             }
 
         } catch (Exception e) {
             e.printStackTrace();
-            result = new Account.AccountResult(false, "Network error");
+            result = new Account.Result(false, "Network error");
         } finally {
             if (conn != null) {
                 conn.disconnect();
