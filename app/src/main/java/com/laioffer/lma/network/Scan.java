@@ -8,10 +8,29 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class Scan {
-    // washer isAvailable
-    // scanToClose? token?
-    public static Account.Result scanToOpen(String scanString, String token) {
-        Account.Result result;
+
+    public static class ScanResult {
+
+        private final boolean status;
+        private final String message;
+
+        public ScanResult(boolean status, String message) {
+            this.status = status;
+            this.message = message;
+        }
+
+        public boolean isStatus() {
+            return status;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+    }
+
+    // check washer isAvailable or not
+    public static Scan.ScanResult scanToOpen(String scanString, String token) {
+        Scan.ScanResult result;
         HttpURLConnection conn = null;
         try {
             URL url = new URL(HttpUtils.serverUrl + HttpUtils.scanToOpen);
@@ -26,15 +45,15 @@ public class Scan {
             conn.connect();
 
             JSONObject response = HttpUtils.readJsonObjectFromResponse(conn);
-            if (response.getBoolean("isUsing")) {
-                result = new Account.Result(false, "Washer is not available!");
+            if (response.getBoolean("isSuccess")) {
+                result = new Scan.ScanResult(true, "Washer is available!");
             } else {
-                result = new Account.Result(true, "Washer is available!");
+                result = new Scan.ScanResult(false, response.getString("msg"));
             }
 
         } catch (Exception e) {
             e.printStackTrace();
-            result = new Account.Result(false, "Network error");
+            result = new Scan.ScanResult(false, "Network error");
         } finally {
             if (conn != null) {
                 conn.disconnect();
@@ -44,8 +63,9 @@ public class Scan {
         return result;
     }
 
-    public static Account.Result scanToClose(String scanString, String token) {
-        Account.Result result;
+    // scan to get user's clothes
+    public static Scan.ScanResult scanToClose(String scanString, String token) {
+        Scan.ScanResult result;
         HttpURLConnection conn = null;
         try {
             URL url = new URL(HttpUtils.serverUrl + HttpUtils.scanToClose);
@@ -61,14 +81,14 @@ public class Scan {
 
             JSONObject response = HttpUtils.readJsonObjectFromResponse(conn);
             if (response.getBoolean("isSuccess")) {
-                result = new Account.Result(true, "Thank you for using!");
+                result = new Scan.ScanResult(true, "Thank you for using!");
             } else {
-                result = new Account.Result(false, "Error!");
+                result = new Scan.ScanResult(false, "Error!");
             }
 
         } catch (Exception e) {
             e.printStackTrace();
-            result = new Account.Result(false, "Network error");
+            result = new Scan.ScanResult(false, "Network error");
         } finally {
             if (conn != null) {
                 conn.disconnect();

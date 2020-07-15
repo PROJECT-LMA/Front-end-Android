@@ -60,7 +60,6 @@ public class Myservice extends Service {
 
     @Override
     public void onDestroy() {
-
         cdt.cancel();
         Log.i(TAG, "Timer cancelled");
         super.onDestroy();
