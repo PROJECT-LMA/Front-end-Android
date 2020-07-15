@@ -54,10 +54,13 @@ public class SetupActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // uncomment the following code if you want to jump to Main Activity
-//                Intent intent = new Intent(context, MainActivity.class);
-//                startActivity(intent);
-//                finish();
 
+                //user.setLocationId("5f0899e9c6c5dc6994fe6e5f");
+
+                Intent intent = new Intent(context, MainActivity.class);
+                startActivity(intent);
+                finish();
+                /*
                 final String selected = ((LocationListAdaptor)recyclerView.getAdapter()).getSelectedLocationId();
                 if (selected == null) {
                     runOnUiThread(new Runnable() {
@@ -85,6 +88,7 @@ public class SetupActivity extends AppCompatActivity {
                     });
                     thread1.start();
                 }
+                */
             }
         });
     }

@@ -1,35 +1,65 @@
 package com.laioffer.lma.model;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+import android.util.Log;
 public class Machine {
-    private String id = null;
-    private boolean isAvailable = false;
-    private String userId = null;
-    private String locationID = null;
 
-    Machine(MachineBuilder machine) {
-        this.id = machine.id;
-        this.isAvailable = machine.isAvailable;
-        this.userId = machine.userId;
-        this.locationID = machine.locationID;
+    private final static String TAG = "lifecycle";
+    private String id = null;
+    private String isAvailable = null;
+    private String machineType = null;
+    private String userID = null;
+    private String locationID = null;
+    private String scanString = null;
+
+    public void setupMachine(JSONObject response) throws JSONException {
+        //Log.d(TAG, response.toString());
+        this.id = response.getString("_id");
+        this.isAvailable = response.getString("isAvailable");
+        this.machineType = response.getString("machineType");
+        //Log.d(TAG, "machineType : "+ machineType);
+        this.userID = response.getString("userID");
+        this.locationID = response.getString("locationID");
+
+        //Log.d(TAG, "locationID "+ locationID);
+        this.scanString = response.getString("scanString");
+        printMachineStatus();
+    }
+
+    public void printMachineStatus() {
+        Log.d(TAG, "id : " + id);
+        Log.d(TAG, "machineType : "+ machineType);
+        Log.d(TAG, "locationID "+ locationID);
+        Log.d(TAG, machineType + " is " + isAvailable);
+
     }
 
     public String getId() {
         return id;
     }
 
-    public boolean getIsAvailable() {
+    public String getIsAvailable() {
         return isAvailable;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getUserID() {
+        return userID;
     }
 
     public String getLocationID() {
         return locationID;
     }
+}
 
-    public static class MachineBuilder {
+ /*Machine(MachineBuilder machine) {
+        this.id = machine.id;
+        this.isAvailable = machine.isAvailable;
+        this.userId = machine.userId;
+        this.locationID = machine.locationID;
+    }*/
+
+    /*public static class MachineBuilder {
         private String id = null;
         private boolean isAvailable = false;
         private String userId = null;
@@ -56,8 +86,7 @@ public class Machine {
             return new Machine(this);
         }
 
-    }
+    }*/
 
-}
 
 

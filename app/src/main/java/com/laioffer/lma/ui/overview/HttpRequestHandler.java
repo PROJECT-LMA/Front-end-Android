@@ -16,7 +16,7 @@ public class HttpRequestHandler {
         }
     }
     public static void call_me() throws Exception {
-        String url = "https://colefaust.com/doris.json";
+        String url = "http://lmapp.us-east-2.elasticbeanstalk.com/api/machines/5f0899e9c6c5dc6994fe6e5f";
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
         // optional default is GET

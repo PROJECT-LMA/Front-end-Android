@@ -17,6 +17,7 @@ public class HttpUtils {
     static final String login = "/api/users/login";
     static final String checkEmail = "/api/checkEmail";
     static final String location = "/api/locations";
+    static final String machines = "/api/machines";
 
     public static JSONObject readJsonObjectFromResponse(HttpURLConnection conn) {
         if (null==conn) {

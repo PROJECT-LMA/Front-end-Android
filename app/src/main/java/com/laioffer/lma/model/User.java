@@ -102,6 +102,10 @@ public class User {
         SharedPreferenceUtils.writeAttributes(context, "token", instance.token);
         SharedPreferenceUtils.writeAttributes(context, "locationId", instance.locationId);
     }
+
+    public void setLocationId(String locationId) {
+        this.locationId = locationId;
+    }
 }
 
 class SharedPreferenceUtils {
