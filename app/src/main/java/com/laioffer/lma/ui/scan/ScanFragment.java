@@ -89,6 +89,7 @@ public class ScanFragment extends Fragment {
                 Toast.makeText(getContext(), "Cancelled", Toast.LENGTH_LONG).show();
             } else {
                 // if washer is available, start service
+                Bundle bundle = getActivity().getIntent().getExtras();
                 switch (Objects.requireNonNull(data.getStringExtra("btn"))) {
                     // case 0
                     case "open":
