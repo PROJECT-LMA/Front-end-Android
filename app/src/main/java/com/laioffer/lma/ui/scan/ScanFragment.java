@@ -35,6 +35,8 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
 public class ScanFragment extends Fragment {
 
     private Fragment self;
+    private String type = "";
+    private String token = "";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -69,12 +71,12 @@ public class ScanFragment extends Fragment {
             requestPermissions(new String[]{Manifest.permission.CAMERA}, 1888);
         } else {
             IntentIntegrator integrator = IntentIntegrator.forSupportFragment(self);
-            integrator.addExtra("btn", type);
-            integrator.addExtra("token", token);
             integrator.setOrientationLocked(false);
             integrator.setPrompt("Scan QR code");
             integrator.setBeepEnabled(false);
             integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE);
+            this.type = type;
+            this.token = token;
 
             integrator.initiateScan();
         }
@@ -84,11 +86,13 @@ public class ScanFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         final IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        Log.d("err", result.toString());
         if (result != null) {
             if (result.getContents() == null) {
                 Toast.makeText(getContext(), "Cancelled", Toast.LENGTH_LONG).show();
             } else {
                 // if washer is available, start service
+                switch (type) {
                 Bundle bundle = getActivity().getIntent().getExtras();
                 switch (Objects.requireNonNull(data.getStringExtra("btn"))) {
                     // case 0
