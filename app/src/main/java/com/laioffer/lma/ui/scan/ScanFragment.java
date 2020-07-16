@@ -35,6 +35,7 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
 public class ScanFragment extends Fragment {
 
     private Fragment self;
+    private static final int MY_PERMISSION_CODE = 1888;
     private String type = "";
     private String token = "";
 
@@ -50,6 +51,8 @@ public class ScanFragment extends Fragment {
         scanToOpen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                getActivity().startService(new Intent(getActivity(), Myservice.class));
+                Log.i(TAG, "Started service");
                 scanQRCode("open", user.getToken());
             }
         });
@@ -68,7 +71,7 @@ public class ScanFragment extends Fragment {
     private void scanQRCode(String type, String token) {
         int permissionCheck = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA);
         if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[]{Manifest.permission.CAMERA}, 1888);
+            requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_PERMISSION_CODE);
         } else {
             IntentIntegrator integrator = IntentIntegrator.forSupportFragment(self);
             integrator.setOrientationLocked(false);
@@ -82,19 +85,40 @@ public class ScanFragment extends Fragment {
         }
     }
 
+    // handle permission request result
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        int permissionCheck = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA);
+        switch (requestCode){
+            case MY_PERMISSION_CODE:
+                if (permissionCheck == PackageManager.PERMISSION_GRANTED){
+                    IntentIntegrator integrator = IntentIntegrator.forSupportFragment(self);
+                    integrator.setOrientationLocked(false);
+                    integrator.setPrompt("Scan QR code");
+                    integrator.setBeepEnabled(false);
+                    integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE);
+                    this.type = type;
+                    this.token = token;
+
+                    integrator.initiateScan();
+                } else {
+                    Toast.makeText(getContext(),"This app requires camera permission to be granted", Toast.LENGTH_SHORT).show();
+                }
+                break;
+        }
+    }
+
     // handle scan result
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         final IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        Log.d("err", result.toString());
         if (result != null) {
             if (result.getContents() == null) {
                 Toast.makeText(getContext(), "Cancelled", Toast.LENGTH_LONG).show();
             } else {
                 // if washer is available, start service
                 switch (type) {
-                Bundle bundle = getActivity().getIntent().getExtras();
-                switch (Objects.requireNonNull(data.getStringExtra("btn"))) {
                     // case 0
                     case "open":
                         Thread thread1 = new Thread(new Runnable() {
