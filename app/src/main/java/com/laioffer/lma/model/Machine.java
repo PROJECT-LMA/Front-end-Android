@@ -28,7 +28,7 @@ public class Machine {
     }
 
     public void printMachineStatus() {
-        Log.d(TAG, "id : " + id);
+        Log.d(TAG, "/nid : " + id);
         Log.d(TAG, "machineType : "+ machineType);
         Log.d(TAG, "locationID "+ locationID);
         Log.d(TAG, machineType + " is " + isAvailable);

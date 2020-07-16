@@ -1,5 +1,6 @@
 package com.laioffer.lma.ui.settings;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,6 +21,7 @@ import com.laioffer.lma.LauncherActivity;
 import com.laioffer.lma.OnBoardingActivity;
 import com.laioffer.lma.MainActivity;
 import com.laioffer.lma.R;
+import com.laioffer.lma.model.User;
 
 public class SettingsFragment extends Fragment {
 
@@ -44,17 +46,19 @@ public class SettingsFragment extends Fragment {
         swipeRefreshLayout = (SwipeRefreshLayout) root.findViewById(R.id.swipe_setting);
         textView_firstName = (TextView) root.findViewById(R.id.first_name);
         textView_lastName = (TextView) root.findViewById(R.id.last_name);
-        textView_firstName.setText("haha 0");
-        textView_lastName.setText("hoho 0");
+        final Context context = getContext();
+        final User user = User.getInstance(context);
+        textView_firstName.setText(user.getFirstName());
+        textView_lastName.setText(user.getLastName());
+
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        num++;
-                        textView_firstName.setText("haha " + num);
-                        textView_lastName.setText("hoho " + num);
+                        textView_firstName.setText(user.getFirstName());
+                        textView_lastName.setText(user.getLastName());
                         swipeRefreshLayout.setRefreshing(false);
                     }
                 },2000);

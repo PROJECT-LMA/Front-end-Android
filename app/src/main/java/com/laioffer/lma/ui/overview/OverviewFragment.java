@@ -57,6 +57,21 @@ public class OverviewFragment extends Fragment {
             }
         });
 
+/*
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        num++;
+                        textView.setText("Overview, swipe count = " + num);
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                },2000);
+            }
+        });*/
+
         /*overviewViewModel =
                 ViewModelProviders.of(this).get(OverviewViewModel.class);
         View root = inflater.inflate(R.layout.fragment_overview, container, false);

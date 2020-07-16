@@ -21,27 +21,6 @@ public class MachinesList {
     public static List<Machine> list = new ArrayList<>();
     private final static String TAG = "lifecycle";
 
-    /*public static class Result {
-
-        private final boolean status;
-        private final String message;
-
-        public Result(boolean status, String message) {
-            this.status = status;
-            this.message = message;
-        }
-
-        public boolean isStatus() {
-            return status;
-        }
-
-        public String getMessage() {
-            return message;
-        }
-
-
-    }*/
-
     public static List<Machine> checkMachineStatus() {
         HttpURLConnection conn = null;
         String tmp_locationID = "/5f0899e9c6c5dc6994fe6e5f";
@@ -80,11 +59,11 @@ public class MachinesList {
                 conn.disconnect();
             }
         }
-
-
-
-
         return list;
+    }
+
+    public static void clear() {
+        list.clear();
     }
 
 

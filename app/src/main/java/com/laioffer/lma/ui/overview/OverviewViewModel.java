@@ -41,6 +41,7 @@ public class OverviewViewModel extends ViewModel {
             @Override
             public void run() {
                 final List<Machine> list = MachinesList.checkMachineStatus();
+
                 Handler threadHandler = new Handler(Looper.getMainLooper());
                 threadHandler.post(new Runnable() {
                     @Override
@@ -48,13 +49,12 @@ public class OverviewViewModel extends ViewModel {
                         int totalNum = list.size();
                         int num = countAvailableMachines(list);
                         mText.setValue("The number of available machines are " + num + " out of " + totalNum);
+                        list.clear();
                     }
                 });
             }
         });
         thread.start();
-
-
 
     }
 
