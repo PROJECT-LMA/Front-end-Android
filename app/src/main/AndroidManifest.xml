@@ -33,7 +33,7 @@
         <activity android:name=".SetupActivity"
             android:theme="@style/Theme.Design.Light.NoActionBar">
         </activity>
-        <service android:name=".ui.service.Myservice"/>
+        <service android:name=".service.TimerService"/>
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="fullSensor"
