@@ -29,6 +29,7 @@ public class SettingsFragment extends Fragment {
     private SwipeRefreshLayout swipeRefreshLayout;
     private TextView textView_firstName;
     private TextView textView_lastName;
+    private TextView textView_location;
     private int num = 0;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -46,11 +47,12 @@ public class SettingsFragment extends Fragment {
         swipeRefreshLayout = (SwipeRefreshLayout) root.findViewById(R.id.swipe_setting);
         textView_firstName = (TextView) root.findViewById(R.id.first_name);
         textView_lastName = (TextView) root.findViewById(R.id.last_name);
+        textView_location = (TextView) root.findViewById(R.id.location_id);
         final Context context = getContext();
         final User user = User.getInstance(context);
         textView_firstName.setText(user.getFirstName());
         textView_lastName.setText(user.getLastName());
-
+        textView_location.setText(user.getLocationId());
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -59,6 +61,7 @@ public class SettingsFragment extends Fragment {
                     public void run() {
                         textView_firstName.setText(user.getFirstName());
                         textView_lastName.setText(user.getLastName());
+                        textView_location.setText(user.getLocationId());
                         swipeRefreshLayout.setRefreshing(false);
                     }
                 },2000);

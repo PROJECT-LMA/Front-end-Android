@@ -64,6 +64,27 @@
                         android:textStyle="bold" />
                 </TableRow>
 
+                <TableRow>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="Location ID"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/location_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="Last Name"
+
+                        android:textStyle="bold" />
+                </TableRow>
+
             </TableLayout>
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
