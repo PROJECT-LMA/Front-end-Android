@@ -24,14 +24,6 @@ import java.util.List;
 
 public class OverviewViewModel extends ViewModel {
 
-    /*
-    private MutableLiveData<List<Machine>> machineData;
-    public OverviewViewModel() {
-        machineData = new MutableLiveData<>();
-        List<Machine> list = getMachines();
-        machineData.setValue(list);
-    }
-*/
     private MutableLiveData<String> mText;
     public Handler handler = new Handler();
     public OverviewViewModel() {
@@ -72,31 +64,38 @@ public class OverviewViewModel extends ViewModel {
         return mText;
     }
 
-}
 
-
-    /*private List<Machine> createMachines() {
-        List<Machine> list = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
-            MachineBuilder builder = new MachineBuilder();
-            builder.setId("machine" + i);
-            builder.setIsAvailable(true);
-            builder.setlocationID(i + "_" + i);
-            Machine machine = builder.build();
-            list.add(machine);
+    private MutableLiveData<List<Machine>> machines;
+    public LiveData<List<Machine>> getMachines() {
+        if (machines == null) {
+            machines = new MutableLiveData<List<Machine>>();
+            loadMachines();
         }
-        return list;
-    }*/
-
-
-    /*
-    private MutableLiveData<String> mText;
-
-    public OverviewViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is dashboard fragment");
+        return machines;
     }
 
-    public LiveData<String> getText() {
-        return mText;
-    }*/
+    private void loadMachines() {
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final List<Machine> list = MachinesList.checkMachineStatus();
+
+                Handler threadHandler = new Handler(Looper.getMainLooper());
+                threadHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        //int totalNum = list.size();
+                        //int num = countAvailableMachines(list);
+                        //mText.setValue("The number of available machines are " + num + " out of " + totalNum);
+                        machines.setValue(list);
+                        list.clear();
+                    }
+                });
+            }
+        });
+        thread.start();
+    }
+
+
+}
