@@ -85,6 +85,15 @@ public class User {
         instance.isLoggedIn = true;
     }
 
+    static public void logout() {
+        instance.firstName = "";
+        instance.lastName = "";
+        instance.locationId = "";
+        instance.token = "";
+        instance.isLoggedIn = false;
+        instance.rememberLoggedIn = false;
+    }
+
     public void setFirstVisit(boolean firstVisit) {
         isFirstVisit = firstVisit;
     }

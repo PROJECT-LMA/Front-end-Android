@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -75,6 +74,8 @@ public class SetupActivity extends AppCompatActivity {
 //
 //                            if (result.isStatus()) {
 //                                Toast.makeText(context, "Location set up", Toast.LENGTH_LONG).show();
+//                                user.setLocationId(selected);
+//                                user.saveUserStats(context);
 //                                Intent intent = new Intent(context, MainActivity.class);
 //                                startActivity(intent);
 //                                finish();

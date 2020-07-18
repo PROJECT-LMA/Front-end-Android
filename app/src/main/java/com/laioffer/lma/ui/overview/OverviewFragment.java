@@ -6,36 +6,31 @@ import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.laioffer.lma.R;
 import com.laioffer.lma.model.Machine;
+import com.laioffer.lma.model.User;
 import com.laioffer.lma.network.MachinesList;
-import com.laioffer.lma.ui.overview.OverviewViewModel;
 
 import java.util.List;
 
 public class OverviewFragment extends Fragment {
 
-    private OverviewViewModel overviewViewModel;
     private SwipeRefreshLayout swipeRefreshLayout;
     private TextView textView;
     private int num = 0;
+    private User user;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        user = User.getInstance(getContext());
         View root = inflater.inflate(R.layout.fragment_overview, container, false);
         swipeRefreshLayout = (SwipeRefreshLayout) root.findViewById(R.id.swipe);
         textView = root.findViewById(R.id.text_dashboard);
@@ -63,7 +58,17 @@ public class OverviewFragment extends Fragment {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                final List<Machine> list = MachinesList.checkMachineStatus();
+                final List<Machine> list = MachinesList.checkMachineStatus(user.getLocationId());
+
+                if (list == null) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getContext(), "Network Error", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                    return;
+                }
 
                 Handler threadHandler = new Handler(Looper.getMainLooper());
                 threadHandler.post(new Runnable() {

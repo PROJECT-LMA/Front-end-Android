@@ -11,15 +11,10 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.laioffer.lma.LauncherActivity;
 import com.laioffer.lma.OnBoardingActivity;
-import com.laioffer.lma.MainActivity;
 import com.laioffer.lma.R;
 import com.laioffer.lma.model.User;
 
@@ -72,8 +67,11 @@ public class SettingsFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                User.logout();
+                user.saveUserStats(context);
                 Intent launchActivity = new Intent(getActivity(), OnBoardingActivity.class);
                 startActivity(launchActivity);
+                getActivity().finish();
             }
         });
         return root;
