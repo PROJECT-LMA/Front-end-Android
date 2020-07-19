@@ -41,12 +41,13 @@ public class LocationListAdaptor extends RecyclerView.Adapter<LocationListAdapto
         String name = locations.get(position).getName();
         holder.locationName.setText(name);
 
-        // TODO: set a onClick listener
+        holder.button.setChecked(selected == position);
+
         View.OnClickListener handleClick = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // should be able to light up radio button
-                // and deselect any item, use @param selected
+                selected = position;
+                notifyDataSetChanged();
             }
         };
 
@@ -79,5 +80,13 @@ public class LocationListAdaptor extends RecyclerView.Adapter<LocationListAdapto
         }
 
         return locations.get(selected).getId();
+    }
+
+    public String getSelectedLocationName() {
+        if (selected == -1) {
+            return null;
+        }
+
+        return locations.get(selected).getName();
     }
 }

@@ -2,7 +2,6 @@ package com.laioffer.lma.model;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import android.util.Log;
 public class Machine {
 
     private final static String TAG = "lifecycle";
@@ -24,16 +23,8 @@ public class Machine {
 
         //Log.d(TAG, "locationID "+ locationID);
         this.scanString = response.getString("scanString");
-        printMachineStatus();
     }
 
-    public void printMachineStatus() {
-        Log.d(TAG, "/nid : " + id);
-        Log.d(TAG, "machineType : "+ machineType);
-        Log.d(TAG, "locationID "+ locationID);
-        Log.d(TAG, machineType + " is " + isAvailable);
-
-    }
 
     public String getId() {
         return id;

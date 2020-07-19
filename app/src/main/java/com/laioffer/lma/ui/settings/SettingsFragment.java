@@ -47,7 +47,7 @@ public class SettingsFragment extends Fragment {
         final User user = User.getInstance(context);
         textView_firstName.setText(user.getFirstName());
         textView_lastName.setText(user.getLastName());
-        textView_location.setText(user.getLocationId());
+        textView_location.setText(user.getLocationName());
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -56,7 +56,7 @@ public class SettingsFragment extends Fragment {
                     public void run() {
                         textView_firstName.setText(user.getFirstName());
                         textView_lastName.setText(user.getLastName());
-                        textView_location.setText(user.getLocationId());
+                        textView_location.setText(user.getLocationName());
                         swipeRefreshLayout.setRefreshing(false);
                     }
                 },2000);
