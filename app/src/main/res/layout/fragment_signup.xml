@@ -30,6 +30,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/create_a_new_account"
                     android:textSize="17sp"
+                    android:gravity="center"
                     android:textColor="@color/colorPrimaryDark"/>
 
 

@@ -99,6 +99,7 @@ public class User {
         instance.token = "";
         instance.isLoggedIn = false;
         instance.rememberLoggedIn = false;
+        instance.locationName = "";
     }
 
     public void setFirstVisit(boolean firstVisit) {
