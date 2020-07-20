@@ -23,8 +23,10 @@ public class User {
     private String lastName;
     private String token;
     private String locationId;
+    private String locationName;
 
-    public User(boolean isLoggedIn, boolean isFirstVisit, boolean rememberLoggedIn, String firstName, String lastName, String token, String locationId) {
+    public User(boolean isLoggedIn, boolean isFirstVisit, boolean rememberLoggedIn, String firstName, String lastName, String token, String locationId,
+                String locationName) {
         this.isLoggedIn = isLoggedIn;
         this.isFirstVisit = isFirstVisit;
         this.rememberLoggedIn = rememberLoggedIn;
@@ -32,6 +34,7 @@ public class User {
         this.lastName = lastName;
         this.token = token;
         this.locationId = locationId;
+        this.locationName = locationName;
     }
 
     // should only be called in Launcher Activity !!!
@@ -76,6 +79,10 @@ public class User {
         return locationId;
     }
 
+    public String getLocationName() {
+        return locationName;
+    }
+
     // Log in the user
     static public void login(JSONObject user, String token) throws JSONException {
         instance.firstName = user.getString("firstName");
@@ -83,6 +90,16 @@ public class User {
         instance.locationId = user.getString("locationID");
         instance.token = token;
         instance.isLoggedIn = true;
+    }
+
+    static public void logout() {
+        instance.firstName = "";
+        instance.lastName = "";
+        instance.locationId = "";
+        instance.token = "";
+        instance.isLoggedIn = false;
+        instance.rememberLoggedIn = false;
+        instance.locationName = "";
     }
 
     public void setFirstVisit(boolean firstVisit) {
@@ -101,7 +118,17 @@ public class User {
         SharedPreferenceUtils.writeAttributes(context, "lastName", instance.lastName);
         SharedPreferenceUtils.writeAttributes(context, "token", instance.token);
         SharedPreferenceUtils.writeAttributes(context, "locationId", instance.locationId);
+        SharedPreferenceUtils.writeAttributes(context, "locationName", instance.locationName);
     }
+
+    public void setLocationId(String locationId) {
+        this.locationId = locationId;
+    }
+
+    public void setLocationName(String locationName) {
+        this.locationName = locationName;
+    }
+
 }
 
 class SharedPreferenceUtils {
@@ -118,8 +145,9 @@ class SharedPreferenceUtils {
         String lastName = isLoggedIn ? reader.getString("lastName", "") : "";
         String token = isLoggedIn ? reader.getString("token", "") : "";
         String locationId = isLoggedIn ? reader.getString("locationId", "") : "";
+        String locationName = isLoggedIn ? reader.getString("locationName", "") : "";
 
-        return new User(isLoggedIn, isFirstVisit, rememberLoggedIn, firstName, lastName, token, locationId);
+        return new User(isLoggedIn, isFirstVisit, rememberLoggedIn, firstName, lastName, token, locationId, locationName);
     }
 
     static void writeAttributes(Context context, String key, boolean value) {

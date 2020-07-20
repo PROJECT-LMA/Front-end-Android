@@ -2,13 +2,9 @@ package com.laioffer.lma.ui.scan;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,18 +15,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.laioffer.lma.R;
 import com.laioffer.lma.model.User;
 import com.laioffer.lma.network.Scan;
-import com.laioffer.lma.ui.service.Myservice;
-
-import java.util.Objects;
-
-import static androidx.constraintlayout.widget.Constraints.TAG;
+import com.laioffer.lma.service.TimerService;
 
 public class ScanFragment extends Fragment {
 
@@ -140,8 +131,7 @@ public class ScanFragment extends Fragment {
                                         @Override
                                         public void run() {
                                             //start service
-                                            getActivity().startService(new Intent(getActivity(), Myservice.class));
-                                            Log.i(TAG, "Started service");
+                                            getActivity().startService(new Intent(getActivity(), TimerService.class));
                                         }
                                     });
                                 }
@@ -174,7 +164,6 @@ public class ScanFragment extends Fragment {
                                         public void run() {
                                             //finish
                                             Toast.makeText(getContext(), "Thank you for using", Toast.LENGTH_LONG).show();
-                                            Log.i(TAG, "Ready for next service");
                                         }
                                     });
                                 }

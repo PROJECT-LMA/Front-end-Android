@@ -1,4 +1,4 @@
-package com.laioffer.lma.ui.service;
+package com.laioffer.lma.service;
 
 import android.app.AlarmManager;
 import android.app.NotificationChannel;
@@ -8,24 +8,19 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.CountDownTimer;
-import android.os.Build;
 import android.os.IBinder;
-import android.os.SystemClock;
-import android.util.Log;
-import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
 import com.laioffer.lma.MainActivity;
 import com.laioffer.lma.R;
 
-public class Myservice extends Service {
+public class TimerService extends Service {
 
     private AlarmManager alarmMgr;
     private PendingIntent alarmIntent;
 
-    private final static String TAG = "Myservice";
+    private final static String TAG = "TimerService";
     private final static String CHANNEL_ID = "LMA";
 
     public static final String COUNTDOWN_BR = "service.countdown_br";
@@ -37,20 +32,17 @@ public class Myservice extends Service {
     public void onCreate() {
         super.onCreate();
 
-        Log.i(TAG, "Starting timer...");
         createNotificationChannel();
         // 10 sec count
         cdt = new CountDownTimer(10000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                Log.i(TAG, "Countdown seconds remaining: " + millisUntilFinished / 1000);
                 bi.putExtra("countdown", millisUntilFinished);
                 sendBroadcast(bi);
             }
 
             @Override
             public void onFinish() {
-                Log.i(TAG, "Timer finished");
                 addNotification();
             }
         };
@@ -61,7 +53,6 @@ public class Myservice extends Service {
     @Override
     public void onDestroy() {
         cdt.cancel();
-        Log.i(TAG, "Timer cancelled");
         super.onDestroy();
     }
 

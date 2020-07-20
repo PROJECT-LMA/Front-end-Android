@@ -33,7 +33,7 @@ public class Location {
         HttpURLConnection conn = null;
 
         try {
-            URL url = new URL(HttpUtils.serverUrl + HttpUtils.location);
+            URL url = new URL(HttpUtils.serverUrl + HttpUtils.locations);
             conn = (HttpURLConnection) url.openConnection();
 
             conn.setRequestMethod("GET");

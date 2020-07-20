@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -54,37 +53,51 @@ public class SetupActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // uncomment the following code if you want to jump to Main Activity
-                Intent intent = new Intent(context, MainActivity.class);
-                startActivity(intent);
-                finish();
+//                Intent intent = new Intent(context, MainActivity.class);
+//                startActivity(intent);
+//                finish();
 
-//                final String selected = ((LocationListAdaptor)recyclerView.getAdapter()).getSelectedLocationId();
-//                if (selected == null) {
-//                    runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            Toast.makeText(context, "Please choose one wash room", Toast.LENGTH_LONG).show();
-//                        }
-//                    });
-//                } else {
-//                    Thread thread1 = new Thread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            com.laioffer.lma.network.Location.Result result =
-//                                    com.laioffer.lma.network.Location.setLocation(selected, user.getToken());
-//
-//                            if (result.isStatus()) {
-//                                Toast.makeText(context, "Location set up", Toast.LENGTH_LONG).show();
-//                                Intent intent = new Intent(context, MainActivity.class);
-//                                startActivity(intent);
-//                                finish();
-//                            } else {
-//                                Toast.makeText(context, "Network error", Toast.LENGTH_LONG).show();
-//                            }
-//                        }
-//                    });
-//                    thread1.start();
-//                }
+                final String selected = ((LocationListAdaptor)recyclerView.getAdapter()).getSelectedLocationId();
+                final String locationName =((LocationListAdaptor)recyclerView.getAdapter()).getSelectedLocationName();
+                if (selected == null) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(context, "Please choose one washroom", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                } else {
+                    Thread thread1 = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            com.laioffer.lma.network.Location.Result result =
+                                    com.laioffer.lma.network.Location.setLocation(selected, user.getToken());
+
+                            if (result.isStatus()) {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(context, "Location setup succeed", Toast.LENGTH_LONG).show();
+                                    }
+                                });
+                                user.setLocationId(selected);
+                                user.setLocationName(locationName);
+                                user.saveUserStats(context);
+                                Intent intent = new Intent(context, MainActivity.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(context, "Network error", Toast.LENGTH_LONG).show();
+                                    }
+                                });
+                            }
+                        }
+                    });
+                    thread1.start();
+                }
             }
         });
     }
