@@ -51,8 +51,6 @@ public class ScanFragment extends Fragment {
         scanToOpen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getActivity().startService(new Intent(getActivity(), Myservice.class));
-                Log.i(TAG, "Started service");
                 scanQRCode("open", user.getToken());
             }
         });
@@ -126,7 +124,7 @@ public class ScanFragment extends Fragment {
                             public void run() {
                                 final Scan.ScanResult result1 = Scan.scanToOpen(
                                         result.getContents(),
-                                        data.getStringExtra("token")
+                                        token
                                 );
                                 Activity activity = getActivity();
 
@@ -159,7 +157,7 @@ public class ScanFragment extends Fragment {
                             public void run() {
                                 final Scan.ScanResult result2 = Scan.scanToOpen(
                                         result.getContents(),
-                                        data.getStringExtra("token")
+                                        token
                                 );
                                 Activity activity = getActivity();
 
