@@ -12,13 +12,22 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceFragmentCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.laioffer.lma.OnBoardingActivity;
 import com.laioffer.lma.R;
 import com.laioffer.lma.model.User;
 
-public class SettingsFragment extends Fragment {
+
+public class SettingsFragment extends PreferenceFragmentCompat {
+
+    @Override
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+        setPreferencesFromResource(R.xml.preferences, rootKey);
+    }
+}
+/*public class SettingsFragment extends Fragment {
 
     private SettingsViewModel settingsViewModel;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -28,16 +37,6 @@ public class SettingsFragment extends Fragment {
     private int num = 0;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-       /* settingsViewModel =
-                ViewModelProviders.of(this).get(SettingsViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_settings, container, false);
-        final TextView textView = root.findViewById(R.id.text_home);
-        settingsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });*/
         View root = inflater.inflate(R.layout.fragment_settings, container, false);
         swipeRefreshLayout = (SwipeRefreshLayout) root.findViewById(R.id.swipe_setting);
         textView_firstName = (TextView) root.findViewById(R.id.first_name);
@@ -76,4 +75,16 @@ public class SettingsFragment extends Fragment {
         });
         return root;
     }
-}
+}*/
+
+
+       /* settingsViewModel =
+                ViewModelProviders.of(this).get(SettingsViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_settings, container, false);
+        final TextView textView = root.findViewById(R.id.text_home);
+        settingsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String s) {
+                textView.setText(s);
+            }
+        });*/

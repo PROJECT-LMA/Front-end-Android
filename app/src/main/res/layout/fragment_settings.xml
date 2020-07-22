@@ -105,6 +105,5 @@
         android:textColor="@color/colorBackground"
         android:textSize="17sp" />
 
-
 </RelativeLayout>
 

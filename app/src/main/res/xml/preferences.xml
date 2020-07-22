@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:title="@string/title_intent_preference"
+    android:summary="@string/summary_intent_preference">
+    <PreferenceCategory
+        textColor="@color/colorPrimaryDark"
+        app:key="profile"
+        app:title="Profile">
+
+        <Preference app:title="Personal info" app:key="exitlink"/>
+
+    </PreferenceCategory>
+    <PreferenceCategory
+        app:key="notifications_category"
+        app:title="Notifications">
+
+        <SwitchPreferenceCompat
+            app:key="notifications"
+            app:title="Enable message notifications"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:key="help_category"
+        app:title="Help">
+
+        <Preference
+            app:key="feedback"
+            app:summary="Report technical issues or suggest new features"
+            app:title="Send feedback"/>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

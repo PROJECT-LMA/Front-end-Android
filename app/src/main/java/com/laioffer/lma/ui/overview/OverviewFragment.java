@@ -76,7 +76,7 @@ public class OverviewFragment extends Fragment {
                     public void run() {
                         int totalNum = list.size();
                         int num = countAvailableMachines(list);
-                        textView.setText("The number of available machines are " + num + " out of " + totalNum);
+                        textView.setText("The number of available machines is " + num + " out of " + totalNum);
                         //machines.setValue(list);
                         list.clear();
                     }
