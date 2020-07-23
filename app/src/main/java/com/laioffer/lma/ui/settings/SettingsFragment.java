@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -24,8 +25,14 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        setPreferencesFromResource(R.xml.preferences, rootKey);
+        addPreferencesFromResource(R.xml.preferences);
+        Preference preference = findPreference(getString(R.string.username));
+        final User user = User.getInstance(getContext());
+        preference.setTitle(user.getFirstName() + " " + user.getLastName());
     }
+
+
+
 }
 /*public class SettingsFragment extends Fragment {
 
