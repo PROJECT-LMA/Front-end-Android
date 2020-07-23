@@ -38,7 +38,7 @@ public class LauncherActivity extends AppCompatActivity {
                 }
 
                 // user has logged in, has chosen to remember logged in, and location is set
-                if (user.isLoggedIn() && user.isRememberLoggedIn() && !user.getLocationId().isEmpty()) {
+                if (user.isLoggedIn() && user.isRememberLoggedIn() && user.getLocationId().isEmpty()) {
                     nextActivity = new Intent(context, SetupActivity.class);
                     startActivity(nextActivity);
                     finish();

@@ -7,16 +7,31 @@
     android:background="@color/colorBackground">
 
     <LinearLayout
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/setup_topbar"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/top_bar"
+        android:layout_height="100dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/setup_topbar"
         android:orientation="horizontal"
         android:id="@+id/location_title">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="30dp"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -26,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/choose_your_washroom"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="19.2sp" />
+                android:textSize="22.2sp" />
 
         </LinearLayout>
 
@@ -62,6 +77,6 @@
         android:text="@string/save"
         android:textAllCaps="false"
         android:textColor="@color/colorBackground"
-        android:textSize="17sp" />
+        android:textSize="20sp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
