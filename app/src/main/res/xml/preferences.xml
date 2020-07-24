@@ -12,6 +12,7 @@ android:title="@string/title_intent_preference"
 
         <Preference android:title="Personal info" android:key="exitlink"/>
 
+
     </PreferenceCategory>
     <PreferenceCategory
         android:key="notifications_category"
@@ -33,5 +34,12 @@ android:title="@string/title_intent_preference"
             android:title="Send feedback"/>
 
     </PreferenceCategory>
+
+
+    <Preference
+        android:key="logout"
+        android:title="@string/logout"/>
+
+
 
 </PreferenceScreen>

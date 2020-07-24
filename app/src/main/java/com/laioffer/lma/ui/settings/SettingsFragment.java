@@ -22,13 +22,23 @@ import com.laioffer.lma.model.User;
 
 
 public class SettingsFragment extends PreferenceFragmentCompat {
-
+    final Context context = getContext();
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.preferences);
         Preference preference = findPreference(getString(R.string.username));
-        final User user = User.getInstance(getContext());
+        final User user = User.getInstance(context);
         preference.setTitle(user.getFirstName() + " " + user.getLastName());
+
+        Preference button = findPreference("logout");
+        button.setOnPreferenceClickListener(myPref -> {
+            User.logout();
+            user.saveUserStats(context);
+            Intent launchActivity = new Intent(getActivity(), OnBoardingActivity.class);
+            startActivity(launchActivity);
+            getActivity().finish();
+            return true;
+        });
     }
 
 
