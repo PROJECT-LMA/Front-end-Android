@@ -4,18 +4,23 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.preference.EditTextPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.laioffer.lma.MainActivity;
 import com.laioffer.lma.OnBoardingActivity;
 import com.laioffer.lma.R;
 import com.laioffer.lma.model.User;
@@ -26,18 +31,35 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.preferences);
-        Preference preference = findPreference(getString(R.string.username));
-        final User user = User.getInstance(context);
-        preference.setTitle(user.getFirstName() + " " + user.getLastName());
 
-        Preference button = findPreference("logout");
-        button.setOnPreferenceClickListener(myPref -> {
-            User.logout();
-            user.saveUserStats(context);
-            Intent launchActivity = new Intent(getActivity(), OnBoardingActivity.class);
-            startActivity(launchActivity);
-            getActivity().finish();
-            return true;
+        EditTextPreference userName_preference = findPreference(getString(R.string.username));
+        final User user = User.getInstance(context);
+        userName_preference.setTitle(user.getFirstName() + " " + user.getLastName());
+        if (userName_preference != null) {
+            userName_preference.setOnBindEditTextListener(
+                    new EditTextPreference.OnBindEditTextListener() {
+                        @Override
+                        public void onBindEditText(@NonNull EditText editText) {
+                            editText.setInputType(InputType.TYPE_CLASS_TEXT);
+                        }
+                    });
+        }
+
+        Preference location_preference = findPreference("location");
+        location_preference.setTitle(user.getLocationName());
+
+        // set sign out buttons
+        Preference button = (Preference) findPreference(getString(R.string.logout));
+        button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            public boolean onPreferenceClick(Preference preference) {
+                //User.logout();
+                //user.saveUserStats(context);
+                Log.d("logout","Yo, user logging out");
+                Intent launchActivity = new Intent(getActivity(), OnBoardingActivity.class);
+                startActivity(launchActivity);
+                getActivity().finish();
+                return true;
+            }
         });
     }
 

@@ -3,14 +3,16 @@
 android:title="@string/title_intent_preference"
     android:summary="@string/summary_intent_preference">
     <EditTextPreference
-        android:defaultValue="@string/username"
         android:key="Username"
-        android:title="Username" />
+        android:title="@string/username"
+        />
     <PreferenceCategory
-        android:key="profile"
-        android:title="Profile">
+        android:key="location_list"
+        android:title="Current Location">
 
-        <Preference android:title="Personal info" android:key="exitlink"/>
+        <Preference
+            android:key="location"
+            android:title="Location choices"/>
 
 
     </PreferenceCategory>
@@ -33,13 +35,14 @@ android:title="@string/title_intent_preference"
             android:summary="Report technical issues or suggest new features"
             android:title="Send feedback"/>
 
+
+
     </PreferenceCategory>
 
-
     <Preference
-        android:key="logout"
-        android:title="@string/logout"/>
+        android:key="@string/logout"
+        android:title="Log Out"
+        android:color="@color/colorPrimary"
+        />
 
-
-
-</PreferenceScreen>
+    </PreferenceScreen>
