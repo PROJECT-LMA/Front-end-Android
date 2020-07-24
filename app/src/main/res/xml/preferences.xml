@@ -2,10 +2,18 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 android:title="@string/title_intent_preference"
     android:summary="@string/summary_intent_preference">
-    <EditTextPreference
-        android:key="Username"
-        android:title="@string/username"
-        />
+
+    <PreferenceCategory
+        android:key="Profile"
+        android:title="Profile"
+        android:textSize="40px">
+
+        <EditTextPreference
+            android:key="Username"
+            android:title="@string/username"
+            />
+    </PreferenceCategory>
+
     <PreferenceCategory
         android:key="location_list"
         android:title="Current Location">
@@ -13,9 +21,9 @@ android:title="@string/title_intent_preference"
         <Preference
             android:key="location"
             android:title="Location choices"/>
-
-
     </PreferenceCategory>
+
+
     <PreferenceCategory
         android:key="notifications_category"
         android:title="Notifications">
@@ -46,3 +54,4 @@ android:title="@string/title_intent_preference"
         />
 
     </PreferenceScreen>
+
