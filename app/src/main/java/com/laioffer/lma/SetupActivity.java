@@ -26,6 +26,7 @@ public class SetupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launcher);
 
+
         final Context context = this;
         final User user = User.getInstance(context);
         final Button saveBtn = findViewById(R.id.choose_location);
