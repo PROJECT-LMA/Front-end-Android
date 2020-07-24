@@ -46,14 +46,14 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         }
 
         Preference location_preference = findPreference("location");
-        location_preference.setTitle(user.getLocationName());
+        location_preference.setTitle(user.getLocation().getName());
 
         // set sign out buttons
         Preference button = (Preference) findPreference(getString(R.string.logout));
         button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             public boolean onPreferenceClick(Preference preference) {
-                //User.logout();
-                //user.saveUserStats(context);
+                User.logout();
+                user.saveUserStats(getContext());
                 Log.d("logout","Yo, user logging out");
                 Intent launchActivity = new Intent(getActivity(), OnBoardingActivity.class);
                 startActivity(launchActivity);
