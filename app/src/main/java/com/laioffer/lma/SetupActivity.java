@@ -9,7 +9,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -24,7 +23,7 @@ public class SetupActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_launcher);
+        setContentView(R.layout.activity_setup);
 
         final Context context = this;
         final User user = User.getInstance(context);
@@ -57,8 +56,7 @@ public class SetupActivity extends AppCompatActivity {
 //                startActivity(intent);
 //                finish();
 
-                final String selected = ((LocationListAdaptor)recyclerView.getAdapter()).getSelectedLocationId();
-                final String locationName =((LocationListAdaptor)recyclerView.getAdapter()).getSelectedLocationName();
+                final Location selected = ((LocationListAdaptor)recyclerView.getAdapter()).getSelectedLocation();
                 if (selected == null) {
                     runOnUiThread(new Runnable() {
                         @Override
@@ -71,7 +69,7 @@ public class SetupActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             com.laioffer.lma.network.Location.Result result =
-                                    com.laioffer.lma.network.Location.setLocation(selected, user.getToken());
+                                    com.laioffer.lma.network.Location.setLocation(selected.getId(), user.getToken());
 
                             if (result.isStatus()) {
                                 runOnUiThread(new Runnable() {
@@ -80,8 +78,7 @@ public class SetupActivity extends AppCompatActivity {
                                         Toast.makeText(context, "Location setup succeed", Toast.LENGTH_LONG).show();
                                     }
                                 });
-                                user.setLocationId(selected);
-                                user.setLocationName(locationName);
+                                user.setLocation(selected);
                                 user.saveUserStats(context);
                                 Intent intent = new Intent(context, MainActivity.class);
                                 startActivity(intent);

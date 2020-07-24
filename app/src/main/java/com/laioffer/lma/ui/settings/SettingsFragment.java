@@ -86,7 +86,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         final User user = User.getInstance(context);
         textView_firstName.setText(user.getFirstName());
         textView_lastName.setText(user.getLastName());
-        textView_location.setText(user.getLocationName());
+        textView_location.setText(user.getLocation().getName());
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -95,7 +95,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                     public void run() {
                         textView_firstName.setText(user.getFirstName());
                         textView_lastName.setText(user.getLastName());
-                        textView_location.setText(user.getLocationName());
+                        textView_location.setText(user.getLocation().getName());
                         swipeRefreshLayout.setRefreshing(false);
                     }
                 },2000);

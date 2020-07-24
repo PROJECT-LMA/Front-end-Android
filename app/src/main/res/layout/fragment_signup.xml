@@ -155,7 +155,7 @@
         android:background="@drawable/primary_rect"
         android:textColor="@color/colorBackground"
         android:textAllCaps="false"
-        android:textSize="17sp"
+        android:textSize="20sp"
         android:layout_marginTop="45dp"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"

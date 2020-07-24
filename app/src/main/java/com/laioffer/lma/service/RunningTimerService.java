@@ -15,12 +15,12 @@ import androidx.core.app.NotificationCompat;
 import com.laioffer.lma.MainActivity;
 import com.laioffer.lma.R;
 
-public class TimerService extends Service {
+public class RunningTimerService extends Service {
 
     private AlarmManager alarmMgr;
     private PendingIntent alarmIntent;
 
-    private final static String TAG = "TimerService";
+    private final static String TAG = "RunningTimerService";
     private final static String CHANNEL_ID = "LMA";
 
     public static final String COUNTDOWN_BR = "service.countdown_br";
@@ -33,8 +33,18 @@ public class TimerService extends Service {
         super.onCreate();
 
         createNotificationChannel();
-        // 10 sec count
-        cdt = new CountDownTimer(10000, 1000) {
+    }
+
+    @Override
+    public void onDestroy() {
+        cdt.cancel();
+        super.onDestroy();
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        int runningTime = intent.getIntExtra("runningTime", 45);
+        cdt = new CountDownTimer(runningTime * 60 * 1000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 bi.putExtra("countdown", millisUntilFinished);
@@ -48,16 +58,6 @@ public class TimerService extends Service {
         };
 
         cdt.start();
-    }
-
-    @Override
-    public void onDestroy() {
-        cdt.cancel();
-        super.onDestroy();
-    }
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
         return super.onStartCommand(intent, flags, startId);
     }
 

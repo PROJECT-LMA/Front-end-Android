@@ -74,6 +74,14 @@ public class LocationListAdaptor extends RecyclerView.Adapter<LocationListAdapto
 
     }
 
+    public Location getSelectedLocation() {
+        if (selected == -1) {
+            return null;
+        }
+
+        return locations.get(selected);
+    }
+
     public String getSelectedLocationId() {
         if (selected == -1) {
             return null;
