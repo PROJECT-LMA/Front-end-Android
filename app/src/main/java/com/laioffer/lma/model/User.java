@@ -22,19 +22,16 @@ public class User {
     private String firstName;
     private String lastName;
     private String token;
-    private String locationId;
-    private String locationName;
+    private Location location;
 
-    public User(boolean isLoggedIn, boolean isFirstVisit, boolean rememberLoggedIn, String firstName, String lastName, String token, String locationId,
-                String locationName) {
+    User(boolean isLoggedIn, boolean isFirstVisit, boolean rememberLoggedIn, String firstName, String lastName, String token, Location location) {
         this.isLoggedIn = isLoggedIn;
         this.isFirstVisit = isFirstVisit;
         this.rememberLoggedIn = rememberLoggedIn;
         this.firstName = firstName;
         this.lastName = lastName;
         this.token = token;
-        this.locationId = locationId;
-        this.locationName = locationName;
+        this.location = location;
     }
 
     // should only be called in Launcher Activity !!!
@@ -75,19 +72,17 @@ public class User {
         return token;
     }
 
-    public String getLocationId() {
-        return locationId;
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
-    public String getLocationName() {
-        return locationName;
-    }
+    public Location getLocation() { return location; }
 
     // Log in the user
     static public void login(JSONObject user, String token) throws JSONException {
         instance.firstName = user.getString("firstName");
         instance.lastName = user.getString("lastName");
-        instance.locationId = user.getString("locationID");
+        instance.location.setId(user.getString("locationID"));
         instance.token = token;
         instance.isLoggedIn = true;
     }
@@ -95,11 +90,10 @@ public class User {
     static public void logout() {
         instance.firstName = "";
         instance.lastName = "";
-        instance.locationId = "";
+        instance.location = null;
         instance.token = "";
         instance.isLoggedIn = false;
         instance.rememberLoggedIn = false;
-        instance.locationName = "";
     }
 
     public void setFirstVisit(boolean firstVisit) {
@@ -117,16 +111,7 @@ public class User {
         SharedPreferenceUtils.writeAttributes(context, "firstName", instance.firstName);
         SharedPreferenceUtils.writeAttributes(context, "lastName", instance.lastName);
         SharedPreferenceUtils.writeAttributes(context, "token", instance.token);
-        SharedPreferenceUtils.writeAttributes(context, "locationId", instance.locationId);
-        SharedPreferenceUtils.writeAttributes(context, "locationName", instance.locationName);
-    }
-
-    public void setLocationId(String locationId) {
-        this.locationId = locationId;
-    }
-
-    public void setLocationName(String locationName) {
-        this.locationName = locationName;
+        SharedPreferenceUtils.saveLocation(context, instance.location);
     }
 
 }
@@ -144,10 +129,37 @@ class SharedPreferenceUtils {
         String firstName = isLoggedIn ? reader.getString("firstName", "") : "";
         String lastName = isLoggedIn ? reader.getString("lastName", "") : "";
         String token = isLoggedIn ? reader.getString("token", "") : "";
-        String locationId = isLoggedIn ? reader.getString("locationId", "") : "";
-        String locationName = isLoggedIn ? reader.getString("locationName", "") : "";
 
-        return new User(isLoggedIn, isFirstVisit, rememberLoggedIn, firstName, lastName, token, locationId, locationName);
+        Location location = readLocation(context);
+
+        return new User(isLoggedIn, isFirstVisit, rememberLoggedIn, firstName, lastName, token, location);
+    }
+
+    static void saveLocation(Context context, Location location) {
+        if (location == null) {
+            writeAttributes(context, "locationId", "");
+            writeAttributes(context, "locationName", "");
+            writeAttributes(context, "locationDefaultRunningTime", "0");
+            writeAttributes(context, "locationDefaultReservationExpireTime", "0");
+            writeAttributes(context, "locationDefaultPickupTime", "0");
+        } else {
+            writeAttributes(context, "locationId", location.getId());
+            writeAttributes(context, "locationName", location.getName());
+            writeAttributes(context, "locationDefaultRunningTime", Integer.valueOf(location.getDefaultRunningTime()).toString());
+            writeAttributes(context, "locationDefaultReservationExpireTime", Integer.valueOf(location.getDefaultReservationExpireTime()).toString());
+            writeAttributes(context, "locationDefaultPickupTime", Integer.valueOf(location.getDefaultPickupTime()).toString());
+        }
+    }
+
+    static Location readLocation(Context context) {
+        SharedPreferences reader = context.getSharedPreferences(EDITOR_NAME, Context.MODE_PRIVATE);
+        return new Location(
+                reader.getString("locationId", ""),
+                reader.getString("locationName", ""),
+                Integer.valueOf(reader.getString("locationDefaultRunningTime", "0")),
+                Integer.valueOf(reader.getString("locationDefaultReservationExpireTime", "0")),
+                Integer.valueOf(reader.getString("locationDefaultPickupTime", "0"))
+        );
     }
 
     static void writeAttributes(Context context, String key, boolean value) {

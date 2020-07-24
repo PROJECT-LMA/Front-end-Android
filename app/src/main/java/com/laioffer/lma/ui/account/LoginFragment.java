@@ -130,7 +130,7 @@ public class LoginFragment extends Fragment {
                             user.setRememberLoggedIn(rememberLoggedIn.isChecked());
                             user.saveUserStats(getContext());
                             Intent intent;
-                            if (user.getLocationId().isEmpty()) {
+                            if (user.getLocation().getId().isEmpty()) {
                                 intent = new Intent(activity, SetupActivity.class);
                             } else {
                                 intent = new Intent(activity, MainActivity.class);

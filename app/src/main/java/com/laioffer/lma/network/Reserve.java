@@ -1,57 +1,64 @@
 package com.laioffer.lma.network;
 
+import android.util.Log;
+
 import org.json.JSONObject;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class Scan {
+public class Reserve {
 
-    public static class ScanResult {
+    static public class Result {
+        private boolean isSuccess;
+        private String message;
+        private String machineId;
 
-        private final boolean status;
-        private final String message;
-
-        public ScanResult(boolean status, String message) {
-            this.status = status;
+        public Result(boolean isSuccess, String message) {
+            this.isSuccess = isSuccess;
             this.message = message;
         }
 
-        public boolean isStatus() {
-            return status;
+        public boolean isSuccess() {
+            return isSuccess;
         }
 
         public String getMessage() {
             return message;
         }
+
+        public String getMachineId() {
+            return machineId;
+        }
     }
 
-    // check washer isAvailable or not
-    public static Scan.ScanResult scanToOpen(String scanString, String token) {
-        Scan.ScanResult result;
+    public static Result reserveWasher(String token) {
+        Result result;
         HttpURLConnection conn = null;
         try {
-            URL url = new URL(HttpUtils.serverUrl + HttpUtils.scanToOpen);
+            URL url = new URL(HttpUtils.serverUrl + HttpUtils.reverseWasher);
             conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
 
             JSONObject object = new JSONObject();
-            object.put("scanString", scanString);
             object.put("token", token);
             HttpUtils.writeJsonObject(conn, object);
             conn.connect();
 
             JSONObject response = HttpUtils.readJsonObjectFromResponse(conn);
+
+            Log.e("db", response.toString());
+
             if (response.getBoolean("isSuccess")) {
-                result = new Scan.ScanResult(true, "Washer is available!");
+                result = new Result(true, response.getString("msg"));
             } else {
-                result = new Scan.ScanResult(false, response.getString("msg"));
+                result = new Result(false, response.getString("msg"));
             }
 
         } catch (Exception e) {
             e.printStackTrace();
-            result = new Scan.ScanResult(false, "Network error");
+            result = new Result(false, "Network error");
         } finally {
             if (conn != null) {
                 conn.disconnect();
@@ -61,32 +68,31 @@ public class Scan {
         return result;
     }
 
-    // scan to get user's clothes
-    public static Scan.ScanResult scanToClose(String scanString, String token) {
-        Scan.ScanResult result;
+    public static Result reserveDryer(String token) {
+        Result result;
         HttpURLConnection conn = null;
         try {
-            URL url = new URL(HttpUtils.serverUrl + HttpUtils.scanToClose);
+            URL url = new URL(HttpUtils.serverUrl + HttpUtils.reverseDryer);
             conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
 
             JSONObject object = new JSONObject();
-            object.put("scanString", scanString);
             object.put("token", token);
             HttpUtils.writeJsonObject(conn, object);
             conn.connect();
 
             JSONObject response = HttpUtils.readJsonObjectFromResponse(conn);
+
             if (response.getBoolean("isSuccess")) {
-                result = new Scan.ScanResult(true, "Thank you for using!");
+                result = new Result(true, response.getString("msg"));
             } else {
-                result = new Scan.ScanResult(false, "Error!");
+                result = new Result(false, response.getString("msg"));
             }
 
         } catch (Exception e) {
             e.printStackTrace();
-            result = new Scan.ScanResult(false, "Network error");
+            result = new Result(false, "Network error");
         } finally {
             if (conn != null) {
                 conn.disconnect();
