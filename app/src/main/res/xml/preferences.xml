@@ -7,11 +7,18 @@ android:title="@string/title_intent_preference"
         android:key="Profile"
         android:title="Profile"
         android:textSize="40px">
-
-        <EditTextPreference
-            android:key="Username"
-            android:title="@string/username"
+        <Preference
+            android:key="first_name_preference"
+            android:title="first_name_preference"
+            android:summary="First Name"
             />
+
+        <Preference
+            android:key="last_name_preference"
+            android:title="@string/last_name_preference"
+            android:summary="Last Name"
+            />
+
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -50,7 +57,6 @@ android:title="@string/title_intent_preference"
     <Preference
         android:key="@string/logout"
         android:title="Log Out"
-        android:color="@color/colorPrimary"
         />
 
     </PreferenceScreen>

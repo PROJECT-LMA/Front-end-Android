@@ -32,35 +32,34 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.preferences);
 
-        EditTextPreference userName_preference = findPreference(getString(R.string.username));
+        Preference last_name = findPreference("first_name_preference");
+        Preference first_name = findPreference("last_name_preference");
         final User user = User.getInstance(context);
-        userName_preference.setTitle(user.getFirstName() + " " + user.getLastName());
-        if (userName_preference != null) {
-            userName_preference.setOnBindEditTextListener(
-                    new EditTextPreference.OnBindEditTextListener() {
-                        @Override
-                        public void onBindEditText(@NonNull EditText editText) {
-                            editText.setInputType(InputType.TYPE_CLASS_TEXT);
-                        }
-                    });
+        if (last_name != null) {
+            last_name.setTitle(user.getLastName());
+        }
+        if (first_name != null) {
+            first_name.setTitle(user.getFirstName());
         }
 
+ /*
         Preference location_preference = findPreference("location");
+        Log.d("location name","user.getLocation().getName()");
         location_preference.setTitle(user.getLocation().getName());
 
         // set sign out buttons
         Preference button = (Preference) findPreference(getString(R.string.logout));
         button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             public boolean onPreferenceClick(Preference preference) {
-                User.logout();
+                //User.logout();
                 user.saveUserStats(getContext());
-                Log.d("logout","Yo, user logging out");
+                //Log.d("logout","Yo, user logging out");
                 Intent launchActivity = new Intent(getActivity(), OnBoardingActivity.class);
                 startActivity(launchActivity);
                 getActivity().finish();
                 return true;
             }
-        });
+        });*/
 
     }
 

@@ -24,7 +24,8 @@
     <string name="term_of_use">Term of use</string>
     <string name="save">save</string>
     <string name="choose_your_washroom">Choose your washroom</string>
-    <string name="username">Username</string>
+    <string name="last_name_preference">LastName</string>
+    <string name="first_name_preference">FirstName</string>
     <string name="logout">Log Out</string>
     <string name="scan_to_open">Scan to open</string>
 </resources>
