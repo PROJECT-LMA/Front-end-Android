@@ -20,14 +20,16 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.laioffer.lma.R;
 import com.laioffer.lma.model.User;
+import com.laioffer.lma.network.Reserve;
 import com.laioffer.lma.network.Scan;
-import com.laioffer.lma.service.TimerService;
+import com.laioffer.lma.service.RunningTimerService;
 
 public class ScanFragment extends Fragment {
 
     private Fragment self;
     private static final int MY_PERMISSION_CODE = 1888;
     private String type = "";
+    private int runningTime = 0;
     private String token = "";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -35,8 +37,11 @@ public class ScanFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_scan, container, false);
         final User user = User.getInstance(getContext());
         self = this;
+        this.runningTime = user.getLocation().getDefaultRunningTime();
         Button scanToOpen = root.findViewById(R.id.scanToOpen_button);
         Button scanToClose = root.findViewById(R.id.scanToClose_button);
+        Button reverseWasher = root.findViewById(R.id.reserve_washer);
+        Button reverseDryer = root.findViewById(R.id.reserve_dryer);
 
         // scan to open
         scanToOpen.setOnClickListener(new View.OnClickListener() {
@@ -53,6 +58,51 @@ public class ScanFragment extends Fragment {
                 scanQRCode("close", user.getToken());
             }
         });
+
+        reverseWasher.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Reserve.Result result = Reserve.reserveWasher(user.getToken());
+                        if (result.isSuccess()) {
+                            // start service
+                        }
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getContext(), result.getMessage(), Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
+                });
+                thread.start();
+            }
+        });
+
+        reverseDryer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Reserve.Result result = Reserve.reserveDryer(user.getToken());
+                        if (result.isSuccess()) {
+                            // start service
+                        }
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getContext(), result.getMessage(), Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
+                });
+                thread.start();
+            }
+        });
+
         return root;
     }
 
@@ -130,8 +180,9 @@ public class ScanFragment extends Fragment {
                                     activity.runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
-                                            //start service
-                                            getActivity().startService(new Intent(getActivity(), TimerService.class));
+                                            Intent intent = new Intent(getActivity(), RunningTimerService.class);
+                                            intent.putExtra("runningTime", runningTime);
+                                            getActivity().startService(intent);
                                         }
                                     });
                                 }

@@ -58,7 +58,7 @@ public class OverviewFragment extends Fragment {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                final List<Machine> list = MachinesList.checkMachineStatus(user.getLocationId());
+                final List<Machine> list = MachinesList.checkMachineStatus(user.getLocation().getId());
 
                 if (list == null) {
                     getActivity().runOnUiThread(new Runnable() {

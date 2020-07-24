@@ -46,7 +46,10 @@ public class Location {
                 for (int i = 0; i < array.length(); i++) {
                     JSONObject temp = array.getJSONObject(i);
                     locations.add(new com.laioffer.lma.model.Location(temp.getString("_id"),
-                            temp.getString("name")));
+                            temp.getString("name"),
+                            temp.getInt("defaultRunningTime"),
+                            temp.getInt("defaultReservationExpireTime"),
+                            temp.getInt("defaultPickupTime")));
                 }
                 result = new Result(locations, true);
             } else {

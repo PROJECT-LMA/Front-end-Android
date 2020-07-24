@@ -21,6 +21,8 @@ public class HttpUtils {
     static final String machines = "/api/machines";
     static final String scanToOpen = "/api/scanToOpen";
     static final String scanToClose = "/api/scanToClose";
+    static final String reverseDryer = "/api/reserveDryer";
+    static final String reverseWasher = "/api/reserveWasher";
 
     public static JSONObject readJsonObjectFromResponse(HttpURLConnection conn) {
         if (null==conn) {
