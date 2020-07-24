@@ -3,10 +3,7 @@
 android:title="@string/title_intent_preference"
     android:summary="@string/summary_intent_preference">
 
-    <PreferenceCategory
-        android:key="Profile"
-        android:title="Profile"
-        android:textSize="40px">
+    <PreferenceCategory android:title="Profile">
         <Preference
             android:key="first_name_preference"
             android:title="first_name_preference"
@@ -21,19 +18,17 @@ android:title="@string/title_intent_preference"
 
     </PreferenceCategory>
 
-    <PreferenceCategory
-        android:key="location_list"
-        android:title="Current Location">
-
-        <Preference
-            android:key="location"
-            android:title="Location choices"/>
+    <PreferenceCategory android:title="Location">
+        <ListPreference
+            android:key="location_list"
+            android:title="No location choosed"
+            android:dialogTitle="Locations"
+            android:summary="Click to change the location"
+            />
     </PreferenceCategory>
 
 
-    <PreferenceCategory
-        android:key="notifications_category"
-        android:title="Notifications">
+    <PreferenceCategory android:title="Notifications">
 
         <SwitchPreferenceCompat
             android:key="notifications"
@@ -50,13 +45,12 @@ android:title="@string/title_intent_preference"
             android:summary="Report technical issues or suggest new features"
             android:title="Send feedback"/>
 
-
-
     </PreferenceCategory>
 
     <Preference
-        android:key="@string/logout"
+        android:key="logout"
         android:title="Log Out"
+        android:layout="@layout/log_out_button"
         />
 
     </PreferenceScreen>

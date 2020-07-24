@@ -5,10 +5,11 @@
     android:orientation="vertical">
 
     <Button
-        android:id="@+id/btn_sign_out"
+        android:id="@+id/btn_log_out"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/primary_rect"
         android:text="@string/logout"
+        android:clickable="false"
         />
 </LinearLayout>

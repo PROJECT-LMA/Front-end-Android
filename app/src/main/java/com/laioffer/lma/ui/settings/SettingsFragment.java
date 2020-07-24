@@ -16,6 +16,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.preference.EditTextPreference;
+import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -23,18 +24,23 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.laioffer.lma.MainActivity;
 import com.laioffer.lma.OnBoardingActivity;
 import com.laioffer.lma.R;
+import com.laioffer.lma.adapter.LocationListAdaptor;
+import com.laioffer.lma.model.Location;
 import com.laioffer.lma.model.User;
+
+import java.util.List;
 
 
 public class SettingsFragment extends PreferenceFragmentCompat {
     final Context context = getContext();
+    final User user = User.getInstance(context);
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.preferences);
 
-        Preference last_name = findPreference("first_name_preference");
-        Preference first_name = findPreference("last_name_preference");
-        final User user = User.getInstance(context);
+        Preference last_name = findPreference("last_name_preference");
+        Preference first_name = findPreference("first_name_preference");
+
         if (last_name != null) {
             last_name.setTitle(user.getLastName());
         }
@@ -42,30 +48,106 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             first_name.setTitle(user.getFirstName());
         }
 
- /*
-        Preference location_preference = findPreference("location");
-        Log.d("location name","user.getLocation().getName()");
-        location_preference.setTitle(user.getLocation().getName());
 
-        // set sign out buttons
-        Preference button = (Preference) findPreference(getString(R.string.logout));
+        //set location list
+        ListPreference location_preference = (ListPreference)findPreference("location_list");
+
+        if (user.getLocation().getName() != null &&  user.getLocation().getName().length() > 0) {
+            location_preference.setTitle(user.getLocation().getName());
+        } else {
+            location_preference.setTitle("No location choosed");
+        }
+
+        setup_listPreference(location_preference);
+        //when user select another item in the list
+        Preference.OnPreferenceChangeListener listener = new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                int index = location_preference.findIndexOfValue(newValue.toString());
+
+                CharSequence[] entries = location_preference.getEntries();
+                location_preference.setTitle(entries[index]);
+
+                return true;
+            }
+        };
+
+        location_preference.setOnPreferenceChangeListener(listener);
+
+        // preference click, not used anymore
+        Preference button = (Preference) findPreference("logout");
+        setup_sign_out_btn(button);
+
+    }
+
+    private void setup_listPreference(ListPreference location_preference) {
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final List<Location> locations = com.laioffer.lma.network.Location.getAllLocations().getLocations();
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        setListPreference(location_preference, locations);
+                    }
+                });
+            }
+        });
+        thread.start();
+    }
+
+    private void setListPreference(ListPreference listPreference, List<Location> locations) {
+        int n = locations.size();
+        CharSequence[] entries = new CharSequence[n];
+        CharSequence[] entryValues = new CharSequence[n];
+        for (int i = 0; i < locations.size(); i++) {
+            entries[i] = locations.get(i).getName();
+            entryValues[i] = "0" + i;
+        }
+        listPreference.setEntries(entries);
+        listPreference.setEntryValues(entryValues);
+    }
+
+    private void setup_sign_out_btn(Preference button) {
+        if (button == null) {
+            Log.d("button","Button is null");
+        }
         button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             public boolean onPreferenceClick(Preference preference) {
-                //User.logout();
+                User.logout();
                 user.saveUserStats(getContext());
-                //Log.d("logout","Yo, user logging out");
+                Log.d("logout","Yo, user logging out");
                 Intent launchActivity = new Intent(getActivity(), OnBoardingActivity.class);
                 startActivity(launchActivity);
                 getActivity().finish();
                 return true;
             }
-        });*/
-
+        });
     }
 
+    /*
+        //log out button
+        final View container = new View(getContext());
+        if (container != null) {
+            final Button button = (Button)container.findViewById(R.id.btn_log_out);
+            if (button != null) {
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        User.logout();
+                        user.saveUserStats(context);
+                        Intent launchActivity = new Intent(getActivity(), OnBoardingActivity.class);
+                        startActivity(launchActivity);
+                        getActivity().finish();
+                    }
+                });
+            }
 
-
+        }*/
 }
+
+
 /*public class SettingsFragment extends Fragment {
 
     private SettingsViewModel settingsViewModel;
