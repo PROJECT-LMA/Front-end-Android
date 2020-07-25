@@ -11,5 +11,8 @@
         android:background="@drawable/primary_rect"
         android:text="@string/logout"
         android:clickable="false"
+        android:textAllCaps="false"
+        android:textColor="@color/colorBackground"
+        android:textSize="20sp"
         />
 </LinearLayout>
