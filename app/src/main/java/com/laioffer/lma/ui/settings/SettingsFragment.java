@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -19,6 +20,7 @@ import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.SwitchPreferenceCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.laioffer.lma.MainActivity;
@@ -60,7 +62,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
         setup_listPreference(location_preference);
         //when user select another item in the list
-        Preference.OnPreferenceChangeListener listener = new Preference.OnPreferenceChangeListener() {
+        Preference.OnPreferenceChangeListener location_listener = new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
                 int index = location_preference.findIndexOfValue(newValue.toString());
@@ -72,7 +74,24 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             }
         };
 
-        location_preference.setOnPreferenceChangeListener(listener);
+        location_preference.setOnPreferenceChangeListener(location_listener);
+
+
+        //notification listener
+        SwitchPreferenceCompat notif_pref = (SwitchPreferenceCompat)findPreference("notifications");
+        Preference.OnPreferenceChangeListener notif_listener = new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+
+                if (!notif_pref.isChecked()) {
+                    Toast.makeText(getActivity(),"checked, opening the notification",Toast.LENGTH_SHORT).show();
+                    startActivityForResult(new Intent(android.provider.Settings.ACTION_SETTINGS), 0);
+                }
+                return true;
+            }
+        };
+
+        notif_pref.setOnPreferenceChangeListener(notif_listener);
 
         // preference click, not used anymore
         Preference button = (Preference) findPreference("logout");
