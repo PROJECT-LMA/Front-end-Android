@@ -8,6 +8,8 @@ public class Location {
     private int defaultReservationExpireTime;
     private int defaultPickupTime;
 
+    public Location() {}
+
     public Location(String id, String name, int defaultRunningTime, int defaultReservationExpireTime, int defaultPickupTime) {
         this.id = id;
         this.name = name;

@@ -90,7 +90,7 @@ public class User {
     static public void logout() {
         instance.firstName = "";
         instance.lastName = "";
-        instance.location = null;
+        instance.location = new Location();
         instance.token = "";
         instance.isLoggedIn = false;
         instance.rememberLoggedIn = false;
