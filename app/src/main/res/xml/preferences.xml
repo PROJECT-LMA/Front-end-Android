@@ -1,49 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-android:title="@string/title_intent_preference"
-    android:summary="@string/summary_intent_preference">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory android:title="Profile">
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        android:title="Profile">
         <Preference
-            android:key="first_name_preference"
-            android:title="first_name_preference"
-            android:summary="First Name"
+            app:iconSpaceReserved="false"
+            android:key="user_name_preference"
+            android:title="UserName"
             />
 
-        <Preference
-            android:key="last_name_preference"
-            android:title="@string/last_name_preference"
-            android:summary="Last Name"
-            />
 
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="Location">
-        <ListPreference
-            android:key="location_list"
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        android:title="Location">
+        <Preference
+            android:key="choose_location"
             android:title="No location choosed"
             android:dialogTitle="Locations"
             android:summary="Click to change the location"
+            app:iconSpaceReserved="false"
             />
     </PreferenceCategory>
 
 
-    <PreferenceCategory android:title="Notifications">
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        android:title="Notifications">
 
-        <SwitchPreferenceCompat
+        <Preference
             android:key="notifications"
-            android:title="Enable message notifications"/>
+            app:iconSpaceReserved="false"
+            android:summary="Click to change message notification setting"
+            android:title=""/>
 
     </PreferenceCategory>
 
     <PreferenceCategory
         android:key="help_category"
-        android:title="Help">
+        android:title="Help"
+        app:iconSpaceReserved="false"
+        >
 
         <Preference
             android:key="feedback"
             android:summary="Report technical issues or suggest new features"
-            android:title="Send feedback"/>
+            android:title="Send feedback"
+            app:iconSpaceReserved="false"/>
 
     </PreferenceCategory>
 

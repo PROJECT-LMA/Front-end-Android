@@ -2,8 +2,10 @@ package com.laioffer.lma.ui.settings;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,11 +28,13 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.laioffer.lma.MainActivity;
 import com.laioffer.lma.OnBoardingActivity;
 import com.laioffer.lma.R;
+import com.laioffer.lma.SetupActivity;
 import com.laioffer.lma.adapter.LocationListAdaptor;
 import com.laioffer.lma.model.Location;
 import com.laioffer.lma.model.User;
 
 import java.util.List;
+
 
 
 public class SettingsFragment extends PreferenceFragmentCompat {
@@ -40,58 +44,37 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.preferences);
 
-        Preference last_name = findPreference("last_name_preference");
-        Preference first_name = findPreference("first_name_preference");
-
-        if (last_name != null) {
-            last_name.setTitle(user.getLastName());
+        Preference user_name = findPreference("user_name_preference");
+        if (user_name != null) {
+            user_name.setTitle(user.getFirstName() + " " + user.getLastName());
         }
-        if (first_name != null) {
-            first_name.setTitle(user.getFirstName());
-        }
-
 
         //set location list
-        ListPreference location_preference = (ListPreference)findPreference("location_list");
+        Preference location_preference = (Preference)findPreference("choose_location");
 
         if (user.getLocation().getName() != null &&  user.getLocation().getName().length() > 0) {
             location_preference.setTitle(user.getLocation().getName());
         } else {
             location_preference.setTitle("No location choosed");
         }
+        setup_location(location_preference);
 
-        setup_listPreference(location_preference);
-        //when user select another item in the list
-        Preference.OnPreferenceChangeListener location_listener = new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                int index = location_preference.findIndexOfValue(newValue.toString());
-
-                CharSequence[] entries = location_preference.getEntries();
-                location_preference.setTitle(entries[index]);
-
-                return true;
-            }
-        };
-
-        location_preference.setOnPreferenceChangeListener(location_listener);
 
 
         //notification listener
-        SwitchPreferenceCompat notif_pref = (SwitchPreferenceCompat)findPreference("notifications");
-        Preference.OnPreferenceChangeListener notif_listener = new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-
-                if (!notif_pref.isChecked()) {
-                    Toast.makeText(getActivity(),"checked, opening the notification",Toast.LENGTH_SHORT).show();
-                    startActivityForResult(new Intent(android.provider.Settings.ACTION_SETTINGS), 0);
-                }
-                return true;
+        Preference notif_pref = (Preference)findPreference("notifications");
+        notif_pref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            public boolean onPreferenceClick(Preference preference) {
+                Toast.makeText(getActivity(),"Opening the notification setting page",Toast.LENGTH_SHORT).show();
+                //startActivityForResult(new Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS), 0);
+                Intent intent = new Intent();
+                intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS");
+                // for Android 8 and above
+                intent.putExtra("android.provider.extra.APP_PACKAGE", getContext().getPackageName());
+                startActivity(intent);
+                return true;//jump to notification page
             }
-        };
-
-        notif_pref.setOnPreferenceChangeListener(notif_listener);
+        });
 
         // preference click, not used anymore
         Preference button = (Preference) findPreference("logout");
@@ -99,6 +82,37 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
     }
 
+    private void setup_sign_out_btn(Preference button) {
+        if (button == null) {
+            Log.d("button","Button is null");
+        }
+        button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            public boolean onPreferenceClick(Preference preference) {
+                User.logout();
+                user.saveUserStats(getContext());
+                Log.d("logout","Yo, user logging out");
+                Intent launchActivity = new Intent(getActivity(), OnBoardingActivity.class);
+                startActivity(launchActivity);
+                getActivity().finish();
+                return true;
+            }
+        });
+    }
+
+    private void setup_location(Preference location_preference) {
+        if (location_preference == null) {
+            return;
+        }
+        location_preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            public boolean onPreferenceClick(Preference preference) {
+                Intent setupActivity = new Intent(getActivity(), SetupActivity.class);
+                startActivity(setupActivity);
+                return true;
+            }
+        });
+    }
+
+/*
     private void setup_listPreference(ListPreference location_preference) {
 
         Thread thread = new Thread(new Runnable() {
@@ -128,24 +142,9 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         listPreference.setEntryValues(entryValues);
     }
 
-    private void setup_sign_out_btn(Preference button) {
-        if (button == null) {
-            Log.d("button","Button is null");
-        }
-        button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            public boolean onPreferenceClick(Preference preference) {
-                User.logout();
-                user.saveUserStats(getContext());
-                Log.d("logout","Yo, user logging out");
-                Intent launchActivity = new Intent(getActivity(), OnBoardingActivity.class);
-                startActivity(launchActivity);
-                getActivity().finish();
-                return true;
-            }
-        });
-    }
 
-    /*
+
+
         //log out button
         final View container = new View(getContext());
         if (container != null) {
