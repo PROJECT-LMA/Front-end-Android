@@ -27,4 +27,17 @@
     <string name="first_name_preference">FirstName</string>
     <string name="logout">Log Out</string>
     <string name="scan_to_open">Scan to open</string>
+
+    <string name="term">
+        1. Provide accurate personal information during registration and keep the information current.
+        We can suspend or terminate your account if you provide incomplete or false information.
+        \n\nYou are responsible for all activity on your account. \n\n
+
+        2. We can make updates to our terms of service at any time, and we’ll notify you of these updates as appropriate.
+        By continuing to use our services after these updates, you agree to the revised terms.
+        \n\nYou also agree to receive notices from us electronically. \n\n
+
+        3. If you want to use our services, you can’t do certain bad things.
+        If we think you are doing these bad things, we have the right to share your information with law enforcement.
+    </string>
 </resources>

@@ -4,7 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.FragmentNavigator;
 
 import android.util.Patterns;
 import android.view.LayoutInflater;
@@ -21,11 +24,15 @@ import com.laioffer.lma.R;
 import com.laioffer.lma.SetupActivity;
 import com.laioffer.lma.model.User;
 import com.laioffer.lma.network.Account;
+import com.laioffer.lma.ui.term.TermFragment;
 import com.laioffer.lma.utils.EditTextValidator;
 import com.laioffer.lma.utils.Encryption;
 
 
-public class LoginFragment extends Fragment {
+public class LoginFragment extends Fragment implements TermFragment.OnAgreeTermListener {
+
+    CheckBox term;
+
     public static LoginFragment newInstance() {
         Bundle args = new Bundle();
 
@@ -42,7 +49,7 @@ public class LoginFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View inflatedView = inflater.inflate(R.layout.fragment_login, container, false);
-
+        final Fragment self = this;
         final Activity activity = getActivity();
         final User user = User.getInstance(getContext());
         /* get all fields */
@@ -51,6 +58,8 @@ public class LoginFragment extends Fragment {
         final EditText password = inflatedView.findViewById(R.id.password);
         final CheckBox rememberLoggedIn = inflatedView.findViewById(R.id.kept_logged_in_checkbox);
         final CheckBox serviceAgreement = inflatedView.findViewById(R.id.term_of_service_checkbox);
+        this.term = serviceAgreement;
+        final TextView term = inflatedView.findViewById(R.id.term_of_service);
 
         // disable button until all fields are filled correctly
         loginBtn.setClickable(false);
@@ -142,7 +151,20 @@ public class LoginFragment extends Fragment {
             }
         });
 
+        term.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogFragment agreement = new TermFragment();
+                agreement.setTargetFragment(self, 0);
+                agreement.show(getParentFragmentManager(), "service agreement");
+            }
+        });
+
         return inflatedView;
     }
 
+    @Override
+    public void onAgreeTermListener() {
+        term.setChecked(true);
+    }
 }
