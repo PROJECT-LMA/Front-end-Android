@@ -1,4 +1,4 @@
-package com.laioffer.lma.ui.fragments.settings;
+package com.laioffer.lma.ui.settings;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

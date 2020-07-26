@@ -1,4 +1,4 @@
-package com.laioffer.lma.ui.fragments.overview;
+package com.laioffer.lma.ui.overview;
 
 import android.os.Handler;
 

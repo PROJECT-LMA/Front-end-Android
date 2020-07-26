@@ -1,4 +1,4 @@
-package com.laioffer.lma.ui.fragments.settings;
+package com.laioffer.lma.ui.settings;
 
 import android.content.Context;
 import android.content.Intent;

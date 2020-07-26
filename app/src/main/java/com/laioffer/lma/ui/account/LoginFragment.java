@@ -1,4 +1,4 @@
-package com.laioffer.lma.ui.fragments.account;
+package com.laioffer.lma.ui.account;
 
 import android.app.Activity;
 import android.content.Intent;
