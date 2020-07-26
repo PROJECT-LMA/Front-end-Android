@@ -62,7 +62,7 @@ public class OverviewFragment extends Fragment {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                final List<Machine> list = MachinesList.checkMachineStatus(user.getLocationId());
+                final List<Machine> list = MachinesList.checkMachineStatus(user.getLocation().getId());
 
                 if (list == null) {
                     getActivity().runOnUiThread(new Runnable() {
@@ -112,7 +112,6 @@ public class OverviewFragment extends Fragment {
                 washer.append(System.getProperty("line.separator"));
             }
         }
-        Log.d("err", washer.toString());
         return washer.toString();
     }
 
@@ -125,7 +124,6 @@ public class OverviewFragment extends Fragment {
                 dryer.append(System.getProperty("line.separator"));
             }
         }
-        Log.d("err", dryer.toString());
         return dryer.toString();
     }
 }

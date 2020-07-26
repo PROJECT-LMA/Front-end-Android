@@ -82,6 +82,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         location_preference.setOnPreferenceClickListener(preference -> {
             Intent setupActivity = new Intent(getActivity(), SetupActivity.class);
             startActivity(setupActivity);
+            getActivity().finish();
             return true;
         });
     }
