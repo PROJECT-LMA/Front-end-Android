@@ -1,4 +1,4 @@
-package com.laioffer.lma.ui.scan;
+package com.laioffer.lma.ui.fragments.scan;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

@@ -1,4 +1,4 @@
-package com.laioffer.lma.ui.account;
+package com.laioffer.lma.ui.fragments.account;
 
 import android.app.Activity;
 import android.content.Context;
@@ -18,7 +18,6 @@ import android.widget.Toast;
 
 import com.laioffer.lma.R;
 import com.laioffer.lma.network.Account;
-import com.laioffer.lma.network.HttpUtils;
 import com.laioffer.lma.utils.EditTextValidator;
 import com.laioffer.lma.utils.Encryption;
 

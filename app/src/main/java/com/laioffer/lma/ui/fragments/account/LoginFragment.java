@@ -1,12 +1,10 @@
-package com.laioffer.lma.ui.account;
+package com.laioffer.lma.ui.fragments.account;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
 
 import android.util.Patterns;
 import android.view.LayoutInflater;

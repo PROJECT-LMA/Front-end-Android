@@ -1,27 +1,11 @@
-package com.laioffer.lma.ui.overview;
+package com.laioffer.lma.ui.fragments.overview;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Handler;
-import android.os.Looper;
-import android.widget.Toast;
 
-import com.laioffer.lma.MainActivity;
-import com.laioffer.lma.SetupActivity;
-import com.laioffer.lma.model.Machine;
 //import com.laioffer.lma.model.Machine.MachineBuilder;
-import androidx.lifecycle.LiveData;
-import com.laioffer.lma.model.Machine;
-import com.laioffer.lma.model.User;
-import com.laioffer.lma.network.Account;
-import com.laioffer.lma.network.MachinesList;
-import com.laioffer.lma.utils.Encryption;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 // deprecated class

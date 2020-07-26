@@ -1,4 +1,4 @@
-package com.laioffer.lma.ui.scan;
+package com.laioffer.lma.ui.fragments.scan;
 
 import android.Manifest;
 import android.app.Activity;

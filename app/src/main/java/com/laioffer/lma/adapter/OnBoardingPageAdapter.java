@@ -6,8 +6,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.laioffer.lma.ui.account.LoginFragment;
-import com.laioffer.lma.ui.account.SignUpFragment;
+import com.laioffer.lma.ui.fragments.account.LoginFragment;
+import com.laioffer.lma.ui.fragments.account.SignUpFragment;
 
 public class OnBoardingPageAdapter extends FragmentPagerAdapter {
 

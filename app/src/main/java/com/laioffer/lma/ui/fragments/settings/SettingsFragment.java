@@ -1,4 +1,4 @@
-package com.laioffer.lma.ui.settings;
+package com.laioffer.lma.ui.fragments.settings;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,7 +12,6 @@ import com.laioffer.lma.R;
 import com.laioffer.lma.SetupActivity;
 import com.laioffer.lma.model.User;
 
-import androidx.preference.Preference;
 public class SettingsFragment extends PreferenceFragmentCompat {
     final Context context = getContext();
     final User user = User.getInstance(context);

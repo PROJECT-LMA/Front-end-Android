@@ -52,7 +52,7 @@
 
     </PreferenceCategory>
 
-    <Preference
+    <com.laioffer.lma.ui.preference.HigherPreference
         android:key="logout"
         android:title="Log Out"
         android:layout="@layout/log_out_button"

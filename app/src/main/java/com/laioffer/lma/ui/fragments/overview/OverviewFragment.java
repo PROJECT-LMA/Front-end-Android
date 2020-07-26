@@ -1,4 +1,4 @@
-package com.laioffer.lma.ui.overview;
+package com.laioffer.lma.ui.fragments.overview;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,7 +18,6 @@ import com.laioffer.lma.model.Machine;
 import com.laioffer.lma.model.User;
 import com.laioffer.lma.network.MachinesList;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class OverviewFragment extends Fragment {
