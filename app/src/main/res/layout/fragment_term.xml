@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.term.TermFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:id="@+id/term_page"
+        android:layout_width="match_parent"
+        android:layout_height="600dp"
+        android:text="@string/term_of_use" />
+
+    <Button
+        android:id="@+id/accept"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="45dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:background="@drawable/primary_rect"
+        android:text="Accept"
+        android:textAllCaps="true"
+        android:textColor="@color/colorBackground"
+        android:textSize="17sp"
+        />
+
+</FrameLayout>
