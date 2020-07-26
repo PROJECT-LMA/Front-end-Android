@@ -1,29 +1,33 @@
 package com.laioffer.lma.service;
 
-import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.CountDownTimer;
 import android.os.IBinder;
 
+import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
 import com.laioffer.lma.MainActivity;
 import com.laioffer.lma.R;
 
-public class RunningTimerService extends Service {
+import java.util.Timer;
 
-    private AlarmManager alarmMgr;
-    private PendingIntent alarmIntent;
+public class ReserveTimerService extends Service {
+
+    private Timer timer = null;
+    private Context context;
+    NotificationManager notificationManager;
 
     private final static String TAG = "RunningTimerService";
     private final static String CHANNEL_ID = "Sparkling";
 
-    public static final String COUNTDOWN_BR = "service.countdown_br.running";
+    public static final String COUNTDOWN_BR = "service.countdown_br.reserve";
     Intent bi = new Intent(COUNTDOWN_BR);
 
     CountDownTimer cdt = null;
@@ -31,7 +35,6 @@ public class RunningTimerService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-
         createNotificationChannel();
     }
 
@@ -43,7 +46,7 @@ public class RunningTimerService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        int runningTime = intent.getIntExtra("runningTime", 45);
+        int runningTime = intent.getIntExtra("reservationTime", 45);
         cdt = new CountDownTimer(runningTime * 60 * 1000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -61,8 +64,9 @@ public class RunningTimerService extends Service {
         return super.onStartCommand(intent, flags, startId);
     }
 
+    @Nullable
     @Override
-    public IBinder onBind(Intent arg0) {
+    public IBinder onBind(Intent intent) {
         return null;
     }
 
@@ -75,7 +79,7 @@ public class RunningTimerService extends Service {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.mipmap.ic_launcher_round)
                 .setContentTitle("Sparkling")
-                .setContentText("Your clothes are ready!")
+                .setContentText("Your reservation is ready!")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setAutoCancel(true)
                 .setContentIntent(contentIntent);
@@ -91,8 +95,8 @@ public class RunningTimerService extends Service {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
         int importance = NotificationManager.IMPORTANCE_DEFAULT;
-        NotificationChannel channel = new NotificationChannel(CHANNEL_ID, "Running reminder", importance);
-        channel.setDescription("Timer of machines running stats");
+        NotificationChannel channel = new NotificationChannel(CHANNEL_ID, "Reservation reminder", importance);
+        channel.setDescription("Timer of reversation stats");
         // Register the channel with the system; you can't change the importance
         // or other notification behaviors after this
         NotificationManager notificationManager = getSystemService(NotificationManager.class);

@@ -48,7 +48,7 @@ public class Account {
 
             if (response.getBoolean("isSuccess")) {
                 result = new Result(true, "Successfully login");
-                User.login(response.getJSONObject("user"), response.getString("token"));
+                User.login(response);
             }else{
                 result = new Result(false, "Login failed");
             }

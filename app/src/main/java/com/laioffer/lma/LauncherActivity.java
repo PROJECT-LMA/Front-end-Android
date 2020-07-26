@@ -16,6 +16,8 @@ public class LauncherActivity extends AppCompatActivity {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setContentView(R.layout.splash_screen);
+
         User.initializeUser(this);
         final User user = User.getInstance(this);
         final Context context = this;

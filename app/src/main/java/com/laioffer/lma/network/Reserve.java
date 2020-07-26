@@ -12,6 +12,7 @@ public class Reserve {
     static public class Result {
         private boolean isSuccess;
         private String message;
+        private int estimateTime;
         private String machineId;
 
         public Result(boolean isSuccess, String message) {
@@ -29,6 +30,18 @@ public class Reserve {
 
         public String getMachineId() {
             return machineId;
+        }
+
+        public int getEstimateTime() {
+            return estimateTime;
+        }
+
+        public void setEstimateTime(int estimateTime) {
+            this.estimateTime = estimateTime;
+        }
+
+        public void setMachineId(String machineId) {
+            this.machineId = machineId;
         }
     }
 
@@ -52,6 +65,8 @@ public class Reserve {
 
             if (response.getBoolean("isSuccess")) {
                 result = new Result(true, response.getString("msg"));
+                result.setEstimateTime(response.getInt("estimateTime"));
+                result.setMachineId(response.getString("reserveMachineID"));
             } else {
                 result = new Result(false, response.getString("msg"));
             }
@@ -86,6 +101,8 @@ public class Reserve {
 
             if (response.getBoolean("isSuccess")) {
                 result = new Result(true, response.getString("msg"));
+                result.setEstimateTime(response.getInt("estimateTime"));
+                result.setMachineId(response.getString("reserveMachineID"));
             } else {
                 result = new Result(false, response.getString("msg"));
             }

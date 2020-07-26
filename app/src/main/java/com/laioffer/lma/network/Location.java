@@ -49,7 +49,8 @@ public class Location {
                             temp.getString("name"),
                             temp.getInt("defaultRunningTime"),
                             temp.getInt("defaultReservationExpireTime"),
-                            temp.getInt("defaultPickupTime")));
+                            temp.getInt("defaultPickupTime"),
+                            temp.getString("email")));
                 }
                 result = new Result(locations, true);
             } else {

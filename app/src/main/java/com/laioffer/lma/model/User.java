@@ -79,12 +79,23 @@ public class User {
     public Location getLocation() { return location; }
 
     // Log in the user
-    static public void login(JSONObject user, String token) throws JSONException {
+    static public void login(JSONObject payload) throws JSONException {
+        JSONObject user = payload.getJSONObject("user");
+        String token = payload.getString("token");
         instance.firstName = user.getString("firstName");
         instance.lastName = user.getString("lastName");
         instance.location.setId(user.getString("locationID"));
         instance.token = token;
         instance.isLoggedIn = true;
+        if (!payload.isNull("location")) {
+            JSONObject location = payload.getJSONObject("location");
+            instance.location.setId(location.getString("_id"));
+            instance.location.setName(location.getString("name"));
+            instance.location.setDefaultPickupTime(location.getInt("defaultPickupTime"));
+            instance.location.setDefaultReservationExpireTime(location.getInt("defaultReservationExpireTime"));
+            instance.location.setDefaultRunningTime(location.getInt("defaultRunningTime"));
+            instance.location.setAdminEmail(location.getString("email"));
+        }
     }
 
     static public void logout() {
@@ -142,12 +153,14 @@ class SharedPreferenceUtils {
             writeAttributes(context, "locationDefaultRunningTime", "0");
             writeAttributes(context, "locationDefaultReservationExpireTime", "0");
             writeAttributes(context, "locationDefaultPickupTime", "0");
+            writeAttributes(context, "locationEmail", "");
         } else {
             writeAttributes(context, "locationId", location.getId());
             writeAttributes(context, "locationName", location.getName());
             writeAttributes(context, "locationDefaultRunningTime", Integer.valueOf(location.getDefaultRunningTime()).toString());
             writeAttributes(context, "locationDefaultReservationExpireTime", Integer.valueOf(location.getDefaultReservationExpireTime()).toString());
             writeAttributes(context, "locationDefaultPickupTime", Integer.valueOf(location.getDefaultPickupTime()).toString());
+            writeAttributes(context, "locationEmail", location.getAdminEmail());
         }
     }
 
@@ -158,7 +171,8 @@ class SharedPreferenceUtils {
                 reader.getString("locationName", ""),
                 Integer.valueOf(reader.getString("locationDefaultRunningTime", "0")),
                 Integer.valueOf(reader.getString("locationDefaultReservationExpireTime", "0")),
-                Integer.valueOf(reader.getString("locationDefaultPickupTime", "0"))
+                Integer.valueOf(reader.getString("locationDefaultPickupTime", "0")),
+                reader.getString("locationEmail", "")
         );
     }
 

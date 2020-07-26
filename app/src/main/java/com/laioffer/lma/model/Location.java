@@ -7,15 +7,17 @@ public class Location {
     private int defaultRunningTime;
     private int defaultReservationExpireTime;
     private int defaultPickupTime;
+    private String adminEmail;
 
     public Location() {}
 
-    public Location(String id, String name, int defaultRunningTime, int defaultReservationExpireTime, int defaultPickupTime) {
+    public Location(String id, String name, int defaultRunningTime, int defaultReservationExpireTime, int defaultPickupTime, String adminEmail) {
         this.id = id;
         this.name = name;
         this.defaultRunningTime = defaultRunningTime;
         this.defaultReservationExpireTime = defaultReservationExpireTime;
         this.defaultPickupTime = defaultPickupTime;
+        this.adminEmail = adminEmail;
     }
 
     public String getId() {
@@ -56,5 +58,13 @@ public class Location {
 
     public void setDefaultPickupTime(int defaultPickupTime) {
         this.defaultPickupTime = defaultPickupTime;
+    }
+
+    public String getAdminEmail() {
+        return adminEmail;
+    }
+
+    public void setAdminEmail(String adminEmail) {
+        this.adminEmail = adminEmail;
     }
 }

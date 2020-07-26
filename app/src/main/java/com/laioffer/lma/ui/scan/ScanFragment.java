@@ -22,6 +22,7 @@ import com.laioffer.lma.R;
 import com.laioffer.lma.model.User;
 import com.laioffer.lma.network.Reserve;
 import com.laioffer.lma.network.Scan;
+import com.laioffer.lma.service.ReserveTimerService;
 import com.laioffer.lma.service.RunningTimerService;
 
 public class ScanFragment extends Fragment {
@@ -67,7 +68,9 @@ public class ScanFragment extends Fragment {
                     public void run() {
                         Reserve.Result result = Reserve.reserveWasher(user.getToken());
                         if (result.isSuccess()) {
-                            // start service
+                            Intent intent = new Intent(getActivity(), ReserveTimerService.class);
+                            intent.putExtra("reservationTime", result.getEstimateTime());
+                            getActivity().startService(intent);
                         }
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
@@ -89,7 +92,9 @@ public class ScanFragment extends Fragment {
                     public void run() {
                         Reserve.Result result = Reserve.reserveDryer(user.getToken());
                         if (result.isSuccess()) {
-                            // start service
+                            Intent intent = new Intent(getActivity(), ReserveTimerService.class);
+                            intent.putExtra("reservationTime", result.getEstimateTime());
+                            getActivity().startService(intent);
                         }
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
