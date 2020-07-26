@@ -96,7 +96,7 @@ public class ReserveTimerService extends Service {
         // the NotificationChannel class is new and not in the support library
         int importance = NotificationManager.IMPORTANCE_DEFAULT;
         NotificationChannel channel = new NotificationChannel(CHANNEL_ID, "Reservation reminder", importance);
-        channel.setDescription("Timer of reversation stats");
+        channel.setDescription("Timer of reservation stats");
         // Register the channel with the system; you can't change the importance
         // or other notification behaviors after this
         NotificationManager notificationManager = getSystemService(NotificationManager.class);
