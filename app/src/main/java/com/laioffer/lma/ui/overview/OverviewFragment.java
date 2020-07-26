@@ -18,12 +18,15 @@ import com.laioffer.lma.model.Machine;
 import com.laioffer.lma.model.User;
 import com.laioffer.lma.network.MachinesList;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class OverviewFragment extends Fragment {
 
     private SwipeRefreshLayout swipeRefreshLayout;
-    private TextView textView;
+    private TextView totalAvailable;
+    private TextView washerAvailable;
+    private TextView dryerAvailable;
     private int num = 0;
     private User user;
 
@@ -33,7 +36,9 @@ public class OverviewFragment extends Fragment {
         user = User.getInstance(getContext());
         View root = inflater.inflate(R.layout.fragment_overview, container, false);
         swipeRefreshLayout = (SwipeRefreshLayout) root.findViewById(R.id.swipe);
-        textView = root.findViewById(R.id.text_dashboard);
+        totalAvailable = root.findViewById(R.id.text_dashboard);
+        washerAvailable = root.findViewById(R.id.washer);
+        dryerAvailable = root.findViewById(R.id.dryer);
         swipeRefreshLayout = (SwipeRefreshLayout) root.findViewById(R.id.swipe);
         loadMachines();
 
@@ -58,7 +63,7 @@ public class OverviewFragment extends Fragment {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                final List<Machine> list = MachinesList.checkMachineStatus(user.getLocation().getId());
+                final List<Machine> list = MachinesList.checkMachineStatus(user.getLocationId());
 
                 if (list == null) {
                     getActivity().runOnUiThread(new Runnable() {
@@ -76,7 +81,10 @@ public class OverviewFragment extends Fragment {
                     public void run() {
                         int totalNum = list.size();
                         int num = countAvailableMachines(list);
-                        textView.setText("The number of available machines is " + num + " out of " + totalNum);
+
+                        totalAvailable.setText(num + " out of " + totalNum + " machines are OPEN: ");
+                        washerAvailable.setText(countWasher(list));
+                        dryerAvailable.setText(countDryer(list));
                         //machines.setValue(list);
                         list.clear();
                     }
@@ -89,11 +97,37 @@ public class OverviewFragment extends Fragment {
     private int countAvailableMachines(List<Machine> list) {
         int count = 0;
         for (Machine m : list) {
-            if (m.getIsAvailable() == "true") {
+            if (m.getIsAvailable().equals("true")) {
                 count++;
             }
         }
         return count;
+    }
+
+    private String countWasher(List<Machine> list){
+        StringBuilder washer = new StringBuilder();
+        for (Machine m : list){
+            if (m.getIsAvailable().equals("true") && m.getMachineType().equals("washer")){
+                washer.append("#");
+                washer.append(m.getSN());
+                washer.append(System.getProperty("line.separator"));
+            }
+        }
+        Log.d("err", washer.toString());
+        return washer.toString();
+    }
+
+    private String countDryer(List<Machine> list){
+        StringBuilder dryer = new StringBuilder();
+        for (Machine m : list){
+            if (m.getIsAvailable().equals("true") && m.getMachineType().equals("dryer")){
+                dryer.append("#");
+                dryer.append(m.getSN());
+                dryer.append(System.getProperty("line.separator"));
+            }
+        }
+        Log.d("err", dryer.toString());
+        return dryer.toString();
     }
 }
 

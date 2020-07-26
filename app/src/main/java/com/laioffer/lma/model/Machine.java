@@ -5,6 +5,7 @@ import org.json.JSONObject;
 public class Machine {
 
     private final static String TAG = "lifecycle";
+    private String SN = null;
     private String id = null;
     private String isAvailable = null;
     private String machineType = null;
@@ -15,6 +16,7 @@ public class Machine {
     public void setupMachine(JSONObject response) throws JSONException {
         //Log.d(TAG, response.toString());
         this.id = response.getString("_id");
+        this.SN = response.getString("sn");
         this.isAvailable = response.getString("isAvailable");
         this.machineType = response.getString("machineType");
         //Log.d(TAG, "machineType : "+ machineType);
@@ -41,6 +43,10 @@ public class Machine {
     public String getLocationID() {
         return locationID;
     }
+
+    public String getMachineType() { return machineType; }
+
+    public String getSN() { return SN; }
 }
 
  /*Machine(MachineBuilder machine) {
