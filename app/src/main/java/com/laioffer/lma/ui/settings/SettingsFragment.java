@@ -60,6 +60,22 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         Preference button = findPreference("logout");
         setup_sign_out_btn(button);
 
+        //Feedback listener
+        Preference sendFeedback = findPreference("feedback");
+        sendFeedback.setOnPreferenceClickListener(preference -> {
+            Intent i = new Intent(Intent.ACTION_SEND);
+            i.setType("message/rfc822");
+            i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"LMAadmin@gmail.com"});
+            i.putExtra(Intent.EXTRA_SUBJECT, "Report technical issues or suggest new features");
+            i.putExtra(Intent.EXTRA_TEXT   , "");
+            try {
+                startActivity(Intent.createChooser(i, "Send mail..."));
+            } catch (android.content.ActivityNotFoundException ex) {
+                Toast.makeText(getActivity(), "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+            }
+            return true;
+        });
+
     }
 
     private void setup_sign_out_btn(Preference button) {
