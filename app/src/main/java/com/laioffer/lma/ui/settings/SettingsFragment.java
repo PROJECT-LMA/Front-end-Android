@@ -64,7 +64,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         sendFeedback.setOnPreferenceClickListener(preference -> {
             Intent i = new Intent(Intent.ACTION_SEND);
             i.setType("message/rfc822");
-            i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"LMAadmin@gmail.com"});
+            i.putExtra(Intent.EXTRA_EMAIL  , new String[]{user.getLocation().getAdminEmail()});
             i.putExtra(Intent.EXTRA_SUBJECT, "Report technical issues or suggest new features");
             i.putExtra(Intent.EXTRA_TEXT   , "");
             try {
