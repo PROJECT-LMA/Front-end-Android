@@ -57,4 +57,7 @@ dependencies {
     // Java language implementation
     implementation "androidx.preference:preference:$preference_version"
 
+    //Use firebase to add afs
+    implementation 'com.google.firebase:firebase-ads:19.0.0'
+
 }

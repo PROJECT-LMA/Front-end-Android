@@ -27,4 +27,5 @@
     <string name="first_name_preference">FirstName</string>
     <string name="logout">Log Out</string>
     <string name="scan_to_open">Scan to open</string>
+    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
 </resources>
