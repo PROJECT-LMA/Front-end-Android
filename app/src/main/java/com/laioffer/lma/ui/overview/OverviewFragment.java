@@ -18,13 +18,14 @@ import com.laioffer.lma.model.Machine;
 import com.laioffer.lma.model.User;
 import com.laioffer.lma.network.MachinesList;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class OverviewFragment extends Fragment {
 
     private SwipeRefreshLayout swipeRefreshLayout;
-    private TextView totalAvailable;
-    private TextView washerAvailable;
+    //private TextView totalAvailable;
+    private TextView washer_count_text;
     private TextView dryerAvailable;
     private int num = 0;
     private User user;
@@ -35,9 +36,9 @@ public class OverviewFragment extends Fragment {
         user = User.getInstance(getContext());
         View root = inflater.inflate(R.layout.fragment_overview, container, false);
         swipeRefreshLayout = (SwipeRefreshLayout) root.findViewById(R.id.swipe);
-        totalAvailable = root.findViewById(R.id.text_dashboard);
-        washerAvailable = root.findViewById(R.id.washer);
-        dryerAvailable = root.findViewById(R.id.dryer);
+        washer_count_text = root.findViewById(R.id.washer_count);
+        //washerAvailable = root.findViewById(R.id.washer);
+        //dryerAvailable = root.findViewById(R.id.dryer);
         swipeRefreshLayout = (SwipeRefreshLayout) root.findViewById(R.id.swipe);
         loadMachines();
 
@@ -63,7 +64,6 @@ public class OverviewFragment extends Fragment {
             @Override
             public void run() {
                 final List<Machine> list = MachinesList.checkMachineStatus(user.getLocation().getId());
-
                 if (list == null) {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
@@ -78,22 +78,58 @@ public class OverviewFragment extends Fragment {
                 threadHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        int totalNum = list.size();
-                        int num = countAvailableMachines(list);
-
-                        totalAvailable.setText(num + " out of " + totalNum + " machines are OPEN: ");
-                        washerAvailable.setText(countWasher(list));
-                        dryerAvailable.setText(countDryer(list));
-                        //machines.setValue(list);
+                        Washers washers = getWashers(list);
+                        Dryers dryers = getDryers(list);
+                        washer_count_text.setText(washers.availableCount + " of " + washers.totalCount + "available");
                         list.clear();
                     }
                 });
             }
         });
         thread.start();
+
     }
 
-    private int countAvailableMachines(List<Machine> list) {
+    private Washers getWashers(List<Machine> list){
+        Washers washers = new Washers();
+        for (Machine m : list){
+            if (m.getIsAvailable().equals("true") && m.getMachineType().equals("washer")){
+                washers.availableCount++;
+                washers.list.add(m);
+            }
+            washers.totalCount++;
+        }
+        return washers;
+    }
+
+    private Dryers getDryers(List<Machine> list){
+        Dryers dryers = new Dryers();
+        for (Machine m : list){
+            if (m.getIsAvailable().equals("true") && m.getMachineType().equals("washer")){
+                dryers.availableCount++;
+                dryers.list.add(m);
+            }
+            dryers.totalCount++;
+        }
+        return dryers;
+    }
+
+    private static class Washers{
+        List<Machine> list = new ArrayList<>();
+        int availableCount = 0;
+        int totalCount = 0;
+    }
+
+    private static class Dryers{
+        List<Machine> list = new ArrayList<>();
+        int availableCount = 0;
+        int totalCount = 0;
+    }
+}
+
+        /*
+
+            private int countAvailableMachines(List<Machine> list) {
         int count = 0;
         for (Machine m : list) {
             if (m.getIsAvailable().equals("true")) {
@@ -102,33 +138,7 @@ public class OverviewFragment extends Fragment {
         }
         return count;
     }
-
-    private String countWasher(List<Machine> list){
-        StringBuilder washer = new StringBuilder();
-        for (Machine m : list){
-            if (m.getIsAvailable().equals("true") && m.getMachineType().equals("washer")){
-                washer.append("#");
-                washer.append(m.getSN());
-                washer.append(System.getProperty("line.separator"));
-            }
-        }
-        return washer.toString();
-    }
-
-    private String countDryer(List<Machine> list){
-        StringBuilder dryer = new StringBuilder();
-        for (Machine m : list){
-            if (m.getIsAvailable().equals("true") && m.getMachineType().equals("dryer")){
-                dryer.append("#");
-                dryer.append(m.getSN());
-                dryer.append(System.getProperty("line.separator"));
-            }
-        }
-        return dryer.toString();
-    }
-}
-
-        /*overviewViewModel = new ViewModelProvider(this).get(OverviewViewModel.class);
+        overviewViewModel = new ViewModelProvider(this).get(OverviewViewModel.class);
         View root = inflater.inflate(R.layout.fragment_overview, container, false);
         swipeRefreshLayout = (SwipeRefreshLayout) root.findViewById(R.id.swipe);
 
