@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.laioffer.lma.R;
+import com.laioffer.lma.adapter.WasherAdapter;
 import com.laioffer.lma.model.Machine;
 import com.laioffer.lma.model.User;
 import com.laioffer.lma.network.MachinesList;
@@ -75,7 +76,19 @@ public class OverviewFragment extends Fragment {
         return root;
     }
 
+    private void setupMachineRecyclerList(List<Machine> washers) {
+        // use this setting to improve performance if you know that changes
+        // in content do not change the layout size of the RecyclerView
+        washer_recyclerView.setHasFixedSize(true);
 
+        // use a linear layout manager
+        layoutManager = new LinearLayoutManager(getContext());
+        washer_recyclerView.setLayoutManager(layoutManager);
+
+        // specify an adapter (see also next example)
+        washerAdapter = new WasherAdapter(washers);
+        washer_recyclerView.setAdapter(washerAdapter);
+    }
 
     private void loadMachines() {
 
@@ -102,6 +115,7 @@ public class OverviewFragment extends Fragment {
                         Dryers dryers = getDryers(list);
                         washer_count_text.setText(washers.availableCount + " of " + washers.totalCount + " available");
                         dryer_count_text.setText(dryers.availableCount + " of " + dryers.totalCount + " available");
+                        setupMachineRecyclerList(washers.list);
                         list.clear();
                     }
                 });
