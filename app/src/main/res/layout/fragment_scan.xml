@@ -80,32 +80,32 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/reserve_washer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginBottom="30dp"
-        android:layout_marginEnd="30dp"
-        app:layout_constraintBottom_toTopOf="@id/reserve_dryer"
-        android:background="@drawable/primary_rect"
-        android:text="Reserve washer"
-        android:textAllCaps="false"
-        android:textColor="@color/colorBackground"
-        android:textSize="24sp" />
+<!--    <Button-->
+<!--        android:id="@+id/reserve_washer"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="30dp"-->
+<!--        android:layout_marginBottom="30dp"-->
+<!--        android:layout_marginEnd="30dp"-->
+<!--        app:layout_constraintBottom_toTopOf="@id/reserve_dryer"-->
+<!--        android:background="@drawable/primary_rect"-->
+<!--        android:text="Reserve washer"-->
+<!--        android:textAllCaps="false"-->
+<!--        android:textColor="@color/colorBackground"-->
+<!--        android:textSize="24sp" />-->
 
-    <Button
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:id="@+id/reserve_dryer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginBottom="75dp"
-        android:layout_marginEnd="30dp"
-        android:background="@drawable/primary_rect"
-        android:text="Reserve dryer"
-        android:textAllCaps="false"
-        android:textColor="@color/colorBackground"
-        android:textSize="24sp" />
+<!--    <Button-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        android:id="@+id/reserve_dryer"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="30dp"-->
+<!--        android:layout_marginBottom="75dp"-->
+<!--        android:layout_marginEnd="30dp"-->
+<!--        android:background="@drawable/primary_rect"-->
+<!--        android:text="Reserve dryer"-->
+<!--        android:textAllCaps="false"-->
+<!--        android:textColor="@color/colorBackground"-->
+<!--        android:textSize="24sp" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
