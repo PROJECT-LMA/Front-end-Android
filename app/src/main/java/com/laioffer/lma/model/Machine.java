@@ -12,7 +12,7 @@ public class Machine {
     private String userID = null;
     private String locationID = null;
     private String scanString = null;
-
+//is picked_up
     public void setupMachine(JSONObject response) throws JSONException {
         //Log.d(TAG, response.toString());
         this.id = response.getString("_id");

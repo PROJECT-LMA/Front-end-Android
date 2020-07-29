@@ -40,4 +40,7 @@
         3. If you want to use our services, you can’t do certain bad things.
         If we think you are doing these bad things, we have the right to share your information with law enforcement.
     </string>
+    <string name="reserve">Reserve</string>
+    <string name="number">Number</string>
+    <string name="washer">Washer</string>
 </resources>
