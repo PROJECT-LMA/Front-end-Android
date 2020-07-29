@@ -10,69 +10,142 @@
         android:id="@+id/swipe"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteX="-16dp"
         tools:layout_editor_absoluteY="0dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
-            <TableLayout
-                android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
+            android:paddingTop="5dp"
+            android:paddingRight="10dp"
+            >
+            <TextView
+                android:id="@+id/location_bar"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="5dp"
-                android:paddingTop="5dp"
-                android:paddingRight="5dp"
-                android:stretchColumns="1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.516"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                >
+                android:layout_gravity="center"
+                android:text="Laundry Room : "
+                android:textColor="@color/colorSecondaryDark"
+                android:textStyle="bold"  />
 
-                <TableRow>
 
-                    <TextView
-                        android:id="@+id/washer_bar_overview"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:text="Washer"
-                        android:textColor="@color/colorSecondaryDark"
-                        android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/washer_count"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right|center_vertical"
-                        android:layout_weight="1"
-                        android:text="Number" />
+                <TableLayout
+                    android:id="@+id/washer_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:stretchColumns="1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.516"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    >
 
-                </TableRow>
-            </TableLayout>
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="160dp"
-                android:layout_height="158dp"
-                android:layout_marginStart="36dp"
-                android:layout_marginTop="52dp"
-                android:src="@drawable/ic_washer"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                    <TableRow>
 
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="160dp"
-                android:layout_height="158dp"
-                android:layout_marginStart="36dp"
-                android:layout_marginBottom="88dp"
-                android:src="@drawable/ic_dryer"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                        <TextView
+                            android:id="@+id/washer_bar_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="Washer"
+                            android:textColor="@color/colorSecondaryDark"
+                            android:textStyle="bold"  />
+
+                        <TextView
+                            android:id="@+id/washer_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right|center_vertical"
+                            android:text="Number" />
+
+                    </TableRow>
+                </TableLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/washer_recycler_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="vertical"
+                    app:layout_constraintBottom_toTopOf="@id/dryer_bar"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/washer_bar"
+                    app:layout_constraintVertical_bias="0.0" />
+                <!--
+                                <ImageView
+                                    android:id="@+id/imageView1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_alignParentBottom="true"
+                                    android:layout_marginRight="12dp"
+                                    android:layout_marginBottom="12dp"
+                                    android:elevation="2dp"
+                                    android:src="@drawable/ic_washer" />
+                                -->
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/colorSkyBlue"
+                android:orientation="vertical">
+
+                <TableLayout
+                    android:id="@+id/dryer_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:stretchColumns="1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.516"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/washer_recycler_list">
+
+                    <TableRow>
+
+                        <TextView
+                            android:id="@+id/dryer_bar_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="Dryer"
+                            android:textColor="@color/colorSecondaryDark"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/dryer_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right|center_vertical"
+                            android:text="Number" />
+
+                    </TableRow>
+                </TableLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/dryer_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/washer_bar"
+                    app:layout_constraintVertical_bias="0.0" />
+            </LinearLayout>
+
         </LinearLayout>
-
-
 
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
