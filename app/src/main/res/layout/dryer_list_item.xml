@@ -5,11 +5,12 @@
     android:padding="6dip" >
     <ImageView
         android:id="@+id/icon_dryer"
-        android:layout_width="wrap_content"
+        android:layout_width="60dp"
         android:layout_height="fill_parent"
         android:layout_alignParentBottom="true"
         android:layout_alignParentTop="true"
-        android:layout_marginRight="6dip"
+        android:layout_marginTop="10dip"
+        android:foregroundGravity="center|center_vertical"
         android:contentDescription="TODO"
         android:src="@drawable/ic_dryer" />
 
@@ -17,14 +18,14 @@
         android:id="@+id/dryer_status"
         android:layout_width="fill_parent"
         android:layout_height="26dip"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
         android:layout_toRightOf="@id/icon_dryer"
         android:ellipsize="marquee"
-        android:text="Available"
-        android:textSize="12sp"
         android:singleLine="true"
-        android:textColor="@color/machineColor"/>
+        android:text="Available"
+        android:textColor="@color/machineColor"
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/dryer_sn"
@@ -37,7 +38,21 @@
         android:layout_toRightOf="@id/icon_dryer"
         android:gravity="center_vertical"
         android:text="Dryer SN"
-        android:textSize="10sp"/>
+        android:textSize="15sp"/>
+
+    <TextView
+        android:id="@+id/dryer_time"
+        android:layout_width="fill_parent"
+        android:layout_height="26dip"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:gravity="right|center_horizontal"
+        android:ellipsize="marquee"
+        android:text="Time"
+        android:textSize="20sp"
+        android:singleLine="true"/>
     <View style="@style/Divider"/>
+
+
 
 </RelativeLayout>

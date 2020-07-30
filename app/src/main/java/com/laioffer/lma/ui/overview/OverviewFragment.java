@@ -1,6 +1,8 @@
 package com.laioffer.lma.ui.overview;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -13,6 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,8 +42,8 @@ public class OverviewFragment extends Fragment {
     private TextView washer_count_text;
     private TextView dryer_count_text;
     private TextView dryerAvailable;
-    private Button reverseWasher;
-    private Button reverseDryer;
+    private Button reverseWasher_btn;
+    private Button reverseDryer_btn;
     private int num = 0;
     private User user;
     private RecyclerView washer_recyclerView;
@@ -62,24 +66,25 @@ public class OverviewFragment extends Fragment {
         dryer_count_text = root.findViewById(R.id.dryer_count);
 
 
-        reverseWasher = root.findViewById(R.id.reserve_washer_btn);
-        reverseDryer = root.findViewById(R.id.reserve_dryer_btn);
+        reverseWasher_btn = root.findViewById(R.id.reserve_washer_btn);
+        reverseDryer_btn = root.findViewById(R.id.reserve_dryer_btn);
         swipeRefreshLayout = (SwipeRefreshLayout) root.findViewById(R.id.swipe);
 
 
         //initialize Screen
-        location_name.setText("Laundry Room : " + user.getLocation().getName());
+        location_name.setText(user.getLocation().getName());
         loadMachines();
 
 
-        //swipe update
+
+        //swipe update, load machines and update lists
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        location_name.setText("Laundry Room : " + user.getLocation().getName());
+                        location_name.setText(user.getLocation().getName());
                         loadMachines();
                         swipeRefreshLayout.setRefreshing(false);
                     }
@@ -87,13 +92,15 @@ public class OverviewFragment extends Fragment {
             }
         });
 
+        //reverse_setup
         setup_reserve();
+
 
         return root;
     }
 
     private void setup_reserve(){
-        reverseWasher.setOnClickListener(new View.OnClickListener() {
+        reverseWasher_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Thread thread = new Thread(new Runnable() {
@@ -117,7 +124,7 @@ public class OverviewFragment extends Fragment {
             }
         });
 
-        reverseDryer.setOnClickListener(new View.OnClickListener() {
+        reverseDryer_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Thread thread = new Thread(new Runnable() {
@@ -156,6 +163,8 @@ public class OverviewFragment extends Fragment {
         // specify an adapter (see also next example)
         washerAdapter = new WasherAdapter(washers);
         washer_recyclerView.setAdapter(washerAdapter);
+
+
     }
 
     private void setupDryersRecyclerList(List<Machine> dryers, Machine user_machine) {
@@ -197,7 +206,15 @@ public class OverviewFragment extends Fragment {
                     public void run() {
 
                         Washers washers = getWashers(list);
+                        if (washers.availableCount == 0) {
+                            reverseWasher_btn.setBackgroundResource(R.drawable.unclickable_btn);
+                            reverseWasher_btn.setEnabled(false);
+                        }
                         Dryers dryers = getDryers(list);
+                        if (dryers.availableCount == 0) {
+                            reverseDryer_btn.setBackgroundResource(R.drawable.unclickable_btn);
+                            reverseDryer_btn.setEnabled(false);
+                        }
                         washer_count_text.setText(washers.availableCount + " of " + washers.totalCount + " available");
                         dryer_count_text.setText(dryers.availableCount + " of " + dryers.totalCount + " available");
                         setupWashersRecyclerList(washers.available_list, washers.user_machine);
@@ -219,9 +236,6 @@ public class OverviewFragment extends Fragment {
                     washers.availableCount++;
                     washers.available_list.add(m);
                 }
-
-                Log.d("user machine", "washer in use: " + m.getUserID() );
-                Log.d("user machine", "user id is: " + user.getId() );
                 if (m.getIsAvailable().equals("false") && m.getUserID().equals(user.getId())) {
                     washers.user_machine = m;
                 }
@@ -252,6 +266,7 @@ public class OverviewFragment extends Fragment {
     public class Washers{
         List<Machine> available_list = new ArrayList<>();
         Machine user_machine;
+        Machine reserved_machine;
         int availableCount = 0;
         int totalCount = 0;
     }
@@ -259,50 +274,8 @@ public class OverviewFragment extends Fragment {
     public class Dryers{
         List<Machine> available_list = new ArrayList<>();
         Machine user_machine;
+        Machine reserved_machine;
         int availableCount = 0;
         int totalCount = 0;
     }
 }
-
-        /*
-
-            private int countAvailableMachines(List<Machine> list) {
-        int count = 0;
-        for (Machine m : list) {
-            if (m.getIsAvailable().equals("true")) {
-                count++;
-            }
-        }
-        return count;
-    }
-        overviewViewModel = new ViewModelProvider(this).get(OverviewViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_overview, container, false);
-        swipeRefreshLayout = (SwipeRefreshLayout) root.findViewById(R.id.swipe);
-
-
-
-        overviewViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
-
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        overviewViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-                            @Override
-                            public void onChanged(@Nullable String s) {
-                                textView.setText(s);
-                            }
-                        });
-                        swipeRefreshLayout.setRefreshing(false);
-                    }
-                },2000);
-            }
-        });
-*/

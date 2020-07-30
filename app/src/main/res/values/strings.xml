@@ -43,4 +43,7 @@
     <string name="reserve">Reserve</string>
     <string name="number">Number</string>
     <string name="washer">Washer</string>
+    <string name="washer_sn">washer SN</string>
+    <string name="available">Available</string>
+    <string name="todo">TODO</string>
 </resources>

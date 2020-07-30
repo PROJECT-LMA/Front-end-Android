@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="Laundry Room : "
-                android:textSize="20dp"
+                android:textSize="25dp"
                 android:textColor="@color/colorSecondaryDark"
                 android:textStyle="bold"  />
 
@@ -54,38 +54,41 @@
                     <TableRow>
 
 
+                    <TextView
+                        android:id="@+id/washer_bar_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left|center_horizontal"
+                        android:text="@string/washer"
+                        android:textColor="@color/colorSecondaryDark"
+                        android:textStyle="bold"
+                        android:textSize="22dp"/>
 
-                        <TextView
-                            android:id="@+id/washer_bar_name"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="@string/washer"
-                            android:textColor="@color/colorSecondaryDark"
-                            android:textStyle="bold"  />
 
                         <Button
                             android:id="@+id/reserve_washer_btn"
-                            android:layout_width="64dp"
-                            android:layout_height="20dp"
-                            android:layout_gravity="start|center_vertical"
-                            android:layout_margin="10px"
+                            android:layout_width="30dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="right"
                             android:background="@drawable/primary_rect"
                             android:text="@string/reserve"
                             android:textAllCaps="false"
                             android:textColor="@color/colorBackground"
-                            android:textSize="12dp" />
-
-                        <TextView
-                            android:id="@+id/washer_count"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="right|center_vertical"
-                            android:paddingRight="10dp"
-                            android:text="@string/number" />
+                            android:textSize="18dp" />
 
 
                     </TableRow>
+                <TableRow>
+
+                    <TextView
+                        android:id="@+id/washer_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left|center_horizontal"
+                        android:text="@string/number"
+                        android:textSize="12dp"/>
+
+                </TableRow>
 
                 </TableLayout>
 
@@ -137,30 +140,35 @@
                             android:id="@+id/dryer_bar_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
+                            android:layout_gravity="left|center_horizontal"
                             android:text="Dryer"
                             android:textColor="@color/colorSecondaryDark"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:textSize="22dp" />
 
                         <Button
                             android:id="@+id/reserve_dryer_btn"
-                            android:layout_width="64dp"
-                            android:layout_height="20dp"
-                            android:layout_gravity="start|center_vertical"
-                            android:layout_margin="10px"
+                            android:layout_width="30dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="right|center_vertical"
                             android:background="@drawable/primary_rect"
                             android:text="@string/reserve"
                             android:textAllCaps="false"
                             android:textColor="@color/colorBackground"
-                            android:textSize="12dp" />
+                            android:textSize="18dp"/>
+
+
+                    </TableRow>
+
+                    <TableRow>
 
                         <TextView
                             android:id="@+id/dryer_count"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="right|center_vertical"
-                            android:paddingRight="10dp"
-                            android:text="Number" />
+                            android:layout_gravity="left|center_horizontal"
+                            android:text="@string/number"
+                            android:textSize="12dp"/>
 
                     </TableRow>
                 </TableLayout>
