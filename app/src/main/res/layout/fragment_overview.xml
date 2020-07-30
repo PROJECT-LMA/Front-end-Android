@@ -39,58 +39,57 @@
                 android:layout_marginTop="20dp"
                 android:orientation="vertical">
 
-
-                <TableLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/washer_bar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:stretchColumns="1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.516"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    >
+                    app:layout_constraintTop_toTopOf="@id/washer_recycler_list">
 
-                    <TableRow>
-
-
-                    <TextView
-                        android:id="@+id/washer_bar_name"
+                    <LinearLayout
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="left|center_horizontal"
-                        android:text="@string/washer"
-                        android:textColor="@color/colorSecondaryDark"
-                        android:textStyle="bold"
-                        android:textSize="22dp"/>
+                        android:orientation="vertical">
 
+                        <TextView
+                            android:id="@+id/washer_bar_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start|center_horizontal"
+                            android:text="Washer"
+                            android:textColor="@color/colorSecondaryDark"
+                            android:textStyle="bold"
+                            android:textSize="22sp" />
 
-                        <Button
-                            android:id="@+id/reserve_washer_btn"
-                            android:layout_width="30dp"
-                            android:layout_height="24dp"
-                            android:layout_gravity="right|center_vertical"
-                            android:background="@drawable/primary_rect"
-                            android:text="@string/reserve"
-                            android:textAllCaps="false"
-                            android:textColor="@color/colorBackground"
-                            android:textSize="18dp" />
+                        <TextView
+                            android:id="@+id/washer_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start|center_horizontal"
+                            android:text="@string/number"
+                            android:textSize="12sp"/>
 
+                    </LinearLayout>
 
-                    </TableRow>
-                <TableRow>
+                    <Button
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:id="@+id/reserve_washer_btn"
+                        android:layout_width="100dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/primary_rect"
+                        android:text="@string/reserve"
+                        android:textAllCaps="false"
+                        android:textColor="@color/colorBackground"
+                        android:textSize="18sp"/>
 
-                    <TextView
-                        android:id="@+id/washer_count"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left|center_horizontal"
-                        android:text="@string/number"
-                        android:textSize="12dp"/>
-
-                </TableRow>
-
-                </TableLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/washer_recycler_list"
@@ -124,54 +123,57 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <TableLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/dryer_bar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:stretchColumns="1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.516"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@id/washer_recycler_list">
 
-                    <TableRow>
+                    <LinearLayout
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
                         <TextView
                             android:id="@+id/dryer_bar_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="left|center_horizontal"
+                            android:layout_gravity="start|center_horizontal"
                             android:text="Dryer"
                             android:textColor="@color/colorSecondaryDark"
                             android:textStyle="bold"
-                            android:textSize="22dp" />
-
-                        <Button
-                            android:id="@+id/reserve_dryer_btn"
-                            android:layout_width="30dp"
-                            android:layout_height="24dp"
-                            android:layout_gravity="right|center_vertical"
-                            android:background="@drawable/primary_rect"
-                            android:text="@string/reserve"
-                            android:textAllCaps="false"
-                            android:textColor="@color/colorBackground"
-                            android:textSize="18dp"/>
-
-
-                    </TableRow>
-
-                    <TableRow>
+                            android:textSize="22sp" />
 
                         <TextView
                             android:id="@+id/dryer_count"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="left|center_horizontal"
+                            android:layout_gravity="start|center_horizontal"
                             android:text="@string/number"
-                            android:textSize="12dp"/>
+                            android:textSize="12sp"/>
 
-                    </TableRow>
-                </TableLayout>
+                    </LinearLayout>
+
+                    <Button
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:id="@+id/reserve_dryer_btn"
+                        android:layout_width="100dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/primary_rect"
+                        android:text="@string/reserve"
+                        android:textAllCaps="false"
+                        android:textColor="@color/colorBackground"
+                        android:textSize="18sp"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/dryer_recycler_list"
