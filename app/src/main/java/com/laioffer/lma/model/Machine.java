@@ -2,6 +2,7 @@ package com.laioffer.lma.model;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
 public class Machine {
 
     private final static String TAG = "lifecycle";
@@ -14,7 +15,9 @@ public class Machine {
     private String scanString = null;
     private String startTime = null;
     private String isReserved = null;
-//is picked_up
+    private String userReservedID = null;
+
+    //is picked_up
     public void setupMachine(JSONObject response) throws JSONException {
         //Log.d(TAG, response.toString());
         this.id = response.getString("_id");
@@ -29,6 +32,7 @@ public class Machine {
         this.scanString = response.getString("scanString");
         this.startTime = response.getString("startTime");
         this.isReserved = response.getString("isReserved");
+        this.userReservedID = response.getString("userReservedID");
     }
 
 
@@ -48,13 +52,25 @@ public class Machine {
         return locationID;
     }
 
-    public String getMachineType() { return machineType; }
+    public String getMachineType() {
+        return machineType;
+    }
 
-    public String getSN() { return SN; }
+    public String getSN() {
+        return SN;
+    }
 
-    public String getStartTime() { return startTime; }
+    public String getStartTime() {
+        return startTime;
+    }
 
-    public String getIsReserved() {return isReserved;}
+    public String getIsReserved() {
+        return isReserved;
+    }
+
+    public String getUserReservedID() {
+        return userReservedID;
+    }
 }
 
  /*Machine(MachineBuilder machine) {
