@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="?android:attr/listPreferredItemHeight"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="6dip" >
+    <TextView
+        android:id="@+id/dryer_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:singleLine="true"
+        android:text="@string/you_ve_reach_the_bottom_of_the_list"
+        android:textColor="@color/greyColor"
+        android:textSize="20sp" />
+</LinearLayout>

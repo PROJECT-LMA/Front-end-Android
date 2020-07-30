@@ -29,6 +29,8 @@ public class DryerAdapter extends RecyclerView.Adapter<DryerAdapter.ViewHolder> 
     private List<Machine> dryers;
     User user;
     private Context context;
+    private static final int FOOTER_VIEW = 1;
+    private static final int ITEM_VIEW = 2;
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
@@ -51,6 +53,14 @@ public class DryerAdapter extends RecyclerView.Adapter<DryerAdapter.ViewHolder> 
         }
     }
 
+    public class FooterViewHolder extends ViewHolder {
+        public View layout;
+        public FooterViewHolder(View v) {
+            super(v);
+            layout = v;
+        }
+    }
+
 
 
     // Provide a suitable constructor (depends on the kind of dataset)
@@ -63,9 +73,18 @@ public class DryerAdapter extends RecyclerView.Adapter<DryerAdapter.ViewHolder> 
     public DryerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                        int viewType) {
         // create a new view
+        View v;
+        if (viewType == FOOTER_VIEW) {
+            v = LayoutInflater.from(parent.getContext()).inflate(R.layout.bottom_of_list_item, parent, false);
+
+            FooterViewHolder vh = new FooterViewHolder(v);
+
+            return vh;
+        }
+
         LayoutInflater inflater = LayoutInflater.from(
                 parent.getContext());
-        View v =
+        v =
                 inflater.inflate(R.layout.dryer_list_item, parent, false);
         DryerAdapter.ViewHolder vh = new DryerAdapter.ViewHolder(v);
         context = parent.getContext();
@@ -78,50 +97,67 @@ public class DryerAdapter extends RecyclerView.Adapter<DryerAdapter.ViewHolder> 
     public void onBindViewHolder(DryerAdapter.ViewHolder holder, final int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        Machine dryer = dryers.get(position);
+        if (holder instanceof FooterViewHolder) {
+            FooterViewHolder footer_vh = (FooterViewHolder) holder;
 
-        final String name = dryer.getSN();
-        String cur_status = null;
-        if (dryer.getIsAvailable() == "true") {
-            cur_status = "Available";
-        } else if (dryer.getUserID().equals(user.getId())) {
-            cur_status = "In use";
-        } else {//reversed machines
-            cur_status = "Reserved";
-        }
-        final String status = cur_status;
-        String estimated_endTime = null;
-        switch (status) {
-            case "Available" :
-                estimated_endTime = "";
-                break;
-            case "In use" :
-                if(dryer.getUserID().equals(user.getId())) {
-                    holder.txtFooter.setTextColor(Color.parseColor("#FF7F50"));
-                    holder.icon.setImageResource(R.drawable.using_ic_dryer);
-                }
-                estimated_endTime = getEndTime(dryer.getStartTime(), user.getLocation().getDefaultRunningTime()); //after finished, calculate the pick up time //warning
-                break;
-            case "Reserved":
-                if(dryer.getUserID().equals(user.getId())) {
-                    holder.txtFooter.setTextColor(Color.parseColor("#FF7F50"));
-                    holder.icon.setImageResource(R.drawable.using_ic_dryer);
-                }
-                estimated_endTime = getEndTime(dryer.getStartTime(), user.getLocation().getDefaultRunningTime() + user.getLocation().getDefaultPickupTime()); //location.defaultRunningTime - helper.millisToMinutes(Date.now() - dryer.startTime) + location.defaultPickupTime;
-                break;
-        }
-        final String endTime = estimated_endTime;
+        } else if (holder instanceof ViewHolder) {
+            ViewHolder washer_vh = (ViewHolder) holder;
+            Machine dryer = dryers.get(position);
 
-        holder.txtHeader.setText("ID: " + name);
-        holder.txtFooter.setText(status);
-        holder.endTime.setText(endTime);
+            final String name = dryer.getSN();
+            String cur_status = null;
+            if (dryer.getIsAvailable() == "true") {
+                cur_status = "Available";
+            } else if (dryer.getUserID().equals(user.getId())) {
+                cur_status = "In use";
+            } else {//reversed machines
+                cur_status = "Reserved";
+            }
+            final String status = cur_status;
+            String estimated_endTime = null;
+            switch (status) {
+                case "Available" :
+                    estimated_endTime = "";
+                    break;
+                case "In use" :
+                    if(dryer.getUserID().equals(user.getId())) {
+                        holder.txtFooter.setTextColor(Color.parseColor("#FF7F50"));
+                        holder.icon.setImageResource(R.drawable.using_ic_dryer);
+                    }
+                    estimated_endTime = getEndTime(dryer.getStartTime(), user.getLocation().getDefaultRunningTime()); //after finished, calculate the pick up time //warning
+                    break;
+                case "Reserved":
+                    if(dryer.getUserID().equals(user.getId())) {
+                        holder.txtFooter.setTextColor(Color.parseColor("#FF7F50"));
+                        holder.icon.setImageResource(R.drawable.using_ic_dryer);
+                    }
+                    estimated_endTime = getEndTime(dryer.getStartTime(), user.getLocation().getDefaultRunningTime() + user.getLocation().getDefaultPickupTime()); //location.defaultRunningTime - helper.millisToMinutes(Date.now() - dryer.startTime) + location.defaultPickupTime;
+                    break;
+            }
+            final String endTime = estimated_endTime;
+
+            washer_vh.txtHeader.setText("ID: " + name);
+            washer_vh.txtFooter.setText(status);
+            washer_vh.endTime.setText(endTime);
+        }
+
 
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return dryers.size();
+        if (dryers == null) {
+            return 0;
+        }
+
+        if (dryers.size() == 0) {
+            //Return 1 here to show nothing
+            return 1;
+        }
+
+        // Add extra view to show the footer view
+        return dryers.size() + 1;
     }
 
 
@@ -132,6 +168,14 @@ public class DryerAdapter extends RecyclerView.Adapter<DryerAdapter.ViewHolder> 
         OffsetDateTime end_odt = odt.plusMinutes(time);
         Log.d("washer" , "output is " + end_odt.getHour() + ":" + end_odt.getMinute());
         return end_odt.getHour() + ":" + end_odt.getMinute();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if(position == dryers.size()) {
+            return FOOTER_VIEW;
+        }
+        return ITEM_VIEW;
     }
 
 }
