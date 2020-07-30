@@ -12,7 +12,9 @@ public class Machine {
     private String userID = null;
     private String locationID = null;
     private String scanString = null;
-
+    private String startTime = null;
+    private String isReserved = null;
+//is picked_up
     public void setupMachine(JSONObject response) throws JSONException {
         //Log.d(TAG, response.toString());
         this.id = response.getString("_id");
@@ -25,6 +27,8 @@ public class Machine {
 
         //Log.d(TAG, "locationID "+ locationID);
         this.scanString = response.getString("scanString");
+        this.startTime = response.getString("startTime");
+        this.isReserved = response.getString("isReserved");
     }
 
 
@@ -47,6 +51,10 @@ public class Machine {
     public String getMachineType() { return machineType; }
 
     public String getSN() { return SN; }
+
+    public String getStartTime() { return startTime; }
+
+    public String getIsReserved() {return isReserved;}
 }
 
  /*Machine(MachineBuilder machine) {

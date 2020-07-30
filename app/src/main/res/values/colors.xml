@@ -7,6 +7,11 @@
     <color name="colorAccent">#CEB896</color>
     <color name="colorGrey">#CCD7DE</color>
     <color name="colorSkyBlue">#98D8E9</color>
+    <color name="colorGreen">#00FF7F</color>
+    <color name="colorRed">#ff0000</color>
+    <color name="machineColor">#31A5EF</color>
+    <color name="greyColor">#A9A9A9</color>
+    <color name="orangeColor">#FF7F50</color>
 
 
     <color name="black_20">#33000000</color>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="?android:attr/listPreferredItemHeight"
+    android:padding="6dip" >
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="60dp"
+        android:layout_height="fill_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="10dip"
+        android:foregroundGravity="center|center_vertical"
+        android:contentDescription="@string/todo"
+        android:src="@drawable/ic_washer" />
+
+    <TextView
+        android:id="@+id/washer_status"
+        android:layout_width="fill_parent"
+        android:layout_height="26dip"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@id/icon"
+        android:ellipsize="marquee"
+        android:text="@string/available"
+        android:textSize="20sp"
+        android:singleLine="true"
+        android:textColor="@color/machineColor"
+        />
+
+    <TextView
+        android:id="@+id/washer_sn"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/washer_status"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignWithParentIfMissing="true"
+        android:layout_toEndOf="@id/icon"
+        android:gravity="center_vertical"
+        android:text="@string/washer_sn"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/washer_time"
+        android:layout_width="fill_parent"
+        android:layout_height="26dip"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:gravity="right|center_horizontal"
+        android:ellipsize="marquee"
+        android:text="Time"
+        android:textSize="20sp"
+        android:singleLine="true"/>
+
+
+    <View style="@style/Divider"/>
+
+</RelativeLayout>
