@@ -22,6 +22,7 @@ import com.laioffer.lma.model.Machine;
 import com.laioffer.lma.model.User;
 
 import java.time.OffsetDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 public class DryerAdapter extends RecyclerView.Adapter<DryerAdapter.ViewHolder> {
@@ -106,7 +107,7 @@ public class DryerAdapter extends RecyclerView.Adapter<DryerAdapter.ViewHolder> 
                     holder.txtFooter.setTextColor(Color.parseColor("#FF7F50"));
                     holder.icon.setImageResource(R.drawable.using_ic_dryer);
                 }
-                estimated_endTime = getEndTime(dryer.getStartTime(), user.getLocation().getDefaultReservationExpireTime()); //location.defaultRunningTime - helper.millisToMinutes(Date.now() - dryer.startTime) + location.defaultPickupTime;
+                estimated_endTime = getEndTime(dryer.getStartTime(), user.getLocation().getDefaultRunningTime() + user.getLocation().getDefaultPickupTime()); //location.defaultRunningTime - helper.millisToMinutes(Date.now() - dryer.startTime) + location.defaultPickupTime;
                 break;
         }
         final String endTime = estimated_endTime;
