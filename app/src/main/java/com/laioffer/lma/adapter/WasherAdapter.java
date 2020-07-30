@@ -86,7 +86,7 @@ public class WasherAdapter extends RecyclerView.Adapter<WasherAdapter.ViewHolder
         String estimated_endTime = null;
         switch (status) {
             case "Available" :
-                estimated_endTime = getEndTime(washer.getStartTime(), user.getLocation().getDefaultRunningTime());
+                estimated_endTime = "";
                 break;
             case "In use" :
                 if(washer.getUserID().equals(user.getId())) {

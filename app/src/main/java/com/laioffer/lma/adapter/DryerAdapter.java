@@ -92,26 +92,24 @@ public class DryerAdapter extends RecyclerView.Adapter<DryerAdapter.ViewHolder> 
         String estimated_endTime = null;
         switch (status) {
             case "Available" :
-                estimated_endTime = getEndTime(dryer.getStartTime(), user.getLocation().getDefaultRunningTime());
+                estimated_endTime = "";
                 break;
             case "In use" :
                 if(dryer.getUserID().equals(user.getId())) {
                     holder.txtFooter.setTextColor(Color.parseColor("#FF7F50"));
                     holder.icon.setImageResource(R.drawable.using_ic_dryer);
                 }
-                estimated_endTime = getEndTime(dryer.getStartTime(), user.getLocation().getDefaultPickupTime());
+                estimated_endTime = getEndTime(dryer.getStartTime(), user.getLocation().getDefaultRunningTime()); //after finished, calculate the pick up time //warning
                 break;
             case "Reserved":
                 if(dryer.getUserID().equals(user.getId())) {
                     holder.txtFooter.setTextColor(Color.parseColor("#FF7F50"));
                     holder.icon.setImageResource(R.drawable.using_ic_dryer);
                 }
-                estimated_endTime = getEndTime(dryer.getStartTime(), user.getLocation().getDefaultReservationExpireTime());
+                estimated_endTime = getEndTime(dryer.getStartTime(), user.getLocation().getDefaultReservationExpireTime()); //location.defaultRunningTime - helper.millisToMinutes(Date.now() - dryer.startTime) + location.defaultPickupTime;
                 break;
         }
         final String endTime = estimated_endTime;
-
-
 
         holder.txtHeader.setText("ID: " + name);
         holder.txtFooter.setText(status);
