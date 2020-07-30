@@ -41,8 +41,8 @@ public class ScanFragment extends Fragment {
         this.runningTime = user.getLocation().getDefaultRunningTime();
         Button scanToOpen = root.findViewById(R.id.scanToOpen_button);
         Button scanToClose = root.findViewById(R.id.scanToClose_button);
-        Button reverseWasher = root.findViewById(R.id.reserve_washer);
-        Button reverseDryer = root.findViewById(R.id.reserve_dryer);
+//        Button reverseWasher = root.findViewById(R.id.reserve_washer);
+//        Button reverseDryer = root.findViewById(R.id.reserve_dryer);
 
         // scan to open
         scanToOpen.setOnClickListener(new View.OnClickListener() {
@@ -60,53 +60,53 @@ public class ScanFragment extends Fragment {
             }
         });
 
-        reverseWasher.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Thread thread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Reserve.Result result = Reserve.reserveWasher(user.getToken());
-                        if (result.isSuccess()) {
-                            Intent intent = new Intent(getActivity(), ReserveTimerService.class);
-                            intent.putExtra("reservationTime", result.getEstimateTime());
-                            getActivity().startService(intent);
-                        }
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(getContext(), result.getMessage(), Toast.LENGTH_LONG).show();
-                            }
-                        });
-                    }
-                });
-                thread.start();
-            }
-        });
-
-        reverseDryer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Thread thread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Reserve.Result result = Reserve.reserveDryer(user.getToken());
-                        if (result.isSuccess()) {
-                            Intent intent = new Intent(getActivity(), ReserveTimerService.class);
-                            intent.putExtra("reservationTime", result.getEstimateTime());
-                            getActivity().startService(intent);
-                        }
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(getContext(), result.getMessage(), Toast.LENGTH_LONG).show();
-                            }
-                        });
-                    }
-                });
-                thread.start();
-            }
-        });
+//        reverseWasher.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Thread thread = new Thread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        Reserve.Result result = Reserve.reserveWasher(user.getToken());
+//                        if (result.isSuccess()) {
+//                            Intent intent = new Intent(getActivity(), ReserveTimerService.class);
+//                            intent.putExtra("reservationTime", result.getEstimateTime());
+//                            getActivity().startService(intent);
+//                        }
+//                        getActivity().runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                Toast.makeText(getContext(), result.getMessage(), Toast.LENGTH_LONG).show();
+//                            }
+//                        });
+//                    }
+//                });
+//                thread.start();
+//            }
+//        });
+//
+//        reverseDryer.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Thread thread = new Thread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        Reserve.Result result = Reserve.reserveDryer(user.getToken());
+//                        if (result.isSuccess()) {
+//                            Intent intent = new Intent(getActivity(), ReserveTimerService.class);
+//                            intent.putExtra("reservationTime", result.getEstimateTime());
+//                            getActivity().startService(intent);
+//                        }
+//                        getActivity().runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                Toast.makeText(getContext(), result.getMessage(), Toast.LENGTH_LONG).show();
+//                            }
+//                        });
+//                    }
+//                });
+//                thread.start();
+//            }
+//        });
 
         return root;
     }

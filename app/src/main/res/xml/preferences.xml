@@ -50,6 +50,12 @@
             android:title="Send feedback"
             app:iconSpaceReserved="false"/>
 
+        <Preference
+            android:key="tutorial"
+            android:summary="Revisit tutorial"
+            android:title="Tutorial"
+            app:iconSpaceReserved="false"/>
+
     </PreferenceCategory>
 
     <Preference

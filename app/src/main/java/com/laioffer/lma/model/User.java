@@ -4,7 +4,6 @@ package com.laioffer.lma.model;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.NoSuchPropertyException;
 
 import com.laioffer.lma.LauncherActivity;
 
@@ -23,8 +22,9 @@ public class User {
     private String lastName;
     private String token;
     private Location location;
+    private String id;
 
-    User(boolean isLoggedIn, boolean isFirstVisit, boolean rememberLoggedIn, String firstName, String lastName, String token, Location location) {
+    User(boolean isLoggedIn, boolean isFirstVisit, boolean rememberLoggedIn, String firstName, String lastName, String token, Location location, String id) {
         this.isLoggedIn = isLoggedIn;
         this.isFirstVisit = isFirstVisit;
         this.rememberLoggedIn = rememberLoggedIn;
@@ -32,6 +32,7 @@ public class User {
         this.lastName = lastName;
         this.token = token;
         this.location = location;
+        this.id = id;
     }
 
     // should only be called in Launcher Activity !!!
@@ -84,6 +85,7 @@ public class User {
         String token = payload.getString("token");
         instance.firstName = user.getString("firstName");
         instance.lastName = user.getString("lastName");
+        instance.id = user.getString("_id");
         instance.location.setId(user.getString("locationID"));
         instance.token = token;
         instance.isLoggedIn = true;
@@ -123,8 +125,12 @@ public class User {
         SharedPreferenceUtils.writeAttributes(context, "lastName", instance.lastName);
         SharedPreferenceUtils.writeAttributes(context, "token", instance.token);
         SharedPreferenceUtils.saveLocation(context, instance.location);
+        SharedPreferenceUtils.writeAttributes(context, "id", instance.id);
     }
 
+    public String getId() {
+        return id;
+    }
 }
 
 class SharedPreferenceUtils {
@@ -140,10 +146,11 @@ class SharedPreferenceUtils {
         String firstName = isLoggedIn ? reader.getString("firstName", "") : "";
         String lastName = isLoggedIn ? reader.getString("lastName", "") : "";
         String token = isLoggedIn ? reader.getString("token", "") : "";
+        String id = isLoggedIn ? reader.getString("id", "") : "";
 
         Location location = readLocation(context);
 
-        return new User(isLoggedIn, isFirstVisit, rememberLoggedIn, firstName, lastName, token, location);
+        return new User(isLoggedIn, isFirstVisit, rememberLoggedIn, firstName, lastName, token, location, id);
     }
 
     static void saveLocation(Context context, Location location) {

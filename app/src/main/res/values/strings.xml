@@ -22,7 +22,7 @@
     <string name="keep_me_logged_in">Keep me logged in</string>
     <string name="term_of_use">Term of use</string>
     <string name="save">save</string>
-    <string name="choose_your_washroom">Choose your washroom</string>
+    <string name="choose_your_washroom">Choose your laundry room</string>
     <string name="last_name_preference">LastName</string>
     <string name="first_name_preference">FirstName</string>
     <string name="logout">Log Out</string>
@@ -40,4 +40,7 @@
         3. If you want to use our services, you can’t do certain bad things.
         If we think you are doing these bad things, we have the right to share your information with law enforcement.
     </string>
+    <string name="reminder">——Reminder——</string>
+    <string name="scan_reminder">1. To start using the machine, tap \'Open\' to scan QR code\n2. To retrieve your cloths, tap \'Close\' to scan QR code again\n3. There is a pickup interval after the machine finishes your laundry. If your pickup time exceeds the max limit, you will be penalized by limiting the usage of this app</string>
+    <string name="account">Account</string>
 </resources>
