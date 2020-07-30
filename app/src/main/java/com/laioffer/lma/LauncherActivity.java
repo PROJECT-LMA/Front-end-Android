@@ -29,7 +29,7 @@ public class LauncherActivity extends AppCompatActivity {
                 Intent nextActivity;
 
                 // first enter the app
-                if (user.isFirstVisit()) {
+                if (!user.isFirstVisit()) {
                     nextActivity = new Intent(context, TutorialActivity.class);
                     user.setFirstVisit(false);
                     user.saveUserStats(context);
