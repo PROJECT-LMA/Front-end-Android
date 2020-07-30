@@ -209,12 +209,12 @@ public class OverviewFragment extends Fragment {
                     public void run() {
 
                         Washers washers = getWashers(list);
-                        if (washers.availableCount == 0) {
+                        if (washers.availableCount > 0 && washers.user_machine != null) {
                             reverseWasher_btn.setBackgroundResource(R.drawable.unclickable_btn);
                             reverseWasher_btn.setEnabled(false);
                         }
                         Dryers dryers = getDryers(list);
-                        if (dryers.availableCount == 0) {
+                        if (dryers.availableCount > 0 && washers.user_machine != null) {
                             reverseDryer_btn.setBackgroundResource(R.drawable.unclickable_btn);
                             reverseDryer_btn.setEnabled(false);
                         }
