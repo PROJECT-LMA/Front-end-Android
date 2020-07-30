@@ -76,7 +76,6 @@ public class OverviewFragment extends Fragment {
         loadMachines();
 
 
-
         //swipe update, load machines and update lists
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -88,7 +87,7 @@ public class OverviewFragment extends Fragment {
                         loadMachines();
                         swipeRefreshLayout.setRefreshing(false);
                     }
-                },2000);
+                }, 2000);
             }
         });
 
@@ -99,7 +98,7 @@ public class OverviewFragment extends Fragment {
         return root;
     }
 
-    private void setup_reserve(){
+    private void setup_reserve() {
         reverseWasher_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -149,7 +148,7 @@ public class OverviewFragment extends Fragment {
         });
     }
 
-    private void setupWashersRecyclerList(List<Machine> washers, Machine user_machine) {
+    private void setupWashersRecyclerList(List<Machine> washers, Machine user_machine, Machine reserved_machine) {
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
         washer_recyclerView.setHasFixedSize(true);
@@ -159,6 +158,8 @@ public class OverviewFragment extends Fragment {
         washer_recyclerView.setLayoutManager(washer_layoutManager);
         if (user_machine != null) {
             washers.add(0, user_machine);
+        } else if (reserved_machine != null) {
+            washers.add(0, reserved_machine);
         }
         // specify an adapter (see also next example)
         washerAdapter = new WasherAdapter(washers);
@@ -167,7 +168,7 @@ public class OverviewFragment extends Fragment {
 
     }
 
-    private void setupDryersRecyclerList(List<Machine> dryers, Machine user_machine) {
+    private void setupDryersRecyclerList(List<Machine> dryers, Machine user_machine, Machine reserved_machine) {
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
         dryer_recyclerView.setHasFixedSize(true);
@@ -178,6 +179,8 @@ public class OverviewFragment extends Fragment {
 
         if (user_machine != null) {
             dryers.add(0, user_machine);
+        } else if (reserved_machine != null) {
+            dryers.add(0, reserved_machine);
         }
         // specify an adapter (see also next example)
         dryerAdapter = new DryerAdapter(dryers);
@@ -217,8 +220,8 @@ public class OverviewFragment extends Fragment {
                         }
                         washer_count_text.setText(washers.availableCount + " of " + washers.totalCount + " available");
                         dryer_count_text.setText(dryers.availableCount + " of " + dryers.totalCount + " available");
-                        setupWashersRecyclerList(washers.available_list, washers.user_machine);
-                        setupDryersRecyclerList(dryers.available_list, dryers.user_machine);
+                        setupWashersRecyclerList(washers.available_list, washers.user_machine, washers.reserved_machine);
+                        setupDryersRecyclerList(dryers.available_list, dryers.user_machine, dryers.reserved_machine);
                         list.clear();
                     }
                 });
@@ -228,16 +231,17 @@ public class OverviewFragment extends Fragment {
 
     }
 
-    private Washers getWashers(List<Machine> list){
+    private Washers getWashers(List<Machine> list) {
         Washers washers = new Washers();
-        for (Machine m : list){
-            if (m.getMachineType().equals("washer")){
-                if(m.getIsAvailable().equals("true")) {
+        for (Machine m : list) {
+            if (m.getMachineType().equals("washer")) {
+                if (m.getIsAvailable().equals("true")) {
                     washers.availableCount++;
                     washers.available_list.add(m);
-                }
-                if (m.getIsAvailable().equals("false") && m.getUserID().equals(user.getId())) {
+                } else if (m.getIsAvailable().equals("false") && m.getUserID().equals(user.getId())) {
                     washers.user_machine = m;
+                } else if (m.getIsReserved().equals("true") && m.getUserReservedID().equals(user.getId())) {
+                    washers.reserved_machine = m;
                 }
                 washers.totalCount++;
             }
@@ -246,16 +250,17 @@ public class OverviewFragment extends Fragment {
         return washers;
     }
 
-    private Dryers getDryers(List<Machine> list){
+    private Dryers getDryers(List<Machine> list) {
         Dryers dryers = new Dryers();
-        for (Machine m : list){
-            if (m.getMachineType().equals("dryer")){
-                if(m.getIsAvailable().equals("true")) {
+        for (Machine m : list) {
+            if (m.getMachineType().equals("dryer")) {
+                if (m.getIsAvailable().equals("true")) {
                     dryers.availableCount++;
                     dryers.available_list.add(m);
-                }
-                if (m.getIsAvailable().equals("false") && m.getUserID().equals(user.getId())) {
+                } else if (m.getIsAvailable().equals("false") && m.getUserID().equals(user.getId())) {
                     dryers.user_machine = m;
+                } else if (m.getIsReserved().equals("true") && m.getUserReservedID().equals(user.getId())) {
+                    dryers.reserved_machine = m;
                 }
                 dryers.totalCount++;
             }
@@ -263,7 +268,7 @@ public class OverviewFragment extends Fragment {
         return dryers;
     }
 
-    public class Washers{
+    public class Washers {
         List<Machine> available_list = new ArrayList<>();
         Machine user_machine;
         Machine reserved_machine;
@@ -271,7 +276,7 @@ public class OverviewFragment extends Fragment {
         int totalCount = 0;
     }
 
-    public class Dryers{
+    public class Dryers {
         List<Machine> available_list = new ArrayList<>();
         Machine user_machine;
         Machine reserved_machine;
