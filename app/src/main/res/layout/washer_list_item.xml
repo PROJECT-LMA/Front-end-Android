@@ -6,7 +6,7 @@
     <ImageView
         android:id="@+id/icon"
         android:layout_width="60dp"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="10dip"
@@ -16,12 +16,11 @@
 
     <TextView
         android:id="@+id/washer_status"
-        android:layout_width="fill_parent"
-        android:layout_height="26dip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_toEndOf="@id/icon"
-        android:ellipsize="marquee"
         android:text="@string/available"
         android:textSize="20sp"
         android:singleLine="true"
@@ -30,7 +29,7 @@
 
     <TextView
         android:id="@+id/washer_sn"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@id/washer_status"
         android:layout_alignParentEnd="true"
@@ -41,19 +40,18 @@
         android:text="@string/washer_sn"
         android:textSize="15sp" />
 
+    <View style="@style/Divider"/>
+
     <TextView
         android:id="@+id/washer_time"
-        android:layout_width="fill_parent"
-        android:layout_height="26dip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:gravity="right|center_horizontal"
-        android:ellipsize="marquee"
-        android:text="Time"
-        android:textSize="20sp"
-        android:singleLine="true"/>
-
-
-    <View style="@style/Divider"/>
+        android:layout_alignParentEnd="true"
+        android:layout_alignWithParentIfMissing="true"
+        android:gravity="end"
+        android:singleLine="true"
+        android:text="@string/time"
+        android:textSize="20sp" />
 
 </RelativeLayout>
