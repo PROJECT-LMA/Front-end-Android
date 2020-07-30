@@ -10,6 +10,7 @@ import androidx.preference.PreferenceFragmentCompat;
 import com.laioffer.lma.OnBoardingActivity;
 import com.laioffer.lma.R;
 import com.laioffer.lma.SetupActivity;
+import com.laioffer.lma.TutorialActivity;
 import com.laioffer.lma.model.User;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
@@ -74,7 +75,12 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             }
             return true;
         });
-
+        Preference tutorial = findPreference("tutorial");
+        tutorial.setOnPreferenceClickListener(preference -> {
+            Intent intent = new Intent(getContext(), TutorialActivity.class);
+            startActivity(intent);
+            return true;
+        });
     }
 
     private void setup_sign_out_btn(Preference button) {
