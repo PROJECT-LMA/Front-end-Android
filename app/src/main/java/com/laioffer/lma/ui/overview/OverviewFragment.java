@@ -209,12 +209,12 @@ public class OverviewFragment extends Fragment {
                     public void run() {
 
                         Washers washers = getWashers(list);
-                        if (washers.availableCount > 0 && washers.user_machine != null) {
+                        if (washers.isReservable == false || washers.availableCount > 0) {
                             reverseWasher_btn.setBackgroundResource(R.drawable.unclickable_btn);
                             reverseWasher_btn.setEnabled(false);
                         }
                         Dryers dryers = getDryers(list);
-                        if (dryers.availableCount > 0 && washers.user_machine != null) {
+                        if (dryers.isReservable == false || dryers.availableCount > 0) {
                             reverseDryer_btn.setBackgroundResource(R.drawable.unclickable_btn);
                             reverseDryer_btn.setEnabled(false);
                         }
@@ -233,25 +233,33 @@ public class OverviewFragment extends Fragment {
 
     private Washers getWashers(List<Machine> list) {
         Washers washers = new Washers();
+        boolean machine_available_to_be_reserved = false;
         for (Machine m : list) {
             if (m.getMachineType().equals("washer")) {
                 if (m.getIsAvailable().equals("true")) {
                     washers.availableCount++;
                     washers.available_list.add(m);
-                } else if (m.getIsAvailable().equals("false") && m.getUserID().equals(user.getId())) {
+                } else if (m.getIsAvailable().equals("false") && m.getUserID().equals(user.getId())) {// user is using a washer
                     washers.user_machine = m;
-                } else if (m.getIsReserved().equals("true") && m.getUserReservedID().equals(user.getId())) {
+                    washers.isReservable = false;
+                } else if (m.getIsReserved().equals("true") && m.getUserReservedID().equals(user.getId())) { //user is reserving a washer
                     washers.reserved_machine = m;
+                    washers.isReservable = false;
+                } else if (m.getIsReserved().equals("false")) {
+                    machine_available_to_be_reserved = true;
                 }
                 washers.totalCount++;
             }
-            Log.d("machines", m.getMachineType());
+        }
+        if (machine_available_to_be_reserved == false) {
+            washers.isReservable = false;
         }
         return washers;
     }
 
     private Dryers getDryers(List<Machine> list) {
         Dryers dryers = new Dryers();
+        boolean machine_available_to_be_reserved = false;
         for (Machine m : list) {
             if (m.getMachineType().equals("dryer")) {
                 if (m.getIsAvailable().equals("true")) {
@@ -259,12 +267,20 @@ public class OverviewFragment extends Fragment {
                     dryers.available_list.add(m);
                 } else if (m.getIsAvailable().equals("false") && m.getUserID().equals(user.getId())) {
                     dryers.user_machine = m;
+                    dryers.isReservable = false;
                 } else if (m.getIsReserved().equals("true") && m.getUserReservedID().equals(user.getId())) {
                     dryers.reserved_machine = m;
+                    dryers.isReservable = false;
+                }else if (m.getIsReserved().equals("false")) {
+                    machine_available_to_be_reserved = true;
                 }
                 dryers.totalCount++;
             }
         }
+        if (machine_available_to_be_reserved == false) {
+            dryers.isReservable = false;
+        }
+
         return dryers;
     }
 
@@ -274,6 +290,7 @@ public class OverviewFragment extends Fragment {
         Machine reserved_machine;
         int availableCount = 0;
         int totalCount = 0;
+        boolean isReservable = true;
     }
 
     public class Dryers {
@@ -282,5 +299,6 @@ public class OverviewFragment extends Fragment {
         Machine reserved_machine;
         int availableCount = 0;
         int totalCount = 0;
+        boolean isReservable = true;
     }
 }
