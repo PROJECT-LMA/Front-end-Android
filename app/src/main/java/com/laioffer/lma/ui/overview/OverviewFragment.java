@@ -98,6 +98,12 @@ public class OverviewFragment extends Fragment {
         return root;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadMachines();
+    }
+
     private void setup_reserve() {
         reverseWasher_btn.setOnClickListener(new View.OnClickListener() {
             @Override
