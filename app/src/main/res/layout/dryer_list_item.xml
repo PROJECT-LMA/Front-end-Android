@@ -24,7 +24,7 @@
         android:ellipsize="marquee"
         android:singleLine="true"
         android:text="@string/available"
-        android:textColor="@color/machineColor"
+        android:textColor="@color/globalColor"
         android:textSize="20sp" />
 
     <TextView

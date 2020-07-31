@@ -24,7 +24,7 @@
         android:text="@string/available"
         android:textSize="20sp"
         android:singleLine="true"
-        android:textColor="@color/machineColor"
+        android:textColor="@color/globalColor"
         />
 
     <TextView

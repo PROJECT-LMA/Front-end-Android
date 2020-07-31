@@ -13,6 +13,9 @@
     <color name="greyColor">#A9A9A9</color>
     <color name="orangeColor">#FF7F50</color>
     <color name="greenSpringColor">#00FA9A</color>
+    <color name="globalColor">#3d85c6</color>
+    <color name="indicatorColor">#22629D</color>
+    <color name="white">#FFFFFF</color>
 
     greenSpringColor
     <color name="black_20">#33000000</color>
