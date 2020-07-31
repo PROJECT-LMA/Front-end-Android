@@ -36,7 +36,7 @@
             android:gravity="center"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/globalColor"
             android:text="——Scan QR code——"/>
 
         <LinearLayout
