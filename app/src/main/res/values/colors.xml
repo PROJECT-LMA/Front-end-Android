@@ -7,7 +7,7 @@
     <color name="colorAccent">#CEB896</color>
     <color name="colorGrey">#CCD7DE</color>
     <color name="colorSkyBlue">#98D8E9</color>
-
+    <color name="black">#000000</color>
 
     <color name="black_20">#33000000</color>
     <color name="transparent">#00000000</color>
