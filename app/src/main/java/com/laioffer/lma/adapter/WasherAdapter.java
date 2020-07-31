@@ -117,9 +117,9 @@ public class WasherAdapter extends RecyclerView.Adapter<WasherAdapter.ViewHolder
                     estimated_endTime = getEndTime(washer.getStartTime(), user.getLocation().getDefaultRunningTime());
                     break;
                 case "Reserved":
-                    if (washer.getUserID().equals(user.getId())) {
-                        holder.txtFooter.setTextColor(Color.parseColor("#FF7F50"));
-                        holder.icon.setImageResource(R.drawable.using_ic_washer);
+                    if (washer.getUserReservedID().equals(user.getId())) {
+                        holder.txtFooter.setTextColor(Color.parseColor("#00FA9A"));
+                        holder.icon.setImageResource(R.drawable.reserved_ic_washer);
                     }
                     estimated_endTime = getEndTime(washer.getStartTime(), user.getLocation().getDefaultRunningTime() + user.getLocation().getDefaultPickupTime());
                     break;
