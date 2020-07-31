@@ -96,7 +96,7 @@
             <CheckBox
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:buttonTint="@color/colorPrimary"
+                android:buttonTint="@color/globalColor"
                 android:id="@+id/kept_logged_in_checkbox" />
 
             <TextView
@@ -118,7 +118,7 @@
             <CheckBox
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:buttonTint="@color/colorPrimary"
+                android:buttonTint="@color/globalColor"
                 android:id="@+id/term_of_service_checkbox"/>
 
             <TextView
@@ -129,7 +129,7 @@
                 android:layout_marginStart="10dp"
                 android:textSize="16sp"
                 android:clickable="true"
-                android:textColor="#007bff"
+                android:textColor="@color/globalColor"
                 android:layout_gravity="center"/>
 
         </LinearLayout>

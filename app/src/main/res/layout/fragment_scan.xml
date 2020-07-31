@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground"
-    tools:context=".ui.scan.ScanFragment">
+    android:background="@color/colorBackground">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -20,12 +19,12 @@
 
         <LinearLayout
             android:layout_gravity="center"
-            android:layout_width="250dp"
+            android:layout_width="200dp"
             android:background="@drawable/ic_border"
-            android:layout_height="250dp">
+            android:layout_height="200dp">
 
             <ImageView
-                android:layout_margin="50dp"
+                android:layout_margin="40dp"
                 android:layout_width="match_parent"
                 android:background="@drawable/ic_qrcode"
                 android:layout_height="match_parent" />
@@ -37,7 +36,7 @@
             android:gravity="center"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/globalColor"
             android:text="——Scan QR code——"/>
 
         <LinearLayout
@@ -46,6 +45,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="30dp"
             android:orientation="horizontal">
 
             <Button
@@ -53,11 +53,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="45dp"
-                android:layout_marginTop="45dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginEnd="30dp"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/primary_rect"
-                android:text="Open"
+                android:text="Start"
                 android:textAllCaps="false"
                 android:textColor="@color/colorBackground"
                 android:textSize="22sp" />
@@ -68,10 +68,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:layout_marginStart="30dp"
-                android:layout_marginTop="45dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginEnd="45dp"
                 android:background="@drawable/primary_rect"
-                android:text="Close"
+                android:text="Pick up"
                 android:textAllCaps="false"
                 android:textColor="@color/colorBackground"
                 android:textSize="22sp" />
@@ -82,6 +82,7 @@
 
     <LinearLayout
         app:layout_constraintTop_toBottomOf="@id/scan"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_height="wrap_content"
@@ -100,8 +101,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:textSize="16.7sp"
+            android:textSize="18sp"
             android:text="@string/scan_reminder"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:id="@+id/time_limit"
+            android:textSize="18sp"
+            />
 
     </LinearLayout>
 

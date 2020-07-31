@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="?android:attr/listPreferredItemHeight"
+    android:padding="6dip" >
+    <ImageView
+        android:id="@+id/icon_dryer"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="10dip"
+        android:foregroundGravity="center|center_vertical"
+        android:src="@drawable/ic_dryer"
+        android:contentDescription="@string/todo" />
+
+    <TextView
+        android:id="@+id/dryer_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@id/icon_dryer"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:text="@string/available"
+        android:textColor="@color/globalColor"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/dryer_est_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignWithParentIfMissing="true"
+        android:layout_toStartOf="@id/dryer_sn"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="5dp"
+        android:gravity="center_vertical"
+        android:text="@string/est_Time"
+        android:textSize="10sp"
+        android:singleLine="true"/>
+
+    <TextView
+        android:id="@+id/dryer_sn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/dryer_status"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignWithParentIfMissing="true"
+        android:layout_toEndOf="@id/icon_dryer"
+        android:gravity="center_vertical"
+        android:text="@string/dryer_sn"
+        android:textSize="15sp"/>
+
+
+
+    <View style="@style/Divider"/>
+    <TextView
+        android:id="@+id/dryer_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignWithParentIfMissing="true"
+        android:layout_toEndOf="@id/icon_dryer"
+        android:gravity="end"
+        android:text="@string/time"
+        android:textSize="20sp"
+        android:singleLine="true"/>
+
+
+
+</RelativeLayout>
