@@ -33,6 +33,7 @@ public class WasherAdapter extends RecyclerView.Adapter<WasherAdapter.ViewHolder
         public TextView txtHeader;
         public TextView txtFooter;
         public TextView endTime;
+        public TextView time_bar;
         public ImageView icon;
         public View layout;
 
@@ -43,6 +44,7 @@ public class WasherAdapter extends RecyclerView.Adapter<WasherAdapter.ViewHolder
             txtFooter = (TextView) v.findViewById(R.id.washer_status);
             icon = (ImageView) v.findViewById(R.id.icon);
             endTime = (TextView) v.findViewById(R.id.washer_time);
+            time_bar = (TextView) v.findViewById(R.id.washer_est_time);
         }
     }
 
@@ -96,7 +98,7 @@ public class WasherAdapter extends RecyclerView.Adapter<WasherAdapter.ViewHolder
             Machine washer = washers.get(position);
             final String name = washer.getSN();
             String cur_status = null;
-            if (washer.getIsAvailable() == "true") {
+            if (washer.getIsAvailable().equals("true")) {
                 cur_status = "Available";
             } else if (washer.getUserID().equals(user.getId())) {
                 cur_status = "In use";
@@ -104,6 +106,7 @@ public class WasherAdapter extends RecyclerView.Adapter<WasherAdapter.ViewHolder
                 cur_status = "Reserved";
             }
             final String status = cur_status;
+            boolean showTimeBar = false;
             String estimated_endTime = null;
             switch (status) {
                 case "Available":
@@ -115,6 +118,7 @@ public class WasherAdapter extends RecyclerView.Adapter<WasherAdapter.ViewHolder
                         holder.icon.setImageResource(R.drawable.using_ic_washer);
                     }
                     estimated_endTime = getEndTime(washer.getStartTime(), user.getLocation().getDefaultRunningTime());
+                    showTimeBar = true;
                     break;
                 case "Reserved":
                     if (washer.getUserReservedID().equals(user.getId())) {
@@ -122,14 +126,18 @@ public class WasherAdapter extends RecyclerView.Adapter<WasherAdapter.ViewHolder
                         holder.icon.setImageResource(R.drawable.reserved_ic_washer);
                     }
                     estimated_endTime = getEndTime(washer.getStartTime(), user.getLocation().getDefaultRunningTime() + user.getLocation().getDefaultPickupTime());
+                    showTimeBar = true;
                     break;
             }
             final String endTime = estimated_endTime;
 
 
-            holder.txtHeader.setText("ID: " + name);
-            holder.txtFooter.setText(status);
-            holder.endTime.setText(endTime);
+            ((ViewHolder) holder).txtHeader.setText("ID: " + name);
+            ((ViewHolder) holder).txtFooter.setText(status);
+            ((ViewHolder) holder).endTime.setText(endTime);
+            if(!showTimeBar) {
+                ((ViewHolder) holder).time_bar.setText("");
+            }
         }
     }
 

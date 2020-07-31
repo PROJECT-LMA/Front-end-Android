@@ -39,6 +39,7 @@ public class DryerAdapter extends RecyclerView.Adapter<DryerAdapter.ViewHolder> 
         public TextView txtHeader;
         public TextView txtFooter;
         public TextView endTime;
+        public TextView time_bar;
         public ImageView icon;
         public View layout;
 
@@ -49,6 +50,7 @@ public class DryerAdapter extends RecyclerView.Adapter<DryerAdapter.ViewHolder> 
             txtHeader = (TextView) v.findViewById(R.id.dryer_sn);
             txtFooter = (TextView) v.findViewById(R.id.dryer_status);
             icon = (ImageView)v.findViewById(R.id.icon_dryer);
+            time_bar = (TextView) v.findViewById(R.id.dryer_est_time);
             endTime = (TextView) v.findViewById(R.id.dryer_time);
         }
     }
@@ -100,13 +102,12 @@ public class DryerAdapter extends RecyclerView.Adapter<DryerAdapter.ViewHolder> 
         if (holder instanceof FooterViewHolder) {
             FooterViewHolder footer_vh = (FooterViewHolder) holder;
 
-        } else if (holder instanceof ViewHolder) {
-            ViewHolder washer_vh = (ViewHolder) holder;
+        } else if (holder != null) {
             Machine dryer = dryers.get(position);
 
             final String name = dryer.getSN();
             String cur_status = null;
-            if (dryer.getIsAvailable() == "true") {
+            if (dryer.getIsAvailable().equals("true")) {
                 cur_status = "Available";
             } else if (dryer.getUserID().equals(user.getId())) {
                 cur_status = "In use";
@@ -114,6 +115,7 @@ public class DryerAdapter extends RecyclerView.Adapter<DryerAdapter.ViewHolder> 
                 cur_status = "Reserved";
             }
             final String status = cur_status;
+            boolean showTimeBar = false;
             String estimated_endTime = null;
             switch (status) {
                 case "Available" :
@@ -125,6 +127,7 @@ public class DryerAdapter extends RecyclerView.Adapter<DryerAdapter.ViewHolder> 
                         holder.icon.setImageResource(R.drawable.using_ic_dryer);
                     }
                     estimated_endTime = getEndTime(dryer.getStartTime(), user.getLocation().getDefaultRunningTime()); //after finished, calculate the pick up time //warning
+                    showTimeBar = true;
                     break;
                 case "Reserved":
                     if(dryer.getUserReservedID().equals(user.getId())) {
@@ -132,13 +135,17 @@ public class DryerAdapter extends RecyclerView.Adapter<DryerAdapter.ViewHolder> 
                         holder.icon.setImageResource(R.drawable.reserved_ic_dryer);
                     }
                     estimated_endTime = getEndTime(dryer.getStartTime(), user.getLocation().getDefaultRunningTime() + user.getLocation().getDefaultPickupTime()); //location.defaultRunningTime - helper.millisToMinutes(Date.now() - dryer.startTime) + location.defaultPickupTime;
+                    showTimeBar = true;
                     break;
             }
             final String endTime = estimated_endTime;
 
-            washer_vh.txtHeader.setText("ID: " + name);
-            washer_vh.txtFooter.setText(status);
-            washer_vh.endTime.setText(endTime);
+            ((ViewHolder) holder).txtHeader.setText("ID: " + name);
+            ((ViewHolder) holder).txtFooter.setText(status);
+            ((ViewHolder) holder).endTime.setText(endTime);
+            if(!showTimeBar) {
+                ((ViewHolder) holder).time_bar.setText("");
+            }
         }
 
 
