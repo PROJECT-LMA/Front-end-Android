@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:singleLine="true"
-        android:text="@string/you_ve_reach_the_bottom_of_the_list"
+        android:text="@string/you_ve_reached_the_bottom_of_the_list"
         android:textColor="@color/greyColor"
         android:textSize="14sp" />
 </LinearLayout>
