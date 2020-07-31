@@ -257,9 +257,6 @@ public class OverviewFragment extends Fragment {
                 washers.totalCount++;
             }
         }
-        if (machine_available_to_be_reserved == false) {
-            washers.isReservable = false;
-        }
         return washers;
     }
 
@@ -283,10 +280,6 @@ public class OverviewFragment extends Fragment {
                 dryers.totalCount++;
             }
         }
-        if (machine_available_to_be_reserved == false) {
-            dryers.isReservable = false;
-        }
-
         return dryers;
     }
 
