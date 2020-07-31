@@ -46,6 +46,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="30dp"
             android:orientation="horizontal">
 
             <Button
@@ -57,7 +58,7 @@
                 android:layout_marginEnd="30dp"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/primary_rect"
-                android:text="Open"
+                android:text="Start"
                 android:textAllCaps="false"
                 android:textColor="@color/colorBackground"
                 android:textSize="22sp" />
@@ -71,7 +72,7 @@
                 android:layout_marginTop="45dp"
                 android:layout_marginEnd="45dp"
                 android:background="@drawable/primary_rect"
-                android:text="Close"
+                android:text="Pick up"
                 android:textAllCaps="false"
                 android:textColor="@color/colorBackground"
                 android:textSize="22sp" />
@@ -100,8 +101,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:textSize="16.7sp"
+            android:textSize="18sp"
             android:text="@string/scan_reminder"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:id="@+id/time_limit"
+            android:textSize="18sp"
+            />
 
     </LinearLayout>
 
