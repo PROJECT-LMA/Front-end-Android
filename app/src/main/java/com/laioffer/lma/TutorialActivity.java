@@ -35,7 +35,7 @@ public class TutorialActivity extends OnboarderActivity {
         onboarderPages = new ArrayList<OnboarderPage>();
 
         // Create page
-        OnboarderPage onboarderPage1 = new OnboarderPage("Here is how it works:", "");
+        OnboarderPage onboarderPage1 = new OnboarderPage("Here is how it works", "");
         OnboarderPage onboarderPage2 = new OnboarderPage("Choose your laundry room", "", R.drawable.location);
         OnboarderPage onboarderPage3 = new OnboarderPage("Check machine status", "", R.drawable.overview_usage);
         OnboarderPage onboarderPage4 = new OnboarderPage("Reserve a machine", "", R.drawable.overview_reserve);
@@ -52,7 +52,7 @@ public class TutorialActivity extends OnboarderActivity {
         onboarderPage4.setBackgroundColor(R.color.globalColor);
         onboarderPage5.setBackgroundColor(R.color.globalColor);
 
-        onboarderPage1.setTitleTextSize(45);
+        onboarderPage1.setTitleTextSize(40);
         onboarderPage2.setTitleTextSize(33);
         onboarderPage3.setTitleTextSize(33);
         onboarderPage4.setTitleTextSize(33);
@@ -76,7 +76,6 @@ public class TutorialActivity extends OnboarderActivity {
     public void onFinishButtonPressed() {
         if (user.isLoggedIn()) {
             nextActivity = new Intent(context, MainActivity.class);
-            startActivity(nextActivity);
             finish();
         } else {
             nextActivity = new Intent(context, OnBoardingActivity.class);
