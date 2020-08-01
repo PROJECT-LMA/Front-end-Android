@@ -35,29 +35,28 @@ public class TutorialActivity extends OnboarderActivity {
         onboarderPages = new ArrayList<OnboarderPage>();
 
         // Create page
-        OnboarderPage onboarderPage1 = new OnboarderPage("LOCATION", "Choose your laundry room location", R.drawable.location);
-        OnboarderPage onboarderPage2 = new OnboarderPage("OVERVIEW", "Check and Reserve machines", R.drawable.overview_reserve);
-        OnboarderPage onboarderPage3 = new OnboarderPage("OVERVIEW", "Check and Reserve machines", R.drawable.overview_usage);
-        OnboarderPage onboarderPage4 = new OnboarderPage("SCAN", "Scan QR Code to start your laundry", R.drawable.scan);
+        OnboarderPage onboarderPage1 = new OnboarderPage("Here is how it works:", "");
+        OnboarderPage onboarderPage2 = new OnboarderPage("Choose your laundry room", "", R.drawable.location);
+        OnboarderPage onboarderPage3 = new OnboarderPage("Check machine status", "", R.drawable.overview_usage);
+        OnboarderPage onboarderPage4 = new OnboarderPage("Reserve a machine", "", R.drawable.overview_reserve);
+        OnboarderPage onboarderPage5 = new OnboarderPage("Scan QR Code to start laundry / pick up your clothes", "", R.drawable.scan);
 
         // You can define title and description colors (by default white)
         onboarderPage1.setTitleColor(R.color.white);
         onboarderPage1.setDescriptionColor(R.color.white);
 
         // Don't forget to set background color for your page
-        onboarderPage1.setBackgroundColor(R.color.colorPrimary);
-        onboarderPage2.setBackgroundColor(R.color.colorAccent);
-        onboarderPage3.setBackgroundColor(R.color.colorAccent);
-        onboarderPage4.setBackgroundColor(R.color.colorAccent);
+        onboarderPage1.setBackgroundColor(R.color.globalColor);
+        onboarderPage2.setBackgroundColor(R.color.globalColor);
+        onboarderPage3.setBackgroundColor(R.color.globalColor);
+        onboarderPage4.setBackgroundColor(R.color.globalColor);
+        onboarderPage5.setBackgroundColor(R.color.globalColor);
 
-        onboarderPage1.setTitleTextSize(36);
-        onboarderPage1.setDescriptionTextSize(21);
-        onboarderPage2.setTitleTextSize(36);
-        onboarderPage2.setDescriptionTextSize(21);
-        onboarderPage3.setTitleTextSize(36);
-        onboarderPage3.setDescriptionTextSize(21);
-        onboarderPage4.setTitleTextSize(36);
-        onboarderPage4.setDescriptionTextSize(21);
+        onboarderPage1.setTitleTextSize(45);
+        onboarderPage2.setTitleTextSize(33);
+        onboarderPage3.setTitleTextSize(33);
+        onboarderPage4.setTitleTextSize(33);
+        onboarderPage5.setTitleTextSize(33);
 
         shouldDarkenButtonsLayout(true);
         setSkipButtonHidden();
@@ -67,6 +66,7 @@ public class TutorialActivity extends OnboarderActivity {
         onboarderPages.add(onboarderPage2);
         onboarderPages.add(onboarderPage3);
         onboarderPages.add(onboarderPage4);
+        onboarderPages.add(onboarderPage5);
 
         // And pass your pages to 'setOnboardPagesReady' method
         setOnboardPagesReady(onboarderPages);
