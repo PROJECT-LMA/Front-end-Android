@@ -10,7 +10,7 @@ most importantly, it can save our user's time.
 - [Functions](#functions)
 - [Install](#install)
 - [Usage](#usage)
-- [Contributing](#contributing)
+- [Contributing](#contributors)
 
 ## development
 Front-end:
@@ -21,7 +21,7 @@ Back-end:
 ## Functions
 1. User can get real time usage information of the laundry machines in their selected region.
 2. User can reserve laundry machines.
-3. USer can  scan the QR code to use/close the laundry machines.
+3. User can  scan the QR code to use/close the laundry machines.
 ## Install
 1. Download from our github: https://github.com/PROJECT-LMA
 
