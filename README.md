@@ -32,20 +32,32 @@ Back-end:
 1[usage](https://github.com/PROJECT-LMA/Front-end-Android/blob/new-master/app/src/main/res/drawable/overview_usage.png)
 ![scan](https://github.com/PROJECT-LMA/Front-end-Android/blob/new-master/app/src/main/res/drawable/scan.png)
 
-## Contributing
+## Contributors
 PM:
->Nevaeh Wu
+
+> Nevaeh Wu
+
 Front-end:
->ZeSheng Xing
->YiZhou Yang
->XingWei Huang
->YuQing Li
->Doris Pan
->TzuChin Lin
+
+> Zesheng Xing
+
+> Yizhou Yang
+
+> Xingwei Huang
+
+> Yuqing Li
+
+> Doris Pan
+
+> TzuChin Lin
 
 Back-end:
->Benjamin Zhou
->MingLong Pan
->Lian Xue
->LiJun Chen
->YiFei Hu
+> Benjamin Zhou
+
+> MingLong Pan
+
+> Lian Xue
+
+> LiJun Chen
+
+> YiFei Hu
