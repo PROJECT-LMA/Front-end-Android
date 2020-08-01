@@ -202,7 +202,7 @@ public class ScanFragment extends Fragment {
                         Thread thread2 = new Thread(new Runnable() {
                             @Override
                             public void run() {
-                                final Scan.ScanResult result2 = Scan.scanToOpen(
+                                final Scan.ScanResult result2 = Scan.scanToClose(
                                         result.getContents(),
                                         token
                                 );

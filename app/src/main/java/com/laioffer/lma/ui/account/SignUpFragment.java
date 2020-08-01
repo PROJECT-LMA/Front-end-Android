@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
@@ -12,18 +13,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.laioffer.lma.R;
 import com.laioffer.lma.network.Account;
+import com.laioffer.lma.ui.term.TermFragment;
 import com.laioffer.lma.utils.EditTextValidator;
 import com.laioffer.lma.utils.Encryption;
 
 
-public class SignUpFragment extends Fragment {
+public class SignUpFragment extends Fragment implements TermFragment.OnAgreeTermListener  {
 
+    CheckBox term;
     private Context context;
     View inflatedView;
 
@@ -52,6 +56,10 @@ public class SignUpFragment extends Fragment {
         final EditText lastName = inflatedView.findViewById(R.id.last_name);
         final EditText email = inflatedView.findViewById(R.id.username_register);
         final EditText password = inflatedView.findViewById(R.id.password_register);
+        final CheckBox serviceAgreement = inflatedView.findViewById(R.id.term_of_service_checkbox);
+        this.term = serviceAgreement;
+        final TextView term = inflatedView.findViewById(R.id.term_of_service);
+        Fragment self = this;
 
         // disable button until all fields are filled correctly
         registerBtn.setClickable(false);
@@ -145,6 +153,17 @@ public class SignUpFragment extends Fragment {
                     });
                     return;
                 }
+
+                if (!serviceAgreement.isChecked()) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getContext(), "Please read and agree term of service", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                    return;
+                }
+
                 Thread thread = new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -177,6 +196,20 @@ public class SignUpFragment extends Fragment {
             }
         });
 
+        term.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogFragment agreement = new TermFragment();
+                agreement.setTargetFragment(self, 0);
+                agreement.show(getParentFragmentManager(), "service agreement");
+            }
+        });
+
         return inflatedView;
+    }
+
+    @Override
+    public void onAgreeTermListener() {
+        term.setChecked(true);
     }
 }

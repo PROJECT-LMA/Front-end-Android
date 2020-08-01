@@ -109,31 +109,6 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="28.7dp"
-            android:layout_marginTop="15dp">
-
-            <CheckBox
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:buttonTint="@color/globalColor"
-                android:id="@+id/term_of_service_checkbox"/>
-
-            <TextView
-                android:id="@+id/term_of_service"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/term_of_use"
-                android:layout_marginStart="10dp"
-                android:textSize="16sp"
-                android:clickable="true"
-                android:textColor="@color/globalColor"
-                android:layout_gravity="center"/>
-
-        </LinearLayout>
-
     </LinearLayout>
 
     <Button
