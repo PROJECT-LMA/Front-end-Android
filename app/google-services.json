@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "578478020636",
+    "firebase_url": "https://lmaproject.firebaseio.com",
+    "project_id": "lmaproject",
+    "storage_bucket": "lmaproject.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:578478020636:android:975da45ade49442c4e27d9",
+        "android_client_info": {
+          "package_name": "com.laioffer.lma"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "578478020636-r8mpn8lc0ljfqp4b57tsbibidnst2fuk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOqMhRWGEDdE2OI7TWmhlDcAriDtNu4Lg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "578478020636-r8mpn8lc0ljfqp4b57tsbibidnst2fuk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -23,6 +23,7 @@ public class HttpUtils {
     static final String scanToClose = "/api/scanToClose";
     static final String reverseDryer = "/api/reserveDryer";
     static final String reverseWasher = "/api/reserveWasher";
+    static final String sendToken = "/api/firebase/notification";
 
     public static JSONObject readJsonObjectFromResponse(HttpURLConnection conn) {
         if (null==conn) {
