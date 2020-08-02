@@ -4,6 +4,13 @@
 Sparkling is an app for those who have problems with public laundry room. Sparking can help them dealing with waiting other's laundries, reserve the washing machine, 
 most importantly, it can save our user's time.
 
+# Video demo
+[Demo1](https://drive.google.com/file/d/1bqxh19ZhMmQy825cCTk4CZJ_5D5L9KpD/view?usp=sharing)
+
+[Demo2](https://drive.google.com/file/d/1buGwWEU1pXUqYRLMr14tJOHdQCqeRr-_/view?usp=sharing)
+
+[Demo3](https://drive.google.com/file/d/1buGwWEU1pXUqYRLMr14tJOHdQCqeRr-_/view?usp=sharing)
+
 
 ## Table of Contents
 - [Development](#development)
