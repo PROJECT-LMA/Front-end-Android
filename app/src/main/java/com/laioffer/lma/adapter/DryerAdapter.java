@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
@@ -28,13 +29,12 @@ import java.util.List;
 public class DryerAdapter extends RecyclerView.Adapter<DryerAdapter.ViewHolder> {
     private List<Machine> dryers;
     User user;
-    private Context context;
     private static final int FOOTER_VIEW = 1;
     private static final int ITEM_VIEW = 2;
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public TextView txtHeader;
         public TextView txtFooter;
@@ -55,7 +55,7 @@ public class DryerAdapter extends RecyclerView.Adapter<DryerAdapter.ViewHolder> 
         }
     }
 
-    public class FooterViewHolder extends ViewHolder {
+    public static class FooterViewHolder extends ViewHolder {
         public View layout;
         public FooterViewHolder(View v) {
             super(v);
@@ -71,38 +71,37 @@ public class DryerAdapter extends RecyclerView.Adapter<DryerAdapter.ViewHolder> 
     }
 
     // Create new views (invoked by the layout manager)
+    @NonNull
     @Override
-    public DryerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                       int viewType) {
+    public DryerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent,
+                                                      int viewType) {
         // create a new view
         View v;
         if (viewType == FOOTER_VIEW) {
             v = LayoutInflater.from(parent.getContext()).inflate(R.layout.bottom_of_list_item, parent, false);
 
-            FooterViewHolder vh = new FooterViewHolder(v);
-
-            return vh;
+            return new FooterViewHolder(v);
         }
 
         LayoutInflater inflater = LayoutInflater.from(
                 parent.getContext());
         v =
                 inflater.inflate(R.layout.dryer_list_item, parent, false);
-        DryerAdapter.ViewHolder vh = new DryerAdapter.ViewHolder(v);
-        context = parent.getContext();
+        DryerAdapter.ViewHolder vh = new ViewHolder(v);
+        Context context = parent.getContext();
         user = User.getInstance(context);
         return vh;
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(DryerAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull DryerAdapter.ViewHolder holder, final int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         if (holder instanceof FooterViewHolder) {
             FooterViewHolder footer_vh = (FooterViewHolder) holder;
 
-        } else if (holder != null) {
+        } else {
             Machine dryer = dryers.get(position);
 
             final String name = dryer.getSN();
@@ -139,8 +138,8 @@ public class DryerAdapter extends RecyclerView.Adapter<DryerAdapter.ViewHolder> 
                     break;
             }
             final String endTime = estimated_endTime;
-
-            ((ViewHolder) holder).txtHeader.setText("ID: " + name);
+            String text_id_name = "ID: " + name;
+            ((ViewHolder) holder).txtHeader.setText(text_id_name);
             ((ViewHolder) holder).txtFooter.setText(status);
             ((ViewHolder) holder).endTime.setText(endTime);
             if(!showTimeBar) {

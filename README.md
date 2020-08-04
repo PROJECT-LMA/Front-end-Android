@@ -1,4 +1,11 @@
 # Sparkling
+#TODO: some thoughts
+1. combine recycler view lists to one list, optimize view holders
+2. add analog count down timer(view model)
+3.
+
+
+
 ![Sparkling](https://github.com/PROJECT-LMA/Front-end-Android/blob/new-master/app/src/main/res/mipmap/ic_launcher_round.png)
 
 Sparkling is an app for those who have problems with public laundry room. Sparking can help them dealing with waiting other's laundries, reserve the washing machine, 

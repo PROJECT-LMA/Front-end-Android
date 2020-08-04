@@ -1,12 +1,9 @@
 package com.laioffer.lma.ui.overview;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +12,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.content.res.AppCompatResources;
-import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,25 +28,19 @@ import com.laioffer.lma.service.ReserveTimerService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class OverviewFragment extends Fragment {
 
     private SwipeRefreshLayout swipeRefreshLayout;
-    //private TextView totalAvailable;
     private TextView location_name;
     private TextView washer_count_text;
     private TextView dryer_count_text;
-    private TextView dryerAvailable;
     private Button reverseWasher_btn;
     private Button reverseDryer_btn;
-    private int num = 0;
     private User user;
     private RecyclerView washer_recyclerView;
-    private RecyclerView.Adapter washerAdapter;
-    private RecyclerView.LayoutManager washer_layoutManager;
     private RecyclerView dryer_recyclerView;
-    private RecyclerView.Adapter dryerAdapter;
-    private RecyclerView.LayoutManager dryer_layoutManager;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -77,21 +66,12 @@ public class OverviewFragment extends Fragment {
 
 
         //swipe update, load machines and update lists
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        location_name.setText(user.getLocation().getName());
-                        loadMachines();
-                        swipeRefreshLayout.setRefreshing(false);
-                    }
-                }, 2000);
-            }
-        });
+        swipeRefreshLayout.setOnRefreshListener(() -> new Handler().postDelayed(() -> {
+            location_name.setText(user.getLocation().getName());
+            loadMachines();
+            swipeRefreshLayout.setRefreshing(false);
+        }, 2000));
 
-        //reverse_setup
         setup_reserve();
 
 
@@ -105,52 +85,30 @@ public class OverviewFragment extends Fragment {
     }
 
     private void setup_reserve() {
-        reverseWasher_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Thread thread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Reserve.Result result = Reserve.reserveWasher(user.getToken());
-                        if (result.isSuccess()) {
-                            Intent intent = new Intent(getActivity(), ReserveTimerService.class);
-                            intent.putExtra("reservationTime", result.getEstimateTime());
-                            getActivity().startService(intent);
-                        }
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(getContext(), result.getMessage(), Toast.LENGTH_LONG).show();
-                            }
-                        });
-                    }
-                });
-                thread.start();
-            }
+        reverseWasher_btn.setOnClickListener(view -> {
+            Thread thread = new Thread(() -> {
+                Reserve.Result result = Reserve.reserveWasher(user.getToken());
+                if (result.isSuccess()) {
+                    Intent intent = new Intent(getActivity(), ReserveTimerService.class);
+                    intent.putExtra("reservationTime", result.getEstimateTime());
+                    requireActivity().startService(intent);
+                }
+                requireActivity().runOnUiThread(() -> Toast.makeText(getContext(), result.getMessage(), Toast.LENGTH_LONG).show());
+            });
+            thread.start();
         });
 
-        reverseDryer_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Thread thread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Reserve.Result result = Reserve.reserveDryer(user.getToken());
-                        if (result.isSuccess()) {
-                            Intent intent = new Intent(getActivity(), ReserveTimerService.class);
-                            intent.putExtra("reservationTime", result.getEstimateTime());
-                            getActivity().startService(intent);
-                        }
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(getContext(), result.getMessage(), Toast.LENGTH_LONG).show();
-                            }
-                        });
-                    }
-                });
-                thread.start();
-            }
+        reverseDryer_btn.setOnClickListener(view -> {
+            Thread thread = new Thread(() -> {
+                Reserve.Result result = Reserve.reserveDryer(user.getToken());
+                if (result.isSuccess()) {
+                    Intent intent = new Intent(getActivity(), ReserveTimerService.class);
+                    intent.putExtra("reservationTime", result.getEstimateTime());
+                    requireActivity().startService(intent);
+                }
+                requireActivity().runOnUiThread(() -> Toast.makeText(getContext(), result.getMessage(), Toast.LENGTH_LONG).show());
+            });
+            thread.start();
         });
     }
 
@@ -160,7 +118,7 @@ public class OverviewFragment extends Fragment {
         washer_recyclerView.setHasFixedSize(true);
 
         // use a linear layout manager
-        washer_layoutManager = new LinearLayoutManager(getContext());
+        RecyclerView.LayoutManager washer_layoutManager = new LinearLayoutManager(getContext());
         washer_recyclerView.setLayoutManager(washer_layoutManager);
         if (user_machine != null) {
             washers.add(0, user_machine);
@@ -168,7 +126,7 @@ public class OverviewFragment extends Fragment {
             washers.add(0, reserved_machine);
         }
         // specify an adapter (see also next example)
-        washerAdapter = new WasherAdapter(washers);
+        RecyclerView.Adapter washerAdapter = new WasherAdapter(washers);
         washer_recyclerView.setAdapter(washerAdapter);
 
 
@@ -180,7 +138,7 @@ public class OverviewFragment extends Fragment {
         dryer_recyclerView.setHasFixedSize(true);
 
         // use a linear layout manager
-        dryer_layoutManager = new LinearLayoutManager(getContext());
+        RecyclerView.LayoutManager dryer_layoutManager = new LinearLayoutManager(getContext());
         dryer_recyclerView.setLayoutManager(dryer_layoutManager);
 
         if (user_machine != null) {
@@ -189,49 +147,40 @@ public class OverviewFragment extends Fragment {
             dryers.add(0, reserved_machine);
         }
         // specify an adapter (see also next example)
-        dryerAdapter = new DryerAdapter(dryers);
+        RecyclerView.Adapter dryerAdapter = new DryerAdapter(dryers);
         dryer_recyclerView.setAdapter(dryerAdapter);
     }
 
     private void loadMachines() {
 
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                final List<Machine> list = MachinesList.checkMachineStatus(user.getLocation().getId());
-                if (list == null) {
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getContext(), "Network Error", Toast.LENGTH_LONG).show();
-                        }
-                    });
-                    return;
-                }
-
-                Handler threadHandler = new Handler(Looper.getMainLooper());
-                threadHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        Washers washers = getWashers(list);
-                        if (washers.isReservable == false || washers.availableCount > 0) {
-                            reverseWasher_btn.setBackgroundResource(R.drawable.unclickable_btn);
-                            reverseWasher_btn.setEnabled(false);
-                        }
-                        Dryers dryers = getDryers(list);
-                        if (dryers.isReservable == false || dryers.availableCount > 0) {
-                            reverseDryer_btn.setBackgroundResource(R.drawable.unclickable_btn);
-                            reverseDryer_btn.setEnabled(false);
-                        }
-                        washer_count_text.setText(washers.availableCount + " of " + washers.totalCount + " available");
-                        dryer_count_text.setText(dryers.availableCount + " of " + dryers.totalCount + " available");
-                        setupWashersRecyclerList(washers.available_list, washers.user_machine, washers.reserved_machine);
-                        setupDryersRecyclerList(dryers.available_list, dryers.user_machine, dryers.reserved_machine);
-                        list.clear();
-                    }
-                });
+        Thread thread = new Thread(() -> {
+            final List<Machine> list = MachinesList.checkMachineStatus(user.getLocation().getId());
+            if (list == null) {
+                requireActivity().runOnUiThread(() -> Toast.makeText(getContext(), "Network Error", Toast.LENGTH_LONG).show());
+                return;
             }
+
+            Handler threadHandler = new Handler(Looper.getMainLooper());
+            threadHandler.post(() -> {
+
+                Washers washers = getWashers(list);
+                if (!washers.isReservable) {
+                    reverseWasher_btn.setBackgroundResource(R.drawable.unclickable_btn);
+                    reverseWasher_btn.setEnabled(false);
+                }
+                Dryers dryers = getDryers(list);
+                if (!dryers.isReservable) {
+                    reverseDryer_btn.setBackgroundResource(R.drawable.unclickable_btn);
+                    reverseDryer_btn.setEnabled(false);
+                }
+                String text_washer_count = washers.availableCount + " of " + washers.totalCount + " available";
+                String text_dryer_count = dryers.availableCount + " of " + dryers.totalCount + " available";
+                washer_count_text.setText(text_washer_count);
+                dryer_count_text.setText(text_dryer_count);
+                setupWashersRecyclerList(washers.available_list, washers.user_machine, washers.reserved_machine);
+                setupDryersRecyclerList(dryers.available_list, dryers.user_machine, dryers.reserved_machine);
+                list.clear();
+            });
         });
         thread.start();
 
@@ -239,20 +188,18 @@ public class OverviewFragment extends Fragment {
 
     private Washers getWashers(List<Machine> list) {
         Washers washers = new Washers();
-        boolean machine_available_to_be_reserved = false;
         for (Machine m : list) {
             if (m.getMachineType().equals("washer")) {
                 if (m.getIsAvailable().equals("true")) {
                     washers.availableCount++;
                     washers.available_list.add(m);
+                    washers.isReservable = false;
                 } else if (m.getIsAvailable().equals("false") && m.getUserID().equals(user.getId())) {// user is using a washer
                     washers.user_machine = m;
                     washers.isReservable = false;
                 } else if (m.getIsReserved().equals("true") && m.getUserReservedID().equals(user.getId())) { //user is reserving a washer
                     washers.reserved_machine = m;
                     washers.isReservable = false;
-                } else if (m.getIsReserved().equals("false")) {
-                    machine_available_to_be_reserved = true;
                 }
                 washers.totalCount++;
             }
@@ -262,20 +209,18 @@ public class OverviewFragment extends Fragment {
 
     private Dryers getDryers(List<Machine> list) {
         Dryers dryers = new Dryers();
-        boolean machine_available_to_be_reserved = false;
         for (Machine m : list) {
             if (m.getMachineType().equals("dryer")) {
                 if (m.getIsAvailable().equals("true")) {
                     dryers.availableCount++;
                     dryers.available_list.add(m);
+                    dryers.isReservable = false;
                 } else if (m.getIsAvailable().equals("false") && m.getUserID().equals(user.getId())) {
                     dryers.user_machine = m;
                     dryers.isReservable = false;
                 } else if (m.getIsReserved().equals("true") && m.getUserReservedID().equals(user.getId())) {
                     dryers.reserved_machine = m;
                     dryers.isReservable = false;
-                }else if (m.getIsReserved().equals("false")) {
-                    machine_available_to_be_reserved = true;
                 }
                 dryers.totalCount++;
             }
@@ -283,7 +228,7 @@ public class OverviewFragment extends Fragment {
         return dryers;
     }
 
-    public class Washers {
+    public static class Washers {
         List<Machine> available_list = new ArrayList<>();
         Machine user_machine;
         Machine reserved_machine;
@@ -292,7 +237,7 @@ public class OverviewFragment extends Fragment {
         boolean isReservable = true;
     }
 
-    public class Dryers {
+    public static class Dryers {
         List<Machine> available_list = new ArrayList<>();
         Machine user_machine;
         Machine reserved_machine;
